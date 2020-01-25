@@ -59,6 +59,7 @@ public class RobotContainer {
   public static JoystickButton loadButton = new JoystickButton(X3D_RIGHT, Constants.LOAD_BUTTON_ID);
   public static JoystickButton launchButton = new JoystickButton(X3D_RIGHT, Constants.LAUNCH_BUTTON_ID);
   public static JoystickButton intakeButton = new JoystickButton(X3D_RIGHT, Constants.INTAKE_BUTTON_ID);
+  public static JoystickButton pivotButton = new JoystickButton(X3D_RIGHT, Constants.PIVOT_BUTTON_ID);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -79,6 +80,7 @@ public class RobotContainer {
     launchButton.whileHeld(new TeleopLaunchCommand());
     loadButton.whileHeld(new TeleopLoadCommand());
     intakeButton.whileHeld(new IntakeCommand());
+    pivotButton.whenPressed(new TogglePivotCommand());
   }
 
 

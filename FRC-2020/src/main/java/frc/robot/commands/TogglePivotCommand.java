@@ -7,10 +7,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+//import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.ShootSubsystem;
+//import frc.robot.subsystems.ShootSubsystem;
 
 public class TogglePivotCommand extends CommandBase {
   /**
