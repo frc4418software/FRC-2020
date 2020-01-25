@@ -9,6 +9,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+//import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -22,12 +25,18 @@ public class ShootSubsystem extends SubsystemBase {
   private WPI_TalonSRX pivotMotor;
   private WPI_TalonSRX intakeMotor;
 
+  private AnalogPotentiometer pivotPotentiometer;
+
+  private boolean pivotUp = true;
+
   public ShootSubsystem() {
     rightFireMotor = new WPI_TalonSRX(Constants.SHOOT_FIRE_RIGHT_TALON_SRX_ID);
     leftFireMotor = new WPI_TalonSRX(Constants.SHOOT_FIRE_LEFT_TALON_SRX_ID);
     loadMotor = new WPI_TalonSRX(Constants.SHOOT_LOAD_TALON_SRX_ID);
     pivotMotor = new WPI_TalonSRX(Constants.SHOOT_PIVOT_TALON_SRX_ID);
     intakeMotor = new WPI_TalonSRX(Constants.SHOOT_INTAKE_TALON_SRX_ID);
+
+    pivotPotentiometer = new AnalogPotentiometer(Constants.SHOOT_PIVOT_POTENTIOMETER_ID);
   }
   //set and get the motors stuff
 
@@ -64,6 +73,26 @@ public class ShootSubsystem extends SubsystemBase {
   public double getPivotMotor(){
     return pivotMotor.getMotorOutputPercent(); 
   }
+  
+  // get whether the pivot is up
+  public boolean pivotIsUp(){
+    if( getPivotPotentiometer() > 13){
+      return pivotUp;
+    }
+    else{
+      return !pivotUp;
+    }
+  }
+  
+
+
+
+  //Potentiometer stuffs (I hope this works)
+  //read potentiometer
+  public double getPivotPotentiometer(){
+    return pivotPotentiometer.get();
+  }
+
 
   @Override
   public void periodic() {
