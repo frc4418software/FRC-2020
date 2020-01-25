@@ -35,11 +35,36 @@ public class ShootSubsystem extends SubsystemBase {
   public void setRightFireMotor(double motorValue){
     rightFireMotor.set(ControlMode.PercentOutput, motorValue);
   }
+  public void setLeftFireMotor(double motorValue){
+    leftFireMotor.set(ControlMode.PercentOutput, motorValue);
+  }
+  public void setLoadMotor(double motorValue){
+    loadMotor.set(ControlMode.PercentOutput, motorValue);
+  }
+  public void setIntakeMotor(double motorValue){
+    intakeMotor.set(ControlMode.PercentOutput, motorValue);
+  }
+  public void setPivotMotor(double motorValue){
+    pivotMotor.set(ControlMode.PercentOutput, motorValue);
+  }
 
   //read right spinning fire motor
   public double getRightFireMotor(){
     return rightFireMotor.getMotorOutputPercent();
   }
+  public double getLeftFireMotor(){
+    return leftFireMotor.getMotorOutputPercent();
+  }
+  public double getLoadMotor(){
+    return loadMotor.getMotorOutputPercent();
+  }
+  public double getIntakeMotor(){
+    return intakeMotor.getMotorOutputPercent();
+  }
+  public double getPivotMotor(){
+    return pivotMotor.getMotorOutputPercent(); 
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
