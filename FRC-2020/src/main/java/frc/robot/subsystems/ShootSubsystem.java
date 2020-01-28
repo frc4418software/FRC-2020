@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 //import edu.wpi.first.wpilibj.interfaces.Potentiometer;
@@ -19,22 +19,22 @@ public class ShootSubsystem extends SubsystemBase {
   /**
    * Creates a new ShootSubsystem.
    */
-  private WPI_TalonSRX rightFireMotor;
-  private WPI_TalonSRX leftFireMotor;
-  private WPI_TalonSRX loadMotor;
-  private WPI_TalonSRX pivotMotor;
-  private WPI_TalonSRX intakeMotor;
+  private WPI_VictorSPX rightFireMotor;
+  private WPI_VictorSPX leftFireMotor;
+  private WPI_VictorSPX loadMotor;
+  private WPI_VictorSPX pivotMotor;
+  private WPI_VictorSPX intakeMotor;
 
   private AnalogPotentiometer pivotPotentiometer;
 
   private boolean pivotUp = true;
 
   public ShootSubsystem() {
-    rightFireMotor = new WPI_TalonSRX(Constants.SHOOT_FIRE_RIGHT_TALON_SRX_ID);
-    leftFireMotor = new WPI_TalonSRX(Constants.SHOOT_FIRE_LEFT_TALON_SRX_ID);
-    loadMotor = new WPI_TalonSRX(Constants.SHOOT_LOAD_TALON_SRX_ID);
-    pivotMotor = new WPI_TalonSRX(Constants.SHOOT_PIVOT_TALON_SRX_ID);
-    intakeMotor = new WPI_TalonSRX(Constants.SHOOT_INTAKE_TALON_SRX_ID);
+    rightFireMotor = new WPI_VictorSPX(Constants.SHOOT_FIRE_RIGHT_TALON_SRX_ID);
+    leftFireMotor = new WPI_VictorSPX(Constants.SHOOT_FIRE_LEFT_TALON_SRX_ID);
+    loadMotor = new WPI_VictorSPX(Constants.SHOOT_LOAD_TALON_SRX_ID);
+    pivotMotor = new WPI_VictorSPX(Constants.SHOOT_PIVOT_TALON_SRX_ID);
+    intakeMotor = new WPI_VictorSPX(Constants.SHOOT_INTAKE_TALON_SRX_ID);
 
     pivotPotentiometer = new AnalogPotentiometer(Constants.SHOOT_PIVOT_POTENTIOMETER_ID);
   }
