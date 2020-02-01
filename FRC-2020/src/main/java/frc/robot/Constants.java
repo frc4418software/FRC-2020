@@ -84,11 +84,12 @@ public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10,
   DRIVE_BACK_DISTANCE_PING_ID = 12, 
   DRIVE_BACK_DISTANCE_ECHO_ID = 13;
 public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI) / 256; // diameter * pi = circumference. circumference / 256 = distance per pulse
+
 // Shooter Subsystem IDs
-public static final int SHOOT_FIRE_RIGHT_TALON_SRX_ID = 13,
-  SHOOT_FIRE_LEFT_TALON_SRX_ID = 14,
-  SHOOT_LOAD_TALON_SRX_ID = 15,
-  SHOOT_PIVOT_TALON_SRX_ID = 16,
+public static final int SHOOT_FIRE_RIGHT_TALON_SRX_ID = 4,
+  SHOOT_FIRE_LEFT_TALON_SRX_ID = 1,
+  SHOOT_LOAD_TALON_SRX_ID = 3,
+  SHOOT_PIVOT_TALON_SRX_ID = 6,
   SHOOT_INTAKE_TALON_SRX_ID = 17,
   SHOOT_PIVOT_POTENTIOMETER_ID = 18;
 
