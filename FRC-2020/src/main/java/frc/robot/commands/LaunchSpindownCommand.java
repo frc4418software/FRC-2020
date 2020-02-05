@@ -7,16 +7,13 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.subsystems.ShootSubsystem;
 
-public class TeleopLaunchCommand extends CommandBase {
+public class LaunchSpindownCommand extends CommandBase {
   /**
-   * Creates a new TeleopLaunchCommand.
+   * Creates a new LaunchSpindownCommand.
    */
-  public TeleopLaunchCommand() {
+  public LaunchSpindownCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,17 +25,6 @@ public class TeleopLaunchCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Robot.shootsubsystem.launchSpin == false) {
-      for(int i=0; i <= 10; i++){
-        Robot.shootsubsystem.setRightFireMotor(i*10);
-        Robot.shootsubsystem.setLeftFireMotor(-i*10);
-        WaitCommand(0.2);
-      }
-      Robot.shootsubsystem.launchSpin = true;
-    }
-  }
-
-  private void WaitCommand(double d) {
   }
 
   // Called once the command ends or is interrupted.

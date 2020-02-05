@@ -77,7 +77,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
     driveStraightButton.whileHeld(new DriveStraightCommand());
-    launchButton.whileHeld(new TeleopLaunchCommand());
+    launchButton.whenPressed(new TeleopLaunchCommand());
+    launchButton.whenReleased(new LaunchSpindownCommand());
     loadButton.whileHeld(new TeleopLoadCommand());
     intakeButton.whileHeld(new IntakeCommand());
     pivotButton.whenPressed(new TogglePivotCommand());

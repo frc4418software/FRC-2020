@@ -29,6 +29,8 @@ public class ShootSubsystem extends SubsystemBase {
 
   private boolean pivotUp = true;
 
+  public boolean launchSpin;
+
   public ShootSubsystem() {
     rightFireMotor = new WPI_VictorSPX(Constants.SHOOT_FIRE_RIGHT_TALON_SRX_ID);
     leftFireMotor = new WPI_VictorSPX(Constants.SHOOT_FIRE_LEFT_TALON_SRX_ID);
@@ -84,8 +86,6 @@ public class ShootSubsystem extends SubsystemBase {
     }
   }
   
-
-
 
   //Potentiometer stuffs (I hope this works)
   //read potentiometer
