@@ -9,28 +9,27 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.ColorSensorSubsystem;
 
-public class DriveStraightCommand extends CommandBase {
+public class SenseColorCommand extends CommandBase {
   /**
-   * Creates a new DriveStraightCommand.
+   * Creates a new SenseColorCommand.
    */
-  public DriveStraightCommand() {
+  public SenseColorCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.driveSubsystem);
+    addRequirements(Robot.colorSensorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.driveSubsystem.setLeftBrakemode(false);
-    Robot.driveSubsystem.setRightBrakemode(false);
-    Robot.driveSubsystem.setLeftMotorValue(50);
-    Robot.driveSubsystem.setRightMotorValue(-50);
+    ColorSensorSubsystem.DnDColors();
   }
 
   // Called once the command ends or is interrupted.
