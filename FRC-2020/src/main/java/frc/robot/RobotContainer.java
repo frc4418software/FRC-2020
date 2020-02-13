@@ -56,6 +56,9 @@ public class RobotContainer {
   // Create and assign default buttons
   public static JoystickButton toggleArcadeDriveButton = new JoystickButton(X3D_RIGHT, Constants.TOGGLE_ARCADE_DRIVE_BUTOON_ID);
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
+  public static JoystickButton StageTwoCPButton = new JoystickButton(GAMEPAD, Constants.STAGE_TWO_CONTROL_PANEL_BUTTON_ID);
+  public static JoystickButton StageThreeCPButton = new JoystickButton(GAMEPAD, Constants.STAGE_THREE_CONTROL_PANEL_BUTTON_ID);
+  
 
 
   /**
@@ -75,6 +78,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
     driveStraightButton.whileHeld(new DriveStraightCommand());
+    StageThreeCPButton.whenPressed(new StageThreeSpinCommand());
+    StageTwoCPButton.whenPressed(new StageTwoSpinCommand());
+
 
   }
 

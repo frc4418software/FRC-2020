@@ -20,7 +20,7 @@ public class ControlPanelManipulatorSubsystem extends SubsystemBase {
   private WPI_TalonSRX controlPanelManipulatorMotor;
 
   public ControlPanelManipulatorSubsystem() {
-    controlPanelManipulatorMotor = new WPI_TalonSRX(Constants.COLOR_PANEL_MANIPULATOR_TALON_SRX_ID);
+    controlPanelManipulatorMotor = new WPI_TalonSRX(Constants.CONTROL_PANEL_MANIPULATOR_TALON_SRX_ID);
   
   }
   public void SetMotor(double motorValue) {

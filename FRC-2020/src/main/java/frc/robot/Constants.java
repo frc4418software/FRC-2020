@@ -23,8 +23,8 @@ public final class Constants {
   GAMEPAD_AXIS_RIGHT_Y = 5,
   GAMEPAD_AXIS_LEFT_TRIGGER = 2,
   GAMEPAD_AXIS_RIGHT_TRIGGER = 3,
-  GAMEPAD_BUTTON_A = 1, // Gamepad buttons
-  GAMEPAD_BUTON_B = 2,
+  */GAMEPAD_BUTTON_A = 1, // Gamepad buttons
+  GAMEPAD_BUTON_B = 2, /*
   GAMEPAD_BUTON_X = 3,
   GAMEPAD_BUTTON_Y = 4,
   GAMEPAD_BUTON_LEFT_BUMPER = 5,
@@ -81,8 +81,10 @@ public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10,
 public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI) / 256; // diameter * pi = circumference. circumference / 256 = distance per pulse
 
 //Color Sensor/Manipulator Subsystem IDs
-public static final int COLOR_PANEL_MANIPULATOR_TALON_SRX_ID = 18;
-
+public static final int CONTROL_PANEL_MANIPULATOR_TALON_SRX_ID = 18,
+  STAGE_TWO_CONTROL_PANEL_BUTTON_ID = GAMEPAD_BUTTON_A,
+  STAGE_THREE_CONTROL_PANEL_BUTTON_ID = GAMEPAD_BUTON_B;
+  
 // Climb Subsystem IDs
 public static final int CLIMBER_ENCODER_CHANNELA_ID = 2, 
   CLIMBER_FRONT_ENCODER_CHANNELB_ID = 3, 
