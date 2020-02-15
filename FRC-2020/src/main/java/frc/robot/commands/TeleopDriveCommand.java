@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+//import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Robot;
@@ -25,12 +27,18 @@ public class TeleopDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("Left Encoder", Robot.driveSubsystem.getLeftDriveEncoder());
+    SmartDashboard.putNumber("Right Encoder", Robot.driveSubsystem.getRightDriveEncoder());
+    SmartDashboard.putNumber("Left Drive Motor", Robot.driveSubsystem.getLeftDriveValue());
+    SmartDashboard.putNumber("Right Drive Motor", Robot.driveSubsystem.getRightDriveValue());
+    SmartDashboard.putBoolean("Arcade Drive", Robot.driveSubsystem.isArcadeDrive());
     if(Robot.driveSubsystem.isArcadeDrive()) {
       Robot.driveSubsystem.teleopArcadeDriveWrapper(RobotContainer.getForwardArcadeDriveAxis(),
           RobotContainer.getAngleArcadeDriveAxis());
     } else {
       Robot.driveSubsystem.teleopTankDriveWrapper(RobotContainer.getLeftTankDriveAxis(), RobotContainer.getRightTankDriveAxis());
     }
+
   }
 
   // Called once the command ends or is interrupted.
