@@ -16,6 +16,10 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import frc.robot.Constants;
 import frc.robot.commands.TeleopDriveCommand;
 import frc.robot.teamlibraries.DriveInputPipeline;
@@ -41,7 +45,9 @@ public class DriveSubsystem extends SubsystemBase {
   private Ultrasonic frontDriveDistance;
   private Ultrasonic backDriveDistance;
 
-  private boolean arcadeDrive = false;
+  private boolean arcadeDrive = true;
+  private final DifferentialDriveOdometry odometry;
+
   public DriveSubsystem() {
     leftDriveMotor1 = new WPI_TalonSRX(Constants.DRIVE_LEFT_A_TALON_SRX_ID);
     leftDriveMotor2 = new WPI_TalonSRX(Constants.DRIVE_LEFT_B_TALON_SRX_ID);
@@ -50,6 +56,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     leftDriveMotor2.follow(leftDriveMotor1);
     rightDriveMotor2.follow(rightDriveMotor1);
+
+
+
+    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getGyroValue()));
 
     robotDrive = new DifferentialDrive(leftDriveMotor1, rightDriveMotor1);
 
@@ -240,6 +250,12 @@ public class DriveSubsystem extends SubsystemBase {
     driveGyro.calibrate();
   }
 
+  //Controls the left and right sides of the drive directly with voltages. (this is mainly for auto)
+  public void driveVolts(double leftVolts, double rightVolts) {
+    leftDriveMotor1.setVoltage(leftVolts);
+    rightDriveMotor1.setVoltage(-rightVolts);
+    robotDrive.feed();
+  }
 
 
 
@@ -303,12 +319,12 @@ public class DriveSubsystem extends SubsystemBase {
 
   // read front distance
   public double getFrontDriveDistance(){
-    return frontDriveDistance.getRangeMM() / 10.0;
+    return (frontDriveDistance.getRangeMM() * 100.0)/2;
   }
 
   //read back distance
   public double getBackDriveDistance(){
-    return backDriveDistance.getRangeMM() / 10.0;
+    return (backDriveDistance.getRangeMM() * 100.0)/2;
   }
 
   //enable/disable front distance
@@ -321,6 +337,23 @@ public class DriveSubsystem extends SubsystemBase {
     backDriveDistance.setEnabled(enable);
   }
 
+  public double getAverageEncoderDistance() {
+    return (leftDriveEncoder.getDistance() + rightDriveEncoder.getDistance())/2.0;
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(leftDriveEncoder.getRate(), rightDriveEncoder.getRate());
+  }
+
+  public Pose2d getPose() {
+    return odometry.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    odometry.resetPosition(pose, Rotation2d.fromDegrees(getGyroValue()));
+  }
+
 
 
 
@@ -331,5 +364,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new TeleopDriveCommand());
+    odometry.update(Rotation2d.fromDegrees(getGyroValue()), leftDriveEncoder.getDistance(), rightDriveEncoder.getDistance());
   }
 }
