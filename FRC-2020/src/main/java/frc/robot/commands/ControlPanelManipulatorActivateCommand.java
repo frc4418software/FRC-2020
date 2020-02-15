@@ -10,18 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-//will spin the Control Panel 3 times
-
-public class StageTwoSpinCommand extends CommandBase {
+public class ControlPanelManipulatorActivateCommand extends CommandBase {
   /**
-   * Creates a new StageTwoSpinCommand.
+   * Creates a new ControlPanelManipulatorActivateCommand.
    */
-  private String[] colorArray = new String[] { "Y", "R", "G", "B" };
-  private int[] colorCount = new int[4];
-
-  public StageTwoSpinCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.colorSensorSubsystem);
+  public ControlPanelManipulatorActivateCommand() {
+    // Use addRequirements() here to declare subsystem dependencies. 
     addRequirements(Robot.controlPanelManipulatorSubsystem);
   }
 
@@ -33,24 +27,19 @@ public class StageTwoSpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(false);
-    while(colorCount[0]<=6 || colorCount[1]<=6 || colorCount[2]<=6 || colorCount[3]<=6) {
-      Robot.controlPanelManipulatorSubsystem.SetMotor(20); 
-      for(int i =0; i<=4; i++) {
-        if(Robot.color.equals(colorArray[i])) {
-          colorCount[i]++;
-        }
-      }
+    Robot.controlPanelManipulatorSubsystem.setBrakemodeRotation(false);
+    while(Robot.controlPanelManipulatorSubsystem.rotationLimitSwitch.get() != true) {
+      Robot.controlPanelManipulatorSubsystem.SetRotation(10);
     }
-    Robot.controlPanelManipulatorSubsystem.SetMotor(0);
-    Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(true);
+    Robot.controlPanelManipulatorSubsystem.SetRotation(0);
+    Robot.controlPanelManipulatorSubsystem.setBrakemodeRotation(true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.controlPanelManipulatorSubsystem.SetMotor(0);
-    Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(true);
+    Robot.controlPanelManipulatorSubsystem.SetRotation(0);
+    Robot.controlPanelManipulatorSubsystem.setBrakemodeRotation(true);
   }
 
   // Returns true when the command should end.

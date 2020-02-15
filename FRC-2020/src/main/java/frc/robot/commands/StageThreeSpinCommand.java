@@ -46,13 +46,14 @@ public class StageThreeSpinCommand extends CommandBase {
       } else {
         desiredColor = colorArray[Arrays.asList(colorArray).indexOf(gameData) + 2];
       }
-
+      Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(false);
       while (!Robot.color.equals(desiredColor)) {
         Robot.controlPanelManipulatorSubsystem.SetMotor(20);        
       }
       break;
     }
     Robot.controlPanelManipulatorSubsystem.SetMotor(0);  
+    Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(true);
     
 
   }
