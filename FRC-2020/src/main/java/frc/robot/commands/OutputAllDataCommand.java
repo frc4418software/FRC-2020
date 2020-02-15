@@ -36,6 +36,7 @@ public class OutputAllDataCommand extends CommandBase {
     SmartDashboard.putNumber("Drive Accel X", Robot.driveSubsystem.getDriveAccelX());
     SmartDashboard.putNumber("Drive Accel Y", Robot.driveSubsystem.getDriveAccelY());
     SmartDashboard.putNumber("Drive Accel Z", Robot.driveSubsystem.getDriveAccelZ());
+    
   }
 
   // Called once the command ends or is interrupted.
