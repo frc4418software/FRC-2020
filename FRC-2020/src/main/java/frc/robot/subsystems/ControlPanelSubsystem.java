@@ -7,47 +7,34 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import com.revrobotics.ColorSensorV3;
-
-public class ColorSensorSubsystem extends SubsystemBase {
+public class ControlPanelSubsystem extends CommandBase {
   /**
-   * Creates a new ColorSensorSubsystem.
+   * Creates a new ControlPanelSubsystem.
    */
-  private static I2C.Port i2cPort = I2C.Port.kOnboard;
-  
-  private static ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-  public static String sensorColor = "N";
-  public ColorSensorSubsystem() {
-    
+  public ControlPanelSubsystem() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
-  public static void DnDColors() {
-    final Color detectedColor = m_colorSensor.getColor();
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    if (detectedColor.red > 0.280 && detectedColor.red < 0.550 && detectedColor.blue < 0.150) {
-      sensorColor = "R";
-    }
-    if (detectedColor.blue > 0.270 && detectedColor.blue > 0.450 && detectedColor.red < 0.135) {
-      sensorColor = "B";
-    }
-    if (detectedColor.red > 0.251 && detectedColor.green > 0.480) {
-      sensorColor = "Y";
-    }
-    if (detectedColor.green > 0.540 && detectedColor.red < 0.170 && detectedColor.blue < 0.275) {
-      sensorColor= "G";
-    }
-    SmartDashboard.putString("Color", sensorColor);
-  }
-  
+
+  // Called when the command is initially scheduled.
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void initialize() {
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }
