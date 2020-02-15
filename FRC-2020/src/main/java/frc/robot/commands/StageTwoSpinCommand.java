@@ -33,7 +33,6 @@ public class StageTwoSpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(false);
     while(colorCount[0]<=6 || colorCount[1]<=6 || colorCount[2]<=6 || colorCount[3]<=6) {
       Robot.controlPanelManipulatorSubsystem.SetMotor(20); 
       for(int i =0; i<=4; i++) {
@@ -43,14 +42,12 @@ public class StageTwoSpinCommand extends CommandBase {
       }
     }
     Robot.controlPanelManipulatorSubsystem.SetMotor(0);
-    Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     Robot.controlPanelManipulatorSubsystem.SetMotor(0);
-    Robot.controlPanelManipulatorSubsystem.setBrakemodeWheel(true);
   }
 
   // Returns true when the command should end.
