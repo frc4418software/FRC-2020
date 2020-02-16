@@ -177,7 +177,7 @@ public class DriveSubsystem extends SubsystemBase {
     rightDriveMotor1.set(ControlMode.PercentOutput, 0);
   }
 
-  // a wrapper around tank drive that sets stuff up to be better optimized for teleop controll
+  // a wrapper around tank drive that sets stuff up to be better optimized for teleop control
   public void teleopTankDriveWrapper(double leftValue, double rightValue) {
     // Convert to an array to allow for easy data transmission
     double[] values = {leftValue, rightValue};
@@ -195,7 +195,7 @@ public class DriveSubsystem extends SubsystemBase {
     tankDrive(values);
   }
 
-  // a wrapper around arcade drive that sets stuff up to be better optimized for teleop controll
+  // a wrapper around arcade drive that sets stuff up to be better optimized for teleop control
   public void teleopArcadeDriveWrapper(double forwardValue, double angleValue) {
     // Convert to an array to allow for easy data transmission
     double[] values = {forwardValue, angleValue};
@@ -243,7 +243,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 
 
-  // Encoder stuffs
+  // Encoder stuff
 
   //read left encoder
   public double getLeftDriveEncoder(){
@@ -280,7 +280,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 
 
-  // Accelerometr stuffs
+  // Accelerometer stuff
 
   //read acceleromter
   public double getDriveAccelX(){
