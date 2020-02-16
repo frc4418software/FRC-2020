@@ -9,18 +9,35 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.JevoisCommand;
+import frc.robot.commands.HSVDetectBallCommand;;
 
 
-public class JevoisSubsystem extends SubsystemBase {
+public class HSVDetectBallSubsystem extends SubsystemBase {
   private char terminateChar = 's';
   private float timeoutTime = 60.0f;
   private SerialPort jevois;
 
+  private int ballXcenter;
+  private int ballYcenter;
+
+  public int getBallXcenter() {
+    return this.ballXcenter;
+  }
+  public void setBallXcenter(int xcenter) {
+    this.ballXcenter = xcenter;
+  }
+
+  public int getBallYcenter() {
+    return this.ballYcenter;
+  }
+  public void setBallYcenter(int ycenter) {
+    this.ballYcenter = ycenter;
+  }
+
   //#region Set default command
   @Override
   public void periodic() {
-    setDefaultCommand(new JevoisCommand());
+    setDefaultCommand(new HSVDetectBallCommand());
   }
   //#endregion
 

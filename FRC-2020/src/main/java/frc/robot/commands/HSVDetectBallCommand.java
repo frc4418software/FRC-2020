@@ -11,38 +11,42 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class JevoisCommand extends CommandBase {
+public class HSVDetectBallCommand extends CommandBase {
 
-  public JevoisCommand() {
-    addRequirements(Robot.jevoisSubsystem);
+  public HSVDetectBallCommand() {
+    addRequirements(Robot.hsvDetectBallSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.jevoisSubsystem.Init();
+    Robot.hsvDetectBallSubsystem.Init();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    try {
-      System.out.println(Robot.jevoisSubsystem.ReadString());
-    }
-    catch(Exception e) {
-      System.out.println("Error");
-    }
+    //#region Test if receiving strings from JeVois correctly
+    // try {
+    //   System.out.println(Robot.jevoisSubsystem.ReadString());
+    // }
+    // catch(Exception e) {
+    //   System.out.println("Error");
+    // }
     
-    Timer.delay(0.005);
+    // Timer.delay(0.005);
+    //#endregion
+
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    Robot.hsvDetectBallSubsystem.Cleanup();
   }
 
-  // Returns true when the command should end.
+  // Returns true WHEN the command should end.
   @Override
   public boolean isFinished() {
     return false;
