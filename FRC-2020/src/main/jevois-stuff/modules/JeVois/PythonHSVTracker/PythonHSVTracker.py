@@ -82,8 +82,8 @@ class PythonHSVTracker:
                 str_ycenter = str(ycenter)
 
                 # Use hard-wired serial port to send the rectangle center coords as strings, with the terminating char 's'
-                jevois.sendSerial('x' + str_xcenter + 's')
-                jevois.sendSerial('y' + str_ycenter + 's')
+                jevois.sendSerial('x' + str_xcenter)
+                jevois.sendSerial('y' + str_ycenter)
 
                 # NOTE:  to see if getting center of rectangle is correct
                 #frame_center = cv2.circle(frame_rect, (xcenter, ycenter), 2, (255, 0, 0), -1)
@@ -111,9 +111,9 @@ class PythonHSVTracker:
 
         # Write frames/s info from our timer into the edge map (NOTE: does not account for output conversion time):
         fps = self.timer.stop()
-        outheight = outimg.shape[0]
-        outwidth = outimg.shape[1]
-        cv2.putText(outimg, fps, (3, outheight - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255))
+        #outheight = outimg.shape[0]
+        #outwidth = outimg.shape[1]
+        #cv2.putText(outimg, fps, (3, outheight - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255))
 
         # Convert our OpenCv output image to video output format and send to host over USB:
         outframe.sendCv(outimg)

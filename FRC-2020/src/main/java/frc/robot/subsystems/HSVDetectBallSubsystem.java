@@ -13,7 +13,6 @@ import frc.robot.commands.HSVDetectBallCommand;;
 
 
 public class HSVDetectBallSubsystem extends SubsystemBase {
-  private char terminateChar = 's';
   private float timeoutTime = 60.0f;
   private SerialPort jevois;
 
@@ -58,7 +57,7 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
   //#region Initialize needed stuff
   public void Init() {
     jevois = new SerialPort(921600, SerialPort.Port.kUSB);
-    jevois.enableTermination(terminateChar);
+    jevois.enableTermination();
     jevois.setTimeout(timeoutTime);
   }
   //#endregion
