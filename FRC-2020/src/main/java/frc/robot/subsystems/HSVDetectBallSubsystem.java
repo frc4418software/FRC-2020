@@ -17,6 +17,7 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
   private float timeoutTime = 60.0f;
   private SerialPort jevois;
 
+  private String receivedString;
   private int ballXcenter;
   private int ballYcenter;
 
@@ -27,12 +28,25 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
     this.ballXcenter = xcenter;
   }
 
+
+
   public int getBallYcenter() {
     return this.ballYcenter;
   }
   public void setBallYcenter(int ycenter) {
     this.ballYcenter = ycenter;
   }
+
+
+
+  public String getReceivedString() {
+    return this.receivedString;
+  }
+  public void setReceivedString(String receivedString) {
+    this.receivedString = receivedString;
+  }
+
+
 
   //#region Set default command
   @Override
@@ -54,8 +68,8 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
     jevois.writeString(write);
   }
 
-  public String ReadString() {
-    return jevois.readString();
+  public void ReadString() {
+    setReceivedString(jevois.readString());
   }
 
   public void ReadStringLimit(int limit) {
@@ -63,6 +77,8 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
   }
   //#endregion
   
+
+
   //#region Cleanup needed stuff
   public void Cleanup() {
     jevois.disableTermination();
