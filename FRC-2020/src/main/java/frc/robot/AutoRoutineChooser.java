@@ -39,7 +39,7 @@ public class AutoRoutineChooser {
     public static Trajectory rightPositionHighTrajectory;
     public static final double ROBOTHALFLENGTH = 0.5; // length of half/ to the rio ... actual value tbd
     public static final double SHOOTINGDISTANCELOW = .45; // distance is .45 meters from the top of the triangle on the game field
-    public static final double SHOOTINGDISTANCEHIGH = 2; //distance is two meters away from the goal
+    public static final double SHOOTINGDISTANCEHIGH = .6604; //distance is two meters away from the goal
 
     public static void SetDriveTrajectory() {
         // Create a voltage constraint to ensure we don't accelerate too fast
@@ -80,16 +80,16 @@ public class AutoRoutineChooser {
 
         double PositionL = (.9466-(Math.abs(Robot.distance- ROBOTHALFLENGTH)));
 
-        leftPositionLowTrajectory = TrajectoryGenerator.generateTrajectory(
+        leftPositionHighTrajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through first one, is in front of shooting zone, passes through second one, is in position to shoot to low goal
             List.of(
                 new Translation2d(PositionL, .4399),
-                new Translation2d(PositionL, (SHOOTINGDISTANCELOW+.4394))
+                new Translation2d(PositionL, (SHOOTINGDISTANCEHIGH+.4394))
             ),
             // final position 90 degrees from origional position and calculated distance from start
-            new Pose2d(PositionL, (SHOOTINGDISTANCELOW+.4394), new Rotation2d((Math.PI/2))),
+            new Pose2d(PositionL, (SHOOTINGDISTANCEHIGH+.4394), new Rotation2d((Math.PI/2))),
             // Pass config
             config
         );
@@ -97,30 +97,30 @@ public class AutoRoutineChooser {
         double PositionR = (2.1918-(Math.abs(Robot.distance- ROBOTHALFLENGTH)));
         
         //this one just turns the opposite way
-        rightPositionLowTrajectory = TrajectoryGenerator.generateTrajectory(
+        rightPositionHighTrajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through first one, is in front of shooting zone, passes through second one, is in position to shoot to low goal
             List.of(
                 new Translation2d(PositionR, -.4399),
-                new Translation2d(PositionR, -(SHOOTINGDISTANCELOW+.4394))
+                new Translation2d(PositionR, -(SHOOTINGDISTANCEHIGH+.4394))
             ),
             // final position 90 degrees from origional position and calculated distance from start
-            new Pose2d(PositionR, (SHOOTINGDISTANCELOW+.4394), new Rotation2d(-Math.PI/2)),
+            new Pose2d(PositionR, (SHOOTINGDISTANCEHIGH+.4394), new Rotation2d(-Math.PI/2)),
             // Pass config
             config
         );
 
         //assumed to be right in front of low goal, just drives forward into shooting distance
-        centerPositionLowTrajectory = TrajectoryGenerator.generateTrajectory(
+        centerPositionHighTrajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction (facing goal)
             new Pose2d(0, 0, new Rotation2d(0)),
             // moves into shooting distance
             List.of(
-                new Translation2d((SHOOTINGDISTANCELOW+.4394), 0)
+                new Translation2d((SHOOTINGDISTANCEHIGH+.4394), 0)
             ),
             // final position in shooting position
-            new Pose2d((SHOOTINGDISTANCELOW+.4394), 0, new Rotation2d(0)),
+            new Pose2d((SHOOTINGDISTANCEHIGH+.4394), 0, new Rotation2d(0)),
             // Pass config
             config
         );
@@ -135,7 +135,7 @@ public class AutoRoutineChooser {
         int autoRoutine = Robot.autoRoutineChooser.getSelected();
         int positionInput = Robot.robotPositionChooser.getSelected();
 
-        //if the auto routine is set to low goal shooting (this is the default command)
+        //if the auto routine is set to low goal shooting 
         if(autoRoutine == 0 ) {
           // if the position is to be given by Driverstation / FMS (this is the default command) 1= left station, 2= center, 3=right
           if(positionInput == 0) {
@@ -161,7 +161,7 @@ public class AutoRoutineChooser {
           }
     
         } 
-        //This is if we are aiming for the high goal... everything is the same as low goal but the trajectories are the high ones
+        //This is if we are aiming for the high goal (this is the default command)
         else if (autoRoutine == 1) {
           if(positionInput == 0) {
             if (Robot.robotPosition == 1) {
