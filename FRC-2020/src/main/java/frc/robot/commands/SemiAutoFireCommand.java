@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class SemiAutoFireCommand extends CommandBase {
+
+  double bottomFireValue;
+  double topFireValue;
+  int waitTime;
   /**
    * Creates a new SemiAutoFireCommand.
    */
@@ -30,14 +34,30 @@ public class SemiAutoFireCommand extends CommandBase {
     SmartDashboard.putNumber("Bottom Fire", Robot.manipulatorsubsystem.getBottomFireMotor());
     SmartDashboard.putNumber("Top Fire", Robot.manipulatorsubsystem.getTopFireMotor());
     SmartDashboard.putNumber("Load", Robot.manipulatorsubsystem.getLoadMotor());
-    Robot.manipulatorsubsystem.setBottomFireMotor(.24);
-    Robot.manipulatorsubsystem.setTopFireMotor(-.6);
+    if(Robot.manipulatorsubsystem.launchPosition == 1){
+      bottomFireValue = .24;
+      topFireValue = -.6;
+      waitTime = 1500;
+    }
+    else if(Robot.manipulatorsubsystem.launchPosition == 2){
+      bottomFireValue = .5;
+      topFireValue = -.5;
+      waitTime = 1000;
+    }
+    else if(Robot.manipulatorsubsystem.launchPosition == 3){
+      bottomFireValue = .3;
+      topFireValue = -.3;
+      waitTime = 250;
+    }
+    Robot.manipulatorsubsystem.setBottomFireMotor(bottomFireValue);
+    Robot.manipulatorsubsystem.setTopFireMotor(topFireValue);
     try{
-      Thread.sleep(1000);
+      Thread.sleep(waitTime);
     } catch (InterruptedException e){
       e.printStackTrace();
     }
     Robot.manipulatorsubsystem.setLoadMotor(.5);
+
   }
 
   // Called once the command ends or is interrupted.

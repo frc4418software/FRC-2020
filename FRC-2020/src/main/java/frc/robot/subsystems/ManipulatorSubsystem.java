@@ -31,6 +31,10 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private boolean pivotUp = true;
 
   public boolean launchSpin;
+  public int launchPosition;
+  //button 7 - launch position 1 is for high goal at distance 1.8m
+  //button 8 - launch position 2 is for high goal at distance 0m
+  //button 9 - launch position 3 is for low goal at distance 0m
 
   public ManipulatorSubsystem() {
     bottomFireMotor = new WPI_TalonSRX(Constants.MAN_FIRE_BOTTOM_TALON_SRX_ID);
