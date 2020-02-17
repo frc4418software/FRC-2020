@@ -94,7 +94,7 @@ public static final DifferentialDriveKinematics kDriveKinematics = new Different
 // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
 public static final double kRamseteB = 2, kRamseteZeta = 0.7;
 
-public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI) / 256; // diameter * pi = circumference. circumference / 256 = distance per pulse
+public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (16 * Math.PI) / 256; // diameter * pi = circumference. circumference / 256 = distance per pulse
 
 //Color Sensor/Manipulator Subsystem IDs
 public static final int CONTROL_PANEL_MANIPULATOR_TALON_SRX_ID = 18,
