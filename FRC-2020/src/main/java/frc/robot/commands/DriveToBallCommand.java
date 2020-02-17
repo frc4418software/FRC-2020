@@ -37,8 +37,7 @@ public class DriveToBallCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     // Stop the motors
-    Robot.driveSubsystem.setLeftMotorValue(0.0);
-    Robot.driveSubsystem.setRightMotorValue(0.0);
+    Robot.driveSubsystem.stopDrive();
   }
 
   // Returns true WHEN the command should end.

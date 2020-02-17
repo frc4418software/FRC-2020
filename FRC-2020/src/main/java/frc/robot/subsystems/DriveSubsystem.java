@@ -172,7 +172,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   // stop driving
-  public void stopDrive(){
+  public void stopDrive() {
     leftDriveMotor1.set(ControlMode.PercentOutput, 0);
     rightDriveMotor1.set(ControlMode.PercentOutput, 0);
   }
