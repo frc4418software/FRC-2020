@@ -9,10 +9,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.commands.DriveToBallCommand;
+import frc.robot.commands.VisionDriveCommand;
 
 
-public class DriveToBallSubsystem extends SubsystemBase {
+public class VisionDriveSubsystem extends SubsystemBase {
 
   private int xError;
   private int yError;
@@ -118,39 +118,39 @@ public class DriveToBallSubsystem extends SubsystemBase {
 	}
   //#endregion
 
-  // Set default command to DriveToBallCommand
+  // Set default command to VisionDriveCommand
   @Override
   public void periodic() {
-    setDefaultCommand(new DriveToBallCommand());
+    setDefaultCommand(new VisionDriveCommand());
   }
 
   // Calculate ball coordinate difference from bottom center of camera view
   public void CalculateCoordError() {
     // calculate how far x coord of ball is from center of camera view
-    setXerror(getHalfWidth() - Robot.hsvDetectBallSubsystem.getBallXcenter());
+    setXerror(getHalfWidth() - Robot.visionSubsystem.getBallXcenter());
 
     // calculate how far y coord of ball is from bottom of camera view
-    setYerror(getFullHeight() - Robot.hsvDetectBallSubsystem.getBallYcenter());
+    setYerror(getFullHeight() - Robot.visionSubsystem.getBallYcenter());
   }
 
   // Calculate the correct motor percentages for turning and driving towards ball
   public void CalculateMotorPivot() {
     // if ball is on left side of camera view
-    if (Robot.hsvDetectBallSubsystem.getBallXcenter() <= getHalfWidth()) {
+    if (Robot.visionSubsystem.getBallXcenter() <= getHalfWidth()) {
       // Left motor pivot math
-      setLeftRelativePercent(( Robot.hsvDetectBallSubsystem.getBallXcenter() ) / getHalfWidth());
+      setLeftRelativePercent(( Robot.visionSubsystem.getBallXcenter() ) / getHalfWidth());
       setLeftMotorPercent(getPivotMotorPercent() * getLeftRelativePercent());
 
       // Set right motor to full speed
       setRightMotorPercent(getMaxMotorPercent());
     } 
     // if ball is on right side of camera view
-    else if (Robot.hsvDetectBallSubsystem.getBallXcenter() > getHalfWidth()) {
+    else if (Robot.visionSubsystem.getBallXcenter() > getHalfWidth()) {
       // Set left motor to full speed
       setLeftMotorPercent(getMaxMotorPercent());
       
       // Right motor pivot math
-      setRightRelativePercent(( Robot.hsvDetectBallSubsystem.getBallXcenter() - getHalfWidth()) / getHalfWidth());
+      setRightRelativePercent(( Robot.visionSubsystem.getBallXcenter() - getHalfWidth()) / getHalfWidth());
       setRightMotorPercent(getPivotMotorPercent() * getRightRelativePercent());
     }
   }

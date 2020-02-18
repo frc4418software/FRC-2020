@@ -24,7 +24,12 @@ class PythonCascadeTracker:
 
         min_neighbors = 3
 
-    ## Process function with USB output
+    # Process function without USB output
+    def processNoUSB(self, inframe):
+        # idk what to put here
+        jevois.LFATAL("process no usb not implemented")
+
+    # Process function with USB output
     def process(self, inframe, outframe):
 
         # Start measuring image processing time (NOTE: does not account for input conversion time):
@@ -38,13 +43,32 @@ class PythonCascadeTracker:
 
         power_cells = power_cell_cascade.detectMultiScale(gray_frame, scale_factor, min_neighbors)
 
-        for (x, y, w, h) in power_cells:
+        # If list of returned rectangles in image is not empty
+        if len(power_cells) != 0:
 
-            center = (x + (w//2), y + (h//2))
+            for (x, y, w, h) in power_cells:
 
-            rect_frame = cv2.rectangle(bgr_frame, (x, y), (x + w, y + h), (0, 255, 0), 5)
+                center = (x + (w//2), y + (h//2))
 
-        outimg = rect_frame
+                rect_frame = cv2.rectangle(bgr_frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            # Cast the calculated center coords of the rectangle into a string
+            str_xcenter = str(x + (w/2))
+            str_ycenter = str(y + (h/2))
+
+            # Use hard-wired serial port to send the rectangle center coords as strings, with the terminating char 's'
+            jevois.sendSerial('x' + str_xcenter)
+            jevois.sendSerial('y' + str_ycenter)
+
+            outimg = rect_frame
+
+        # If list of returned rectangles in image IS empty
+        elif len(power_cells) == 0:
+            # Send serial message indicator to roboRio that there are no balls found
+            jevois.sendSerial('nah')
+
+            # Output BGR image without rectangles (without identified balls because couldn't find any)
+            outimg = bgr_frame
 
 
         # NOTE: Write a title:

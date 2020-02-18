@@ -10,10 +10,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class DriveToBallCommand extends CommandBase {
+public class VisionDriveCommand extends CommandBase {
 
-  public DriveToBallCommand() {
-    addRequirements(Robot.driveToBallSubsystem);
+  public VisionDriveCommand() {
+    addRequirements(Robot.visionDriveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -26,11 +26,11 @@ public class DriveToBallCommand extends CommandBase {
   @Override
   public void execute() {
     // Perform necessary calculations for motor speeds of each motor
-    Robot.driveToBallSubsystem.CalculateCoordError();
-    Robot.driveToBallSubsystem.CalculateMotorPivot();
+    Robot.visionDriveSubsystem.CalculateCoordError();
+    Robot.visionDriveSubsystem.CalculateMotorPivot();
 
     // Set and actually drive towards a single ball
-    Robot.driveToBallSubsystem.DriveTowardsBall();
+    Robot.visionDriveSubsystem.DriveTowardsBall();
   }
 
   // Called once the command ends or is interrupted.

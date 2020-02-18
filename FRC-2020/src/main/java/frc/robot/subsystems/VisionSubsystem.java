@@ -9,10 +9,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.HSVDetectBallCommand;;
+import frc.robot.commands.VisionCommand;;
 
 
-public class HSVDetectBallSubsystem extends SubsystemBase {
+public class VisionSubsystem extends SubsystemBase {
   private float timeoutTime = 60.0f;
   private SerialPort jevois;
 
@@ -50,7 +50,7 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
   //#region Set default command
   @Override
   public void periodic() {
-    setDefaultCommand(new HSVDetectBallCommand());
+    setDefaultCommand(new VisionCommand());
   }
   //#endregion
 
@@ -68,7 +68,7 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
   }
 
   public void ReadString() {
-    setReceivedString(jevois.readString());
+      setReceivedString(jevois.readString());
   }
 
   public void ReadStringLimit(int limit) {
@@ -80,7 +80,12 @@ public class HSVDetectBallSubsystem extends SubsystemBase {
 
   //#region Cleanup needed stuff
   public void Cleanup() {
-    jevois.disableTermination();
+    try {
+      jevois.disableTermination();
+    }
+    catch (NullPointerException npe) {
+      System.out.println("NullPointerException: Did not cleanup the JeVois termination correctly");
+    }
     jevois.reset();
   }
   //#endregion 
