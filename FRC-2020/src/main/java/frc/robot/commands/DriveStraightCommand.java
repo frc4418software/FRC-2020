@@ -27,6 +27,7 @@ public class DriveStraightCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //when executed, turn off brakemode and set the motor values to 50 and -50 while the button is held
     Robot.driveSubsystem.setLeftBrakemode(false);
     Robot.driveSubsystem.setRightBrakemode(false);
     Robot.driveSubsystem.setLeftMotorValue(50);

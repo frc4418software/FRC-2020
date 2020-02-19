@@ -22,6 +22,7 @@ public class ToggleArcadeDriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //when initialized, set the drive to arcade drive or tank drive depending on whether it is in arcade drive or not
     Robot.driveSubsystem.setArcadeDrive(!Robot.driveSubsystem.isArcadeDrive());
   }
 

@@ -28,12 +28,14 @@ public class ClimbCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //when executed, control the climb motor through the climb axis
     Robot.climbSubsystem.SetClimb(RobotContainer.getClimberAxis());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //if the command is interupted, stop the climb motor
     Robot.climbSubsystem.SetClimb(0.0);
   }
 

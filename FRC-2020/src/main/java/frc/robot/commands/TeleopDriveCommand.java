@@ -25,6 +25,7 @@ public class TeleopDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //if the robot is in arcade drive then drive with arcade drive wrapper, otherwise drive with the teleop wrapper
     if(Robot.driveSubsystem.isArcadeDrive()) {
       Robot.driveSubsystem.teleopArcadeDriveWrapper(RobotContainer.getForwardArcadeDriveAxis(),
           RobotContainer.getAngleArcadeDriveAxis());

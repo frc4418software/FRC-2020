@@ -28,6 +28,7 @@ public class OutputAllDataCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //executed throughout match, puts all of the data from the motors and sensors on to smartdashboard
     SmartDashboard.putNumber("Drive Left Drive Value", Robot.driveSubsystem.getLeftDriveValue());
     SmartDashboard.putNumber("Drive Right Drive Value", Robot.driveSubsystem.getRightDriveValue());
     SmartDashboard.putNumber("Drive Gyro Value", Robot.driveSubsystem.getGyroValue());
@@ -36,6 +37,7 @@ public class OutputAllDataCommand extends CommandBase {
     SmartDashboard.putNumber("Drive Accel X", Robot.driveSubsystem.getDriveAccelX());
     SmartDashboard.putNumber("Drive Accel Y", Robot.driveSubsystem.getDriveAccelY());
     SmartDashboard.putNumber("Drive Accel Z", Robot.driveSubsystem.getDriveAccelZ());
+    SmartDashboard.putNumberArray("Color Counts (Y, R, G, B)", Robot.colorCount);
     
   }
 

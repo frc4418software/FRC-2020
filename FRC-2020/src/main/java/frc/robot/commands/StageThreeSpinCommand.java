@@ -13,14 +13,20 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-//Will spin the control panel to a specific color
+//Will spin the control panel to a specific color: note that the motor MUST spin clockwise to work
 
 public class StageThreeSpinCommand extends CommandBase {
   /**
    * Creates a new StageThreeSpinCommand.
    */
+
+  //creates string for the game data
   private String gameData;
+
+  //creates an array of all the possible colors
   private String[] colorArray = new String[] { "Y", "R", "G", "B" };
+
+  //creates a string for the desired color of the system
   private String desiredColor;
 
   public StageThreeSpinCommand() {
@@ -37,24 +43,27 @@ public class StageThreeSpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //sets the game data variable to the data that is given by driverstation
     gameData = DriverStation.getInstance().getGameSpecificMessage();
-    while((gameData.length() > 0) && (gameData.equals("Y") || gameData.equals("B") || gameData.equals("R") || gameData.equals("G"))) {
+    //while the game data exists and is equal to one of the desired colors
+    while((gameData.length() > 0) && ((gameData.equals("Y") || gameData.equals("B") || gameData.equals("R") || gameData.equals("G")))) {
+      //if the color is G or B, then their corresponding colors to be turned to are Y and R respectively
       if (colorArray[Arrays.asList(colorArray).indexOf(gameData)].equals("G")) {
         desiredColor = "Y";
       } if (colorArray[Arrays.asList(colorArray).indexOf(gameData)].equals("B")) {
         desiredColor = "R";
-      } else {
+      } else { // otherwise, the corresponding colors are the index of the origonal color plus 2
         desiredColor = colorArray[Arrays.asList(colorArray).indexOf(gameData) + 2];
       }
 
+      //while the robot color that is sensed is not the desired color, the manipulator will keep spinning
       while (!Robot.color.equals(desiredColor)) {
         Robot.controlPanelManipulatorSubsystem.SetMotor(20);        
       }
       break;
     }
+    //once the process is finished, the motor of the manipulator is set to zero
     Robot.controlPanelManipulatorSubsystem.SetMotor(0);  
-    
-
   }
 
   // Called once the command ends or is interrupted.

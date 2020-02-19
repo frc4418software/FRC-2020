@@ -16,8 +16,9 @@ public class StageTwoSpinCommand extends CommandBase {
   /**
    * Creates a new StageTwoSpinCommand.
    */
+
+  //creates an array of all the possible colors
   private String[] colorArray = new String[] { "Y", "R", "G", "B" };
-  private int[] colorCount = new int[4];
 
   public StageTwoSpinCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,15 +34,25 @@ public class StageTwoSpinCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while(colorCount[0]<=6 || colorCount[1]<=6 || colorCount[2]<=6 || colorCount[3]<=6) {
-      Robot.controlPanelManipulatorSubsystem.SetMotor(20); 
-      for(int i =0; i<=4; i++) {
-        if(Robot.color.equals(colorArray[i])) {
-          colorCount[i]++;
+    //while the color sensor has not seen at least one of the colors more than 6 times:
+    while(Robot.colorCount[0] <= 6.0 || Robot.colorCount[1] <= 6.0 || Robot.colorCount[2] <= 6.0
+        || Robot.colorCount[3] <= 6.0) {
+      // have the motor contineously spin
+      Robot.controlPanelManipulatorSubsystem.SetMotor(20);
+      // for each of the colors, if they are equal to the value that is sensed, add to
+      // the count for that color
+      for (int i = 0; i <= 4; i++) {
+        if (Robot.color.equals(colorArray[i])) {
+          Robot.colorCount[i]++;
         }
       }
     }
+
+    // stops the motor
     Robot.controlPanelManipulatorSubsystem.SetMotor(0);
+    // sets the counts back to zero
+    for (int i = 0; i <= 4; i++)
+      Robot.colorCount[i] = 0;
   }
 
   // Called once the command ends or is interrupted.

@@ -42,6 +42,7 @@ public class Robot extends TimedRobot  {
   public static OutputAllDataCommand dataComm = new OutputAllDataCommand();
   public static int robotPosition; 
   public static double distance;
+  public static double[] colorCount = new double[4];
 
   public static SendableChooser<Integer> robotPositionChooser;
   public static SendableChooser<Integer> autoRoutineChooser;
