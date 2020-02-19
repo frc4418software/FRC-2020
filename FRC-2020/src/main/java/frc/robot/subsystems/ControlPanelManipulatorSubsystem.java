@@ -17,17 +17,23 @@ public class ControlPanelManipulatorSubsystem extends SubsystemBase {
   /**
    * Creates a new ControlPanelManipulatorSubsystem
    */
+
+  //establishes motor for the control panel manipulator
   private WPI_TalonSRX controlPanelManipulatorMotor;
 
   public ControlPanelManipulatorSubsystem() {
+    //sets the ID for the manipulator
     controlPanelManipulatorMotor = new WPI_TalonSRX(Constants.CONTROL_PANEL_MANIPULATOR_TALON_SRX_ID);
   
   }
+
+  //*************Motor configurations*************//
   public void SetMotor(double motorValue) {
     controlPanelManipulatorMotor.set(ControlMode.PercentOutput, motorValue);
       
   }
 
+  //*************Periodic Actions*************//
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

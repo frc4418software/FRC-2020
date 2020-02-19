@@ -27,42 +27,57 @@ import frc.robot.teamlibraries.DriveInputPipeline;
 
 public class DriveSubsystem extends SubsystemBase {
   /**
-   * Creates a new DriveSubsystem.
+   * Creates a new DriveSubsystem
    */
+
+  //creates all of the TalonSRX motorcontrollers
   private WPI_TalonSRX leftDriveMotor1;
   private WPI_TalonSRX leftDriveMotor2;
   private WPI_TalonSRX rightDriveMotor1;
   private WPI_TalonSRX rightDriveMotor2;
+
+  //creates the differential drive
   private DifferentialDrive robotDrive;
   
+  //creates the encoders
   private Encoder leftDriveEncoder;
   private Encoder rightDriveEncoder;
-  
+
+  //creates the gyro 
   private AnalogGyro driveGyro;
   
+  //creates the Accelerometer
   private BuiltInAccelerometer driveAccel;
   
+  //creates the Ultrasonic sensors
   private Ultrasonic frontDriveDistance;
   private Ultrasonic backDriveDistance;
 
+  //establishes arcade drive as the default
   private boolean arcadeDrive = true;
+
+  //creates the drive odometry class
   private final DifferentialDriveOdometry odometry;
 
   public DriveSubsystem() {
+
+    //sets up the IDs for the TalonSRXs
     leftDriveMotor1 = new WPI_TalonSRX(Constants.DRIVE_LEFT_A_TALON_SRX_ID);
     leftDriveMotor2 = new WPI_TalonSRX(Constants.DRIVE_LEFT_B_TALON_SRX_ID);
     rightDriveMotor1 = new WPI_TalonSRX(Constants.DRIVE_RIGHT_A_TALON_SRX_ID);
     rightDriveMotor2 = new WPI_TalonSRX(Constants.DRIVE_RIGHT_B_TALON_SRX_ID);
 
+    //makes the second left and right drive motors follow the first one
     leftDriveMotor2.follow(leftDriveMotor1);
     rightDriveMotor2.follow(rightDriveMotor1);
 
-
-
+    //sets the odometry to get its rotation from the gyro
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getGyroValue()));
 
+    //establishes robot drive
     robotDrive = new DifferentialDrive(leftDriveMotor1, rightDriveMotor1);
 
+    //configures encoder, gyro, ultrasonic and accelerometer IDs
     leftDriveEncoder = new Encoder(Constants.DRIVE_LEFT_ENCODER_CHANNELA_ID, Constants.DRIVE_LEFT_ENCODER_CHANNELB_ID);
     rightDriveEncoder = new Encoder(Constants.DRIVE_RIGHT_ENCODER_CHANNELA_ID, Constants.DRIVE_RIGHT_ENCODER_CHANNELB_ID);
     driveGyro = new AnalogGyro(Constants.DRIVE_GYRO_ID);
@@ -70,26 +85,27 @@ public class DriveSubsystem extends SubsystemBase {
     frontDriveDistance = new Ultrasonic(Constants.DRIVE_FRONT_DISTANCE_PING_ID, Constants.DRIVE_FRONT_DISTANCE_ECHO_ID);
     backDriveDistance = new Ultrasonic(Constants.DRIVE_BACK_DISTANCE_PING_ID, Constants.DRIVE_BACK_DISTANCE_ECHO_ID);
 
+    //sets default breakmode to false
     setLeftBrakemode(false);
     setRightBrakemode(false);
 
+    //calabrates the gyro at start
     driveGyro.initGyro();
     driveGyro.calibrate();
 
+    //establishes the encoder distance per pulse specified in constants and resets the encoders
     leftDriveEncoder.setDistancePerPulse(Constants.DRIVE_ENCODER_DISTANCE_PER_PULSE);
     rightDriveEncoder.setDistancePerPulse(Constants.DRIVE_ENCODER_DISTANCE_PER_PULSE);
     leftDriveEncoder.reset();
     rightDriveEncoder.reset();
 
+    //enables the ultrasonic sensors
     frontDriveDistance.setEnabled(true);
     backDriveDistance.setEnabled(true);
   }
 
 
-
-
-
-  // set and get the motors stuff
+  //*************Motor configurations*************//
 
   //control left motor
   public void setLeftMotorValue(double motorValue){
@@ -110,6 +126,8 @@ public class DriveSubsystem extends SubsystemBase {
   public double getRightDriveValue(){
     return rightDriveMotor1.getMotorOutputPercent();
   }
+
+  //*************Breakmode configurations*************//
 
   // set the left breaks to break or coast
   public void setLeftBrakemode(boolean isBraking) {
@@ -135,8 +153,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
-  // Automatically set the breaks on when the robot is not moving
-  // and disable them when the robot is moving
+  // Automatically set the breaks on when the robot is not moving and disable them when the robot is moving
   public void autoBreakTankDrive(double[] values) {
     // if the input is 0, set break, else don't
     if(values[0] == 0) {
@@ -153,19 +170,14 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
-
-
-
-  // Control code for the motors
+  //*************Control code for driving*************//
 
   //drive both motors at once
   public void tankDrive(double leftValue, double rightValue){
     robotDrive.tankDrive(leftValue, rightValue);
-    
   }
 
-  // A simple wrapper for tank drive that converts a double array to
-  // the correct values
+  // A simple wrapper for tank drive that converts a double array to the correct values
   public void tankDrive(double[] values) {
     tankDrive(values[0], values[1]);
   }
@@ -176,18 +188,18 @@ public class DriveSubsystem extends SubsystemBase {
     
   }
 
-  // a wrapper around arcade to make my life easy
+  // a wrapper around arcade
   public void arcadeDrive(double[] values) {
     arcadeDrive(values[0], values[1]);
   }
 
-  // stop driving
+  // stops driving
   public void stopDrive(){
     leftDriveMotor1.set(ControlMode.PercentOutput, 0);
     rightDriveMotor1.set(ControlMode.PercentOutput, 0);
   }
 
-  // a wrapper around tank drive that sets stuff up to be better optimized for teleop controll
+  // a wrapper around tank drive that sets stuff up to be better optimized for teleop control
   public void teleopTankDriveWrapper(double leftValue, double rightValue) {
     // Convert to an array to allow for easy data transmission
     double[] values = {leftValue, rightValue};
@@ -234,11 +246,15 @@ public class DriveSubsystem extends SubsystemBase {
     arcadeDrive = mode;
   }
 
+  //Controls the left and right sides of the drive directly with voltages. (this is mainly for auto)
+  public void driveVolts(double leftVolts, double rightVolts) {
+    leftDriveMotor1.setVoltage(leftVolts);
+    rightDriveMotor1.setVoltage(-rightVolts);
+    robotDrive.feed();
+  }
 
 
-
-
-  // Gyro stuffs
+  //*************Gyroscope stuff*************//
 
   //read gyro angle
   public double getGyroValue(){
@@ -250,16 +266,9 @@ public class DriveSubsystem extends SubsystemBase {
     driveGyro.calibrate();
   }
 
-  //Controls the left and right sides of the drive directly with voltages. (this is mainly for auto)
-  public void driveVolts(double leftVolts, double rightVolts) {
-    leftDriveMotor1.setVoltage(leftVolts);
-    rightDriveMotor1.setVoltage(-rightVolts);
-    robotDrive.feed();
-  }
 
 
-
-  // Encoder stuffs
+  //*************Encoder stuff*************//
 
   //read left encoder
   public double getLeftDriveEncoder(){
@@ -271,9 +280,9 @@ public class DriveSubsystem extends SubsystemBase {
     return rightDriveEncoder.getDistance();
   }
 
-  public double getDistance(){
-    return (getRightDriveEncoder() + getLeftDriveEncoder()) / 2.0;
-    
+  //gets average distance between the two
+  public double getAverageEncoderDistance() {
+    return (getRightDriveEncoder() + getLeftDriveEncoder())/2.0;
   }
 
   //reset left encoder
@@ -292,13 +301,10 @@ public class DriveSubsystem extends SubsystemBase {
     resetRightDriveEncoder();
   }
 
+  
+  //*************Accelerometer stuff*************//
 
-
-
-
-  // Accelerometr stuffs
-
-  //read acceleromter
+  //read accelerometer's x, y, and z values
   public double getDriveAccelX(){
     return driveAccel.getX();
   }
@@ -312,10 +318,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
 
-
-
-
-  // Range finder
+  //*************Ultrasonics (Range finder)*************//
 
   // read front distance
   public double getFrontDriveDistance(){
@@ -337,33 +340,33 @@ public class DriveSubsystem extends SubsystemBase {
     backDriveDistance.setEnabled(enable);
   }
 
-  public double getAverageEncoderDistance() {
-    return (leftDriveEncoder.getDistance() + rightDriveEncoder.getDistance())/2.0;
-  }
 
+  //*************Autonomous stuff (other than sensor info)*************//
+
+  //gets rate of wheel turns
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(leftDriveEncoder.getRate(), rightDriveEncoder.getRate());
   }
 
+  //gets the Pose meters for auto
   public Pose2d getPose() {
     return odometry.getPoseMeters();
   }
 
+  //resets the encoders and odometry position
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     odometry.resetPosition(pose, Rotation2d.fromDegrees(getGyroValue()));
   }
 
 
-
-
-
-  // Set the default command
+  //*************Periodic Actions (set default and stuff that happens throughout match)*************//
   
   @Override
   public void periodic() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new TeleopDriveCommand());
+    // updates the encoders and gyro throughout match
     odometry.update(Rotation2d.fromDegrees(getGyroValue()), leftDriveEncoder.getDistance(), rightDriveEncoder.getDistance());
   }
 }

@@ -9,9 +9,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.Constants;
 
 import com.revrobotics.ColorSensorV3;
 
@@ -19,13 +19,18 @@ public class ColorSensorSubsystem extends SubsystemBase {
   /**
    * Creates a new ColorSensorSubsystem.
    */
-  private static I2C.Port i2cPort = I2C.Port.kOnboard;
 
-  private static ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+  //establishes colorsensor and sets up port
+  private static ColorSensorV3 m_colorSensor;
 
   public ColorSensorSubsystem() {
+    //assignes the color sensor's port
+    m_colorSensor = new ColorSensorV3(Constants.i2cPort);
 
   }
+
+
+  //*************Color Sensing*************//
 
   public static void DnDColors() {
     final Color detectedColor = m_colorSensor.getColor();
@@ -50,6 +55,8 @@ public class ColorSensorSubsystem extends SubsystemBase {
     SmartDashboard.putString("Color", Robot.color);
   }
   
+
+  //*************Periodic Actions*************//
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

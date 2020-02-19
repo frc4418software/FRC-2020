@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
@@ -100,12 +101,13 @@ public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (16 * Math.PI) / 
 public static final int CONTROL_PANEL_MANIPULATOR_TALON_SRX_ID = 18,
   STAGE_TWO_CONTROL_PANEL_BUTTON_ID = GAMEPAD_BUTTON_A,
   STAGE_THREE_CONTROL_PANEL_BUTTON_ID = GAMEPAD_BUTON_B;
-  
+  public static I2C.Port i2cPort = I2C.Port.kOnboard; 
+
 // Climb Subsystem IDs
 public static final int CLIMBER_ENCODER_CHANNELA_ID = 2, 
   CLIMBER_FRONT_ENCODER_CHANNELB_ID = 3, 
   CLIMBER_TALON_SRX_ID = 30;
-public static final double CLIMBER_ENCODER_DISTANCE_PER_PULSE = (15.24 * Math.PI) / 256; //diameter tbd          
+public static final double CLIMBER_ENCODER_DISTANCE_PER_PULSE = (15.24 * Math.PI) / 256; //diameter tbd  
 
 // RIO Post Info
 public static int[] expectedTalonIDs = {DRIVE_LEFT_A_TALON_SRX_ID, DRIVE_LEFT_B_TALON_SRX_ID, DRIVE_RIGHT_A_TALON_SRX_ID, 
