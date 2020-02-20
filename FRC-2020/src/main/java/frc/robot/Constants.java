@@ -56,7 +56,6 @@ public final class Constants {
   X3D_BUTTON_11 = 11,
   X3D_BUTTON_12 = 12*/;
 
-
 // Controller IDs
 public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
   X3D_RIGHT_JOYSTICK_ID = 1,
@@ -83,6 +82,8 @@ public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10,
   DRIVE_FRONT_DISTANCE_ECHO_ID = 11, 
   DRIVE_BACK_DISTANCE_PING_ID = 12, 
   DRIVE_BACK_DISTANCE_ECHO_ID = 13;
+
+//Drive auto values:
 public static final double ksVolts = 1.0,
   kvVoltSecondsPerMeter = 1.0,
   kaVoltSecondsSquaredPerMeter = 1.0,
@@ -104,10 +105,7 @@ public static final int CONTROL_PANEL_MANIPULATOR_TALON_SRX_ID = 18,
   public static I2C.Port i2cPort = I2C.Port.kOnboard; 
 
 // Climb Subsystem IDs
-public static final int CLIMBER_ENCODER_CHANNELA_ID = 2, 
-  CLIMBER_FRONT_ENCODER_CHANNELB_ID = 3, 
-  CLIMBER_TALON_SRX_ID = 30;
-public static final double CLIMBER_ENCODER_DISTANCE_PER_PULSE = (15.24 * Math.PI) / 256; //diameter tbd  
+public static final int CLIMBER_TALON_SRX_ID = 30;
 
 // RIO Post Info
 public static int[] expectedTalonIDs = {DRIVE_LEFT_A_TALON_SRX_ID, DRIVE_LEFT_B_TALON_SRX_ID, DRIVE_RIGHT_A_TALON_SRX_ID, 
