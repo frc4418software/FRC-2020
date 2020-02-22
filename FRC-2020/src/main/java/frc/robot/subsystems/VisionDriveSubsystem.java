@@ -31,6 +31,8 @@ public class VisionDriveSubsystem extends SubsystemBase {
   private double maxMotorPercent = 1.0;
   private double maxMotorValue = 50.0;
 
+  //#region Getters and setters
+
   //#region xError getter and setter
   public int getxError() {
     return this.xError;
@@ -118,11 +120,16 @@ public class VisionDriveSubsystem extends SubsystemBase {
 	}
   //#endregion
 
+  //#endregion
+
+  //#region Set default command 
   // Set default command to VisionDriveCommand
   @Override
   public void periodic() {
     setDefaultCommand(new VisionDriveCommand());
   }
+
+  //#endregion
 
   // Calculate ball coordinate difference from bottom center of camera view
   public void CalculateCoordError() {

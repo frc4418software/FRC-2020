@@ -17,11 +17,11 @@ public class VisionCommand extends CommandBase {
     addRequirements(Robot.visionSubsystem);
   }
 
-
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    Robot.visionSubsystem.Init();   // intialize serial port and related comms
   }
 
 
@@ -29,41 +29,8 @@ public class VisionCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //#region Test serial connection from JeVois to roboRio
-    try {
-      Robot.visionSubsystem.ReadString();
-      System.out.println(Robot.visionSubsystem.getReceivedString());
-    }
-    catch(NullPointerException npe) {
-      System.out.println("NullPointerException: Did not read string from JeVois correctly");
-    }
-    //#endregion
 
-
-    // Robot.visionSubsystem.ReadString();
-    // if (Robot.visionSubsystem.getReceivedString() != "nah") {
-
-    //   try {
-    //     if (Robot.visionSubsystem.getReceivedString().charAt(0) == 'x') {
-    //       Robot.visionSubsystem.setBallXcenter(
-    //         Integer.parseInt(Robot.visionSubsystem.getReceivedString().substring(1))
-    //                                                   );  
-    //     }
-  
-    //     else if (Robot.visionSubsystem.getReceivedString().charAt(0) == 'y') {
-    //       Robot.visionSubsystem.setBallYcenter(
-    //         Integer.parseInt(Robot.visionSubsystem.getReceivedString().substring(1))
-    //                                                   );
-    //     }
-    //   }
-    //   catch (NumberFormatException nfe) {
-    //     System.out.println("NumberFormatException: Did not receive string from JeVois correctly");
-    //   }
-    //   catch (NullPointerException npe) {
-    //     System.out.println("NullPointerException: Did not receive string from JeVois correctly");
-    //   }
-
-    // }
+    Robot.visionSubsystem.ExtractXandY();   // get EITHER the x or y coord of the ball from every received string
   }
 
 
@@ -71,7 +38,8 @@ public class VisionCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.visionSubsystem.Cleanup();
+
+    Robot.visionSubsystem.Cleanup();    // cleanup serial connection and related comms
   }
 
 
