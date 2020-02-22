@@ -77,16 +77,16 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  
+  public int selection;
   private void configureButtonBindings() {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
     driveStraightButton.whileHeld(new DriveStraightCommand());
     intakeButton.whileHeld(new IntakeCommand());
     launchButton.whileHeld(new SemiAutoFireCommand());
 
-    selectButton1.whenPressed(new SelectLaunchCommand(1));
-    selectButton2.whenPressed(new SelectLaunchCommand(2));
-    selectButton3.whenPressed(new SelectLaunchCommand(3));
+    selectButton1.whenPressed(new SelectLaunch1Command());
+    selectButton2.whenPressed(new SelectLaunch2Command());
+    selectButton3.whenPressed(new SelectLaunch3Command());
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

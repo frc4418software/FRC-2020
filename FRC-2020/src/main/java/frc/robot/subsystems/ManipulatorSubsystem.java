@@ -10,7 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 //import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,6 +32,9 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   public boolean launchSpin;
   public int launchPosition;
+  double bottomFireValue;
+  double topFireValue;
+  int waitTime;
   //button 7 - launch position 1 is for high goal at distance 1.8m
   //button 8 - launch position 2 is for high goal at distance 0m
   //button 9 - launch position 3 is for low goal at distance 0m
@@ -108,6 +111,41 @@ public class ManipulatorSubsystem extends SubsystemBase {
   //read potentiometer
   public double getPivotPotentiometer(){
     return pivotPotentiometer.get();
+  }
+
+  public void selectLaunch(int p){
+    launchPosition = p;
+    SmartDashboard.putNumber("Launch Selection", launchPosition);
+  }
+
+  public void semiAutoFire(){
+    SmartDashboard.putNumber("Bottom Fire", getBottomFireMotor());
+    SmartDashboard.putNumber("Top Fire", getTopFireMotor());
+    SmartDashboard.putNumber("Load", getLoadMotor());
+    if(launchPosition == 1){
+      bottomFireValue = .24;
+      topFireValue = -.6;
+      waitTime = 1500;
+    }
+    else if(launchPosition == 2){
+      bottomFireValue = .5;
+      topFireValue = -.5;
+      waitTime = 1000;
+    }
+    else if(launchPosition == 3){
+      bottomFireValue = .3;
+      topFireValue = -.3;
+      waitTime = 250;
+    }
+    setBottomFireMotor(bottomFireValue);
+    setTopFireMotor(topFireValue);
+    try{
+      Thread.sleep(waitTime);
+    } catch (InterruptedException e){
+      e.printStackTrace();
+    }
+    setLoadMotor(.5);
+
   }
 
 

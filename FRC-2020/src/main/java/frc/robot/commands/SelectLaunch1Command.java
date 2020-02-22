@@ -11,16 +11,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class SemiAutoFireCommand extends CommandBase {
-
-  double bottomFireValue;
-  double topFireValue;
-  int waitTime;
+public class SelectLaunch1Command extends CommandBase {
   /**
-   * Creates a new SemiAutoFireCommand.
+   * Creates a new SelectLaunchCommand.
    */
-  public SemiAutoFireCommand() {
+  public SelectLaunch1Command() {
     // Use addRequirements() here to declare subsystem dependencies.
+    
   }
 
   // Called when the command is initially scheduled.
@@ -31,15 +28,13 @@ public class SemiAutoFireCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.manipulatorsubsystem.semiAutoFire();
+    Robot.manipulatorsubsystem.selectLaunch(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.manipulatorsubsystem.stopBottomFireMotor();
-    Robot.manipulatorsubsystem.stopTopFireMotor();
-    Robot.manipulatorsubsystem.stopLoadMotor();
+    
   }
 
   // Returns true when the command should end.
