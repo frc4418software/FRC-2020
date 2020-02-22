@@ -220,8 +220,8 @@ public class VisionSubsystem extends SubsystemBase {
   //#region Test serial connection from JeVois to roboRio
   public void TestSerialToJevois() {
     try {
-      Robot.visionSubsystem.ReadString();
-      System.out.println(Robot.visionSubsystem.getReceivedString());
+      ReadString();
+      System.out.println(getReceivedString());
     }
     catch(NullPointerException npe) {
       System.out.println("NullPointerException: Did not read string from JeVois correctly");
