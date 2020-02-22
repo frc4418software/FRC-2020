@@ -19,6 +19,9 @@ public final class Constants {
     // Controller abstractions
   private static final int //GAMEPAD_AXIS_LEFT_X = 0, // Gamepad axis
   GAMEPAD_AXIS_LEFT_Y = 1,
+  GAMEPAD_AXIS_LEFT_TRIGGER = 2,
+  GAMEPAD_AXIS_RIGHT_TRIGGER = 3,
+  GAMEPAD_BUTTON_A = 1,
   /*GAMEPAD_AXIS_RIGHT_X = 4,
   GAMEPAD_AXIS_RIGHT_Y = 5,
   GAMEPAD_AXIS_LEFT_TRIGGER = 2,
@@ -62,6 +65,9 @@ public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
   ANGLE_ARCADE_DRIVE_AXIS_ID = X3D_AXIS_ROLL,
   TOGGLE_ARCADE_DRIVE_BUTOON_ID = X3D_BUTTON_5,
   DRIVE_STRAIGHT_BUTTON_ID = X3D_BUTTON_GRIP,
+  MOVE_ARM_DOWN_BUTTON_ID = GAMEPAD_AXIS_RIGHT_TRIGGER,
+  MOVE_ARM_UP_BUTTON_ID = GAMEPAD_AXIS_LEFT_TRIGGER,
+  SPIN_CONTROl_PANEl_BUTTON_ID = GAMEPAD_BUTTON_A,
   CLIMB_AXIS_ID = GAMEPAD_AXIS_LEFT_Y;
 
 // Drive Subsystem IDs
@@ -86,6 +92,9 @@ public static final int CLIMBER_ENCODER_CHANNELA_ID = 2,
   CLIMBER_TALON_SRX_ID = 30;
 //public static final double CLIMBER_ENCODER_DISTANCE_PER_PULSE = ;          tbd
 
+//Control Panel Subsystem IDs
+public tatic final int ARM_TALON_SRX_ID = 40,
+SPIN_TALON_SRX_ID = 41;
 // RIO Post Info
 public static int[] expectedTalonIDs = {DRIVE_LEFT_A_TALON_SRX_ID, DRIVE_LEFT_B_TALON_SRX_ID, DRIVE_RIGHT_A_TALON_SRX_ID, 
                 DRIVE_RIGHT_B_TALON_SRX_ID};

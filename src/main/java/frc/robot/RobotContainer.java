@@ -56,6 +56,9 @@ public class RobotContainer {
   // Create and assign default buttons
   public static JoystickButton toggleArcadeDriveButton = new JoystickButton(X3D_RIGHT, Constants.TOGGLE_ARCADE_DRIVE_BUTOON_ID);
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
+  public static JoystickButton moveControlArmDown =  new JoystickButton(GAMEPAD, Constants.MOVE_ARM_DOWN_BUTTON_ID);
+  public static JoystickButton moveControlArmUp = new JoystickButton(GAMEPAD, Constants.MOVE_ARM_UP_BUTTON_ID);
+  public static JoystickButton spinControlPanel = new JoystickButton(GAMEPAD, Constants.SPIN_CONTROl_PANEL_BUTTON_ID);
 
 
   /**
