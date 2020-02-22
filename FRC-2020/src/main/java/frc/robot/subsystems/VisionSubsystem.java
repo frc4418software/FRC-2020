@@ -15,6 +15,8 @@ import frc.robot.commands.VisionCommand;
 
 
 public class VisionSubsystem extends SubsystemBase {
+  final private double maxMotorPercent = 1.0;   // pretty plz dont change this
+  
   private float timeoutTime = 60.0f;
   private SerialPort jevois;
 
@@ -28,7 +30,7 @@ public class VisionSubsystem extends SubsystemBase {
   private int halfWidth = 320/2;
   private int fullHeight = 240;
 
-  private double pivotMotorPercent = 0.50;
+  private double pivotMotorPercent = 0.80;      // CONFIG
 
   private double leftMotorPercent;
   private double rightMotorPercent;
@@ -36,8 +38,7 @@ public class VisionSubsystem extends SubsystemBase {
   private double leftRelativePercent;
   private double rightRelativePercent;
 
-  private double maxMotorPercent = 1.0;
-  private double maxMotorValue = 50.0;
+  private double maxMotorValue = 50.0;           // CONFIG
 
   //#region Getters and setters
 
