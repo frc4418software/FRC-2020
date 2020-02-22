@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
-  public static VisionDriveSubsystem visionDriveSubsystem = new VisionDriveSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used for any
