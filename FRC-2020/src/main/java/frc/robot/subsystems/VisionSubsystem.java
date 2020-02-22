@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.commands.VisionCommand;
 
 
@@ -268,10 +269,10 @@ public class VisionSubsystem extends SubsystemBase {
   // #region Set left and right motors to previously calculated motor values (based on percentages)
   public void DriveTowardsBall() {
     // Set left motor speed (by value) based on calculated pivot OR full speed
-    setLeftMotorValue(getMaxMotorValue() * getLeftMotorPercent());
+    Robot.driveSubsystem.setLeftMotorValue(getMaxMotorValue() * getLeftMotorPercent());
 
     // Set right motor speed (by value) based on calculated pivot OR full speed
-    setRightMotorValue(getMaxMotorValue() * getRightMotorPercent());
+    Robot.driveSubsystem.setRightMotorValue(getMaxMotorValue() * getRightMotorPercent());
   }
   //#endregion
   

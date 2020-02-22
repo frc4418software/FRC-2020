@@ -32,11 +32,11 @@ public class VisionCommand extends CommandBase {
     Robot.visionSubsystem.ExtractXandY();   // get EITHER the x or y coord of the ball from every received string
 
     // Perform necessary calculations for motor speeds of each motor
-    Robot.visionDriveSubsystem.CalculateCoordError();
-    Robot.visionDriveSubsystem.CalculateMotorPivot();
+    Robot.visionSubsystem.CalculateCoordError();
+    Robot.visionSubsystem.CalculateMotorPivot();
 
     // Set and actually drive towards a single ball
-    Robot.visionDriveSubsystem.DriveTowardsBall();
+    Robot.visionSubsystem.DriveTowardsBall();
   }
 
 
