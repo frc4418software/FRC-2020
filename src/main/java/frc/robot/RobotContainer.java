@@ -60,6 +60,12 @@ public class RobotContainer {
   public static JoystickButton moveControlArmUp = new JoystickButton(GAMEPAD, Constants.MOVE_ARM_UP_BUTTON_ID);
   public static JoystickButton spinControlPanel = new JoystickButton(GAMEPAD, Constants.SPIN_CONTROl_PANEL_BUTTON_ID);
 
+  public static JoystickButton launchButton = new JoystickButton(X3D_RIGHT, Constants.LAUNCH_BUTTON_ID);
+  public static JoystickButton intakeButton = new JoystickButton(X3D_RIGHT, Constants.INTAKE_BUTTON_ID);
+  
+  public static JoystickButton selectButton1 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_1_ID);
+  public static JoystickButton selectButton2 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_2_ID);
+  public static JoystickButton selectButton3 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_3_ID);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -75,13 +81,17 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+  public int selection;
   private void configureButtonBindings() {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
     driveStraightButton.whileHeld(new DriveStraightCommand());
+    intakeButton.whileHeld(new IntakeCommand());
+    launchButton.whileHeld(new SemiAutoFireCommand());
 
+    selectButton1.whenPressed(new SelectLaunch1Command());
+    selectButton2.whenPressed(new SelectLaunch2Command());
+    selectButton3.whenPressed(new SelectLaunch3Command());
   }
-
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
