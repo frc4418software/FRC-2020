@@ -7,32 +7,30 @@
 
 package frc.robot.commands;
 
-import java.lang.module.ModuleDescriptor.Requires;
+import java.util.ResourceBundle.Control;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ColorSensorSubsystem;
+import frc.robot.subsystems.*;
 
 public class ColorSensorCommand extends CommandBase {
   /**
    * Creates a new ColorSensorCommand.
    */
-  private final ColorSensorSubsystem m_ColorSensorSubsystem;
-  public ColorSensorCommand(ColorSensorSubsystem ColorSensorSubsystem) {
-    m_ColorSensorSubsystem = ColorSensorSubsystem;
+  private final ControlPanelSubsystem m_ControlPanelSubsystem;
+  public ColorSensorCommand(ControlPanelSubsystem controlPanelSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ColorSensorSubsystem);
+    m_ControlPanelSubsystem = controlPanelSubsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ColorSensorSubsystem.DnDColors();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    m_ControlPanelSubsystem.DetectColor();
   }
 
   // Called once the command ends or is interrupted.

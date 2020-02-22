@@ -8,10 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,12 +24,19 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleCommand spinControlWheelCommand = new ExampleCommand(m_exampleSubsystem);
+  private final ControlPanelSubsystem m_controlPanelSubsystem = new ControlPanelSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //Create joysticks
+  private static final Joystick X3D_LEFT = new Joystick(Constants.X3D_LEFT_JOYSTICK_ID),
+                                X3D_RIGHT = new Joystick(Constants.X3D_RIGHT_JOYSTICK_ID),
+                                GAMEPAD = new Joystick(Constants.GAMEPAD_JOYSTICK_ID);
 
-
-
+  //Create and Assign buttons
+  public static JoystickButton moveControlArmUpButton = new JoystickButton(GAMEPAD, Constants.MOVE_CONT_ARM_UP_ID);
+  public static JoystickButton moveControlArmDownButton =  new JoystickButton(GAMEPAD, Constants.MOVE_CONT_ARM_DOWN_ID);
+  public static JoystickButton spinControlWheelButton = new JoystickButton (GAMEPAD, Constants.SPIN_CONT_WHEEL_ID);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -41,7 +51,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureButtonBindings(){
+    moveControlArmUpButton.whileHeld(new moveControlArmUpCommand(m_controlPanelSubsystem));
+    moveControlArmDownButton.whileHeld(new moveControlArmDownCommand(m_controlPanelSubsystem));
+    spinControlWheelButton.whileHeld(new spinControlWheelCommand(m_controlPanelSubsystem));
   }
 
 
@@ -51,7 +64,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    return null;
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
   }
 }
