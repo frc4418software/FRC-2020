@@ -7,17 +7,13 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class WaitTestCommand extends CommandBase {
+public class ClearCommand extends CommandBase {
   /**
-   * Creates a new WaitTestCommand.
+   * Creates a new ClearCommand.
    */
-  boolean testStart = false;
-  boolean testFinish = false;
-
-  public WaitTestCommand() {
+  public ClearCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,23 +25,11 @@ public class WaitTestCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("Start", testStart);
-    SmartDashboard.putBoolean("Finish", testFinish);
-    testStart = true;
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    testFinish = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    testStart = false;
-    testFinish = false;
   }
 
   // Returns true when the command should end.

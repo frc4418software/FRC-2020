@@ -58,7 +58,7 @@ public class RobotContainer {
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
   public static JoystickButton launchButton = new JoystickButton(X3D_RIGHT, Constants.LAUNCH_BUTTON_ID);
   public static JoystickButton intakeButton = new JoystickButton(X3D_RIGHT, Constants.INTAKE_BUTTON_ID);
-  
+  public static JoystickButton clearButton = new JoystickButton(X3D_RIGHT, Constants.CLEAR_BUTTON_ID);
   public static JoystickButton selectButton1 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_1_ID);
   public static JoystickButton selectButton2 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_2_ID);
   public static JoystickButton selectButton3 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_3_ID);
@@ -83,7 +83,7 @@ public class RobotContainer {
     driveStraightButton.whileHeld(new DriveStraightCommand());
     intakeButton.whileHeld(new IntakeCommand());
     launchButton.whileHeld(new SemiAutoFireCommand());
-
+    clearButton.whileHeld(new ClearCommand());
     selectButton1.whenPressed(new SelectLaunch1Command());
     selectButton2.whenPressed(new SelectLaunch2Command());
     selectButton3.whenPressed(new SelectLaunch3Command());
