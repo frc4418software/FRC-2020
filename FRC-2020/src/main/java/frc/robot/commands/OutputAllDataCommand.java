@@ -37,8 +37,9 @@ public class OutputAllDataCommand extends CommandBase {
     SmartDashboard.putNumber("Drive Accel X", Robot.driveSubsystem.getDriveAccelX());
     SmartDashboard.putNumber("Drive Accel Y", Robot.driveSubsystem.getDriveAccelY());
     SmartDashboard.putNumber("Drive Accel Z", Robot.driveSubsystem.getDriveAccelZ());
-    SmartDashboard.putNumberArray("Color Counts (Y, R, G, B)", Robot.colorCount);
-    
+    SmartDashboard.putNumber("Front Distance", Robot.driveSubsystem.getFrontDriveDistance());
+    SmartDashboard.putNumber("Back Distance", Robot.driveSubsystem.getBackDriveDistance());
+    SmartDashboard.putNumberArray("Color Count (Y, R, G, B)", Robot.colorCount);
   }
 
   // Called once the command ends or is interrupted.

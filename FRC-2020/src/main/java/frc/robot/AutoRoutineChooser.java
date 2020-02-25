@@ -28,18 +28,22 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 public class AutoRoutineChooser {
 
     //Drive Trajectories for low goal shooting and high goal shooting, as well as an error trajectory where the robot will just drive off of the initiation line
-    public static Trajectory driveTrajectory; //this will be left blank and established in the DriveTrajectoryStart method
+    private static Trajectory driveTrajectory; //this will be left blank and established in the DriveTrajectoryStart method
     //set in SetDriveTrajectory Method:
-    public static Trajectory straightErrorTrajectory;
-    public static Trajectory leftPositionLowTrajectory;
-    public static Trajectory centerPositionLowTrajectory;
-    public static Trajectory rightPositionLowTrajectory;
-    public static Trajectory leftPositionHighTrajectory;
-    public static Trajectory centerPositionHighTrajectory;
-    public static Trajectory rightPositionHighTrajectory;
-    public static final double ROBOTHALFLENGTH = 0.45; // length of half/ to the rio ... actual value tbd
-    public static final double SHOOTINGDISTANCELOW = .45; // distance is .45 meters from the top of the triangle on the game field
-    public static final double SHOOTINGDISTANCEHIGH = .6604; //distance is two meters away from the goal
+    private static Trajectory straightErrorTrajectory;
+    private static Trajectory leftPositionLowTrajectory;
+    private static Trajectory centerPositionLowTrajectory;
+    private static Trajectory rightPositionLowTrajectory;
+    private static Trajectory leftPositionHighTrajectory;
+    private static Trajectory centerPositionHighTrajectory;
+    private static Trajectory rightPositionHighTrajectory;
+    private static final double ROBOTHALFLENGTH = 0.45; // length of half/ to the rio ... actual value tbd
+    //private static final double SHOOTINGDISTANCELOW = .45; // distance is .45 meters from the top of the triangle on the game field
+    private static final double SHOOTINGDISTANCEHIGH = .6604; //distance is two meters away from the goal
+
+    public static Trajectory getTrajectory() {
+      return driveTrajectory;
+    }
 
     public static void SetDriveTrajectory() {
         // Create a voltage constraint to ensure we don't accelerate too fast
@@ -131,7 +135,7 @@ public class AutoRoutineChooser {
     - Low goal shooting: left station, right station, center station
     - High goal shooting: left station, right station, center station (tbd whether or not this will be functional)
     */
-    public static void DriveTrajectoryStart () {
+    public static void DriveTrajectoryStart() {
         int autoRoutine = Robot.autoRoutineChooser.getSelected();
         int positionInput = Robot.robotPositionChooser.getSelected();
 

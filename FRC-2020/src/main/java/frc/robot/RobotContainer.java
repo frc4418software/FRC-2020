@@ -100,11 +100,12 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    AutoRoutineChooser.DriveTrajectoryStart();
+    //this changes the drive trajectory to what it will be for comp, w/o this the robot will run an "s" pattern
+    //AutoRoutineChooser.DriveTrajectoryStart();
 
     //This command will follow the driveTajectory when established
     RamseteCommand ramseteDriveCommand = new RamseteCommand(
-      AutoRoutineChooser.driveTrajectory, 
+      AutoRoutineChooser.getTrajectory(), 
       drive::getPose, 
       new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta), 
       new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter, Constants.kaVoltSecondsSquaredPerMeter), 
