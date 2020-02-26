@@ -30,8 +30,8 @@ public class ControlPanelSubsystem extends SubsystemBase {
   public static String sensorColor = "N";
   public static Color detectedColor;
   public ControlPanelSubsystem() {
-    controlPanelSpinner = new WPI_VictorSPX(Constants.CON_SPIN_VICTOR_SPX_ID);
-    armMover = new WPI_VictorSPX(Constants.CON_ARM_MOV_VICTOR_SPIX_ID);
+    controlPanelSpinner = new WPI_VictorSPX(Constants.SPIN_TALON_SRX_ID);
+    armMover = new WPI_VictorSPX(Constants.ARM_TALON_SRX_ID);
   }
    
 

@@ -58,7 +58,7 @@ public class RobotContainer {
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
   public static JoystickButton moveControlArmDown =  new JoystickButton(GAMEPAD, Constants.MOVE_ARM_DOWN_BUTTON_ID);
   public static JoystickButton moveControlArmUp = new JoystickButton(GAMEPAD, Constants.MOVE_ARM_UP_BUTTON_ID);
-  public static JoystickButton spinControlPanel = new JoystickButton(GAMEPAD, Constants.SPIN_CONTROl_PANEL_BUTTON_ID);
+  public static JoystickButton spinControlPanel = new JoystickButton(GAMEPAD, Constants.SPIN_CONTROl_PANEl_BUTTON_ID);
 
   public static JoystickButton launchButton = new JoystickButton(X3D_RIGHT, Constants.LAUNCH_BUTTON_ID);
   public static JoystickButton intakeButton = new JoystickButton(X3D_RIGHT, Constants.INTAKE_BUTTON_ID);
