@@ -19,8 +19,8 @@ public class VisionCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    Robot.visionSubsystem.Init();   // intialize serial port and related comms
+    // Intialize serial port and related comms
+    Robot.visionSubsystem.Init();
   }
 
 
@@ -28,12 +28,8 @@ public class VisionCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    Robot.visionSubsystem.ExtractXandY();   // get EITHER the x or y coord of the ball from every received string
-
-    // Perform necessary calculations for motor speeds of each motor
-    Robot.visionSubsystem.CalculateCoordError();
-    Robot.visionSubsystem.CalculateMotorPivot();
+    // Get EITHER the x or y coord of the ball from every received string
+    Robot.visionSubsystem.ExtractXandY();
 
     // Set and actually drive towards a single ball
     Robot.visionSubsystem.DriveTowardsBall();
@@ -44,7 +40,6 @@ public class VisionCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
     // Stop the motors
     Robot.driveSubsystem.stopDrive();
 

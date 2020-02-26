@@ -15,6 +15,7 @@ import frc.robot.commands.VisionCommand;
 
 
 public class VisionSubsystem extends SubsystemBase {
+  //#region Variables
   final private double maxMotorPercent = 1.0;   // pretty plz dont change this
   
   private float timeoutTime = 60.0f;
@@ -39,6 +40,7 @@ public class VisionSubsystem extends SubsystemBase {
   private double rightRelativePercent;
 
   private double maxMotorValue = 50.0;           // CONFIG
+  //#endregion
 
   //#region Getters and setters
 
@@ -231,21 +233,14 @@ public class VisionSubsystem extends SubsystemBase {
   }
   //#endregion
 
-
-
-
-  // #region Calculate ball coordinate difference from bottom center of camera view
-  public void CalculateCoordError() {
+  // #region Calculate the correct motor percentages for turning and driving towards ball
+  public void CalculateMotorPivot() {
     // calculate how far x coord of ball is from center of camera view
     setXerror(getHalfWidth() - getBallXcenter());
 
     // calculate how far y coord of ball is from bottom of camera view
     setYerror(getFullHeight() - getBallYcenter());
-  }
-  //#endregion
 
-  // #region Calculate the correct motor percentages for turning and driving towards ball
-  public void CalculateMotorPivot() {
     // if ball is on left side of camera view
     if (getBallXcenter() <= getHalfWidth()) {
       // Left motor pivot math
@@ -269,6 +264,9 @@ public class VisionSubsystem extends SubsystemBase {
 
   // #region Set left and right motors to previously calculated motor values (based on percentages)
   public void DriveTowardsBall() {
+    // Perform necessary calculations to locate and drive towards the ball
+    CalculateMotorPivot();
+
     // Set left motor speed (by value) based on calculated pivot OR full speed
     Robot.driveSubsystem.setLeftMotorValue(getMaxMotorValue() * getLeftMotorPercent());
 
@@ -277,10 +275,6 @@ public class VisionSubsystem extends SubsystemBase {
   }
   //#endregion
   
-
-
-  
-
   //#region Cleanup needed stuff
   public void Cleanup() {
     try {
