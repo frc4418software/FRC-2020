@@ -76,7 +76,7 @@ class PythonCascadeTracker:
 
         # Write frames/s info from our timer into the edge map (NOTE: does not account for output conversion time):
         fps = self.timer.stop()
-
+        
         #outheight = outimg.shape[0]
         #outwidth = outimg.shape[1]
         #cv2.putText(outimg, fps, (3, outheight - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255))
