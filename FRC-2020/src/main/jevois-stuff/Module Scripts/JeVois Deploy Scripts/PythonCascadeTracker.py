@@ -31,9 +31,14 @@ class PythonCascadeTracker:
 
     # Process function with USB output
     def process(self, inframe, outframe):
-
         # Start measuring image processing time (NOTE: does not account for input conversion time):
         self.timer.start()
+
+
+        #================== ACTUAL PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
+
 
         bgr_frame = inframe.getCvBGR()
 
@@ -69,6 +74,15 @@ class PythonCascadeTracker:
 
             # Output BGR image without rectangles (without identified balls because couldn't find any)
             outimg = bgr_frame
+        
+
+        #================== END OF PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
+
+
+
+
 
 
         # NOTE: Write a title:

@@ -11,11 +11,8 @@ class PythonStitchHSVTracker:
         # Instantiate a JeVois Timer to measure our processing framerate:
         self.timer = jevois.Timer("sandbox", 100, jevois.LOG_INFO)
 
-    ## Process function with USB output
-    def process(self, inframe, outframe):
-
-        # Start measuring image processing time (NOTE: does not account for input conversion time):
-        self.timer.start()
+        global lowHue_1, highHue_1, lowSat_1, highSat_1, lowVal_1, highVal_1,
+        lowHue_2, highHue_2, lowSat_2, highSat_2, lowVal_2, highVal_2, area_min, area_max
 
         # Threhold for first hue in HSV
         lowHue_1 = 10
@@ -47,6 +44,17 @@ class PythonStitchHSVTracker:
         # Threshold for largest contour found
         area_min = 170
         area_max = 6000
+
+    ## Process function with USB output
+    def process(self, inframe, outframe):
+
+        # Start measuring image processing time (NOTE: does not account for input conversion time):
+        self.timer.start()
+
+
+        #================== ACTUAL PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
 
 
         # Get BGR image input
@@ -127,9 +135,19 @@ class PythonStitchHSVTracker:
 
         # If the list of contour areas IS empty (also means that there is NOT least one contour)
         else:
-
             # Use post-processed image (that does NOT have any contours) as the output image
             outimg = frame_with_contours
+
+
+        #================== ACTUAL PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
+
+
+
+
+
+
 
         # NOTE: Write a title:
         #cv2.putText(outimg, "JeVois Python Sandbox", (3, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255))

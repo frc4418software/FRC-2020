@@ -11,11 +11,9 @@ class PythonZeroSpotTracker:
         # Instantiate a JeVois Timer to measure our processing framerate:
         self.timer = jevois.Timer("sandbox", 100, jevois.LOG_INFO)
 
-    ## Process function with USB output
-    def process(self, inframe, outframe):
 
-        # Start measuring image processing time (NOTE: does not account for input conversion time):
-        self.timer.start()
+        global HLS_high_thresh, HLS_erode_its, HLS_dilate_its, HSV_low_thresh, HSV_high_thresh, HSV_erode_its, 
+        HSV_dilate_its, bitwise_and_erode_its, bitwise_and_dilate_its, area_min, area_max
 
         # HLS (aka HSL) range
         HLS_high_thresh = np.array([31,255,251])
@@ -38,6 +36,16 @@ class PythonZeroSpotTracker:
         area_min = 170
         area_max = 6000
 
+    ## Process function with USB output
+    def process(self, inframe, outframe):
+
+        # Start measuring image processing time (NOTE: does not account for input conversion time):
+        self.timer.start()
+
+
+        #================== ACTUAL PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
 
         # Get JeVois BGR image input
         bgr_frame = inframe.getCvBGR()
@@ -122,6 +130,13 @@ class PythonZeroSpotTracker:
         else:
             # Use post-processed image (that does NOT have any contours) as the output image
             outimg = contours_frame
+
+
+        #================== END OF PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
+
+
 
             # NOTE: Write a title:
             #cv2.putText(outimg, "JeVois Python Sandbox", (3, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255))

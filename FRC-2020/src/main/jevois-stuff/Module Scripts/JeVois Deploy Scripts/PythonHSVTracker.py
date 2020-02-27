@@ -11,11 +11,7 @@ class PythonHSVTracker:
         # Instantiate a JeVois Timer to measure our processing framerate:
         self.timer = jevois.Timer("sandbox", 100, jevois.LOG_INFO)
 
-    ## Process function with USB output
-    def process(self, inframe, outframe):
-
-        # Start measuring image processing time (NOTE: does not account for input conversion time):
-        self.timer.start()
+        global lowHue, highHue, lowSat, highSat, lowVal, highVal, area_min, area_max
 
         # Threhold for hue in HSV
         lowHue = 23
@@ -32,6 +28,17 @@ class PythonHSVTracker:
         # Threshold for largest contour found
         area_min = 170
         area_max = 6000
+
+    ## Process function with USB output
+    def process(self, inframe, outframe):
+
+        # Start measuring image processing time (NOTE: does not account for input conversion time):
+        self.timer.start()
+
+
+        #================== ACTUAL PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
 
         # STEP ONE: Get BGR image input
         frame = inframe.getCvBGR()
@@ -105,6 +112,16 @@ class PythonHSVTracker:
 
             # Use post-processed image (that does NOT have any contours) as the output image
             outimg = frame_with_contours
+
+        
+        #================== END OF PIPELINE ===========================================================
+        #==============================================================================================
+        #==============================================================================================
+
+
+
+
+
 
         # NOTE: Write a title:
         #cv2.putText(outimg, "JeVois Python Sandbox", (3, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255))
