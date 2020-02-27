@@ -11,7 +11,7 @@ class PythonHSVTracker:
         # Instantiate a JeVois Timer to measure our processing framerate:
         self.timer = jevois.Timer("sandbox", 100, jevois.LOG_INFO)
 
-        global lowHue, highHue, lowSat, highSat, lowVal, highVal, area_min, area_max
+        global lowHue, highHue, lowSat, highSat, lowVal, highVal, area_min, area_max, colorLow, colorHigh
 
         # Threhold for hue in HSV
         lowHue = 23
@@ -24,6 +24,10 @@ class PythonHSVTracker:
         # Threshold for value in HSV
         lowVal = 34
         highVal = 188
+
+        # Create numpy array for HSV threshold
+        colorLow = np.array([lowHue,lowSat,lowVal])
+        colorHigh = np.array([highHue,highSat,highVal])
 
         # Threshold for largest contour found
         area_min = 170
@@ -46,13 +50,9 @@ class PythonHSVTracker:
         # STEP TWO: Convert BGR input image to first HSV output
         frameHSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-        # Create numpy array for HSV threshold
-        colorLow = np.array([lowHue,lowSat,lowVal])
-        colorHigh = np.array([highHue,highSat,highVal])
-
         # STEP THREE: Create HSV threshold mask image from first HSV output
         mask = cv2.inRange(frameHSV, colorLow, colorHigh)
-
+        
         # Find contours from mask image
         contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
