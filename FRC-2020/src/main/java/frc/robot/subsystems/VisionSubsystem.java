@@ -263,7 +263,9 @@ public class VisionSubsystem extends SubsystemBase {
   //#endregion
   
   //#region Align robot with the high-goal in order to shoot
-  
+  public void AlignWithHighgoal() {
+    
+  }
   //#endregion
 
   //#region Cleanup needed stuff
