@@ -70,7 +70,7 @@ public class VisionSubsystem extends SubsystemBase {
   public void setReceivedString(String receivedString) {
     this.receivedString = receivedString;
   }
-  
+
   public int getxError() {
     return this.xError;
   }
