@@ -31,27 +31,11 @@ public class VisionCommand extends CommandBase {
     // Get EITHER the x or y coord of the ball from every received string
     Robot.visionSubsystem.ExtractXandY();
 
-    // Set and actually drive towards a single ball
-    Robot.visionSubsystem.DriveTowardsBall();
-  }
-
-
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    // Stop the motors
-    Robot.driveSubsystem.stopDrive();
-
-    // cleanup serial connection and related comms
-    Robot.visionSubsystem.Cleanup();
-  }
-
-
-
-  // Returns true WHEN the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+    if (Robot.visionSubsystem.getTrackingMode() == 0) {
+      // Set and actually drive towards a single ball
+      Robot.visionSubsystem.DriveTowardsBall();
+    } else if (Robot.visionSubsystem.getTrackingMode() == 1) {
+      Robot.visionSubsystem.AlignWithHighgoal();
+    }
   }
 }

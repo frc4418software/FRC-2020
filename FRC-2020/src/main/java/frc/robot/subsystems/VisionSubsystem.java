@@ -40,6 +40,8 @@ public class VisionSubsystem extends SubsystemBase {
   private double rightRelativePercent;
 
   private double maxMotorValue = 50.0;           // CONFIG
+
+  private int trackingMode = 0;                  // CONFIG
   //#endregion
 
   //#region Getters and setters
@@ -159,6 +161,14 @@ public class VisionSubsystem extends SubsystemBase {
 		this.maxMotorValue = maxMotorValue;
 	}
   //#endregion
+
+  public int getTrackingMode() {
+    return this.trackingMode;
+  }
+
+  public void setTrackingMode(int trackingMode) {
+		this.trackingMode = trackingMode;
+	}
 
   //#endregion
 
