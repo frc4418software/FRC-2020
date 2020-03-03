@@ -74,93 +74,70 @@ public class VisionSubsystem extends SubsystemBase {
   //#endregion
 
   //#region MORE getters and setters
-
-  //#region xError getter and setter
   public int getxError() {
     return this.xError;
   }
   public void setXerror(int xError) {
     this.xError = xError;
   }
-  //#endregion
 
-  //#region yError getter and setter
   public int getYerror() {
     return this.yError;
   }
   public void setYerror(int yError) {
     this.yError = yError;
   }
-  //#endregion
 
-  //#region halfWidth getter
   public int getHalfWidth() {
     return this.halfWidth;
   }
-  //#endregion
 
-  //#region fullHeight getter
   public int getFullHeight() {
     return this.fullHeight;
   }
-  //#endregion
 
-  //#region pivotMotorPercent getter
   public double getPivotMotorPercent() {
     return this.pivotMotorPercent;
   }
-  //#endregion
 
-  //#region leftMotorPercent getter and setter
   public double getLeftMotorPercent() {
     return this.leftMotorPercent;
   }
   public void setLeftMotorPercent(double leftMotorPercent) {
     this.leftMotorPercent = leftMotorPercent;
   }
-  //#endregion
 
-  //#region rightMotorPercent getter and setter
   public double getRightMotorPercent() {
     return this.rightMotorPercent;
   }
   public void setRightMotorPercent(double rightMotorPercent) {
     this.rightMotorPercent = rightMotorPercent;
   }
-  //#endregion
 
-  //#region leftRelativePercent getter and setter
   public double getLeftRelativePercent() {
     return this.leftRelativePercent;
   }
   public void setLeftRelativePercent(double leftRelativePercent) {
     this.leftRelativePercent = leftRelativePercent;
   }
-  //#endregion
   
-  //#region rightRelativePercent getter and setter
   public double getRightRelativePercent() {
     return this.rightRelativePercent;
   }
   public void setRightRelativePercent(double rightRelativePercent) {
     this.rightRelativePercent = rightRelativePercent;
   }
-  //#endregion
 
-  //#region maxMotorPercent getter
   public double getMaxMotorPercent() {
 		return this.maxMotorPercent;
   }
-  //#endregion
   
-  //#region maxMotorValue getter
   public double getMaxMotorValue() {
     return this.maxMotorValue;
   }
   public void setMaxMotorValue(double maxMotorValue) {
 		this.maxMotorValue = maxMotorValue;
 	}
-  //#endregion
 
   public int getTrackingMode() {
     return this.trackingMode;
@@ -285,6 +262,10 @@ public class VisionSubsystem extends SubsystemBase {
   }
   //#endregion
   
+  //#region Align robot with the high-goal in order to shoot
+  
+  //#endregion
+
   //#region Cleanup needed stuff
   public void Cleanup() {
     try {
