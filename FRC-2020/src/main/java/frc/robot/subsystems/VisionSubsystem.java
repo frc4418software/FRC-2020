@@ -197,9 +197,27 @@ public class VisionSubsystem extends SubsystemBase {
   //#endregion
 
   //#region Align robot with y-axis of high-goal in order to shoot
-  //TODO align robot with y-axis
   public void AlignYCoordWithHighgoal() {
-    
+    // if goal is above target y coord
+    if (Robot.getVisionDataSubsystem.getGoalYcenter() >= getGoalYCoordTarget()) {
+      // Left motor pivot math
+      setLeftMotorPercent( (-1) * ((Math.abs(Robot.getVisionDataSubsystem.getGoalYcenter() - getGoalYCoordTarget())) 
+      / (getFullHeight() - getGoalYCoordTarget())) );
+
+      // Right motor pivot math
+      setRightMotorPercent( ((Math.abs(Robot.getVisionDataSubsystem.getGoalYcenter() - getGoalYCoordTarget())) 
+      / (getFullHeight() - getGoalYCoordTarget())) );
+    }
+    // if goal is below target y coord
+    else if (Robot.getVisionDataSubsystem.getGoalYcenter() < getGoalYCoordTarget()) {
+      // Left motor pivot math
+      setLeftMotorPercent( ((Math.abs(Robot.getVisionDataSubsystem.getGoalYcenter() - getGoalYCoordTarget())) 
+      / (getFullHeight() - getGoalYCoordTarget())) );
+
+      // Right motor pivot math
+      setRightMotorPercent( (-1) * ((Math.abs(Robot.getVisionDataSubsystem.getGoalYcenter() - getGoalYCoordTarget())) 
+      / (getFullHeight() - getGoalYCoordTarget())) );
+    }
 
     // Set left motor speed (by value) based on calculated pivot OR full speed
     Robot.driveSubsystem.setLeftMotorValue(getMaxMotorValue() * getLeftMotorPercent());
