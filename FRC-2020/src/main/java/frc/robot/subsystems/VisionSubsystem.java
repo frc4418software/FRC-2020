@@ -200,7 +200,9 @@ public class VisionSubsystem extends SubsystemBase {
       catch (NullPointerException npe) {
         System.out.println("NullPointerException: Did not receive string from JeVois correctly");
       }
-
+      catch (StringIndexOutOfBoundsException siobe) {
+        System.out.println("StringINdexOutOfBoundsException: Did not receive string from JeVois correctly");
+      }
     }
   }
   //#endregion

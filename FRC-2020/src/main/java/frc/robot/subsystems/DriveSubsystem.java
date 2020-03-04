@@ -52,6 +52,7 @@ public class DriveSubsystem extends SubsystemBase {
     rightDriveMotor2.follow(rightDriveMotor1);
 
     robotDrive = new DifferentialDrive(leftDriveMotor1, rightDriveMotor1);
+    robotDrive.setSafetyEnabled(false);
 
     leftDriveEncoder = new Encoder(Constants.DRIVE_LEFT_ENCODER_CHANNELA_ID, Constants.DRIVE_LEFT_ENCODER_CHANNELB_ID);
     rightDriveEncoder = new Encoder(Constants.DRIVE_RIGHT_ENCODER_CHANNELA_ID, Constants.DRIVE_RIGHT_ENCODER_CHANNELB_ID);
