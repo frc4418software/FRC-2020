@@ -27,8 +27,12 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   private float timeoutTime = 60.0f;
   private SerialPort jevois;
   private String receivedString;
+
   private int ballXcenter;
   private int ballYcenter;
+
+  private int goalXcenter;
+  private int goalYcenter;
   //#endregion
 
   //#region Initialize needed stuff
@@ -59,6 +63,21 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   public void setBallYcenter(int ycenter) {
     this.ballYcenter = ycenter;
   }
+
+  public int getGoalXcenter() {
+    return this.goalXcenter;
+  }
+
+  public void setGoalXcenter(int goalXcenter) {
+    this.goalXcenter = goalXcenter;
+  }
+  public int getGoalYcenter() {
+    return this.goalYcenter;
+  }
+
+  public void setGoalYcenter(int goalYcenter) {
+    this.goalYcenter = goalYcenter;
+  }
   //#endregion
 
   //#region Serial sending and receiving methods
@@ -79,7 +98,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   //#endregion
   
   //#region Get the X OR Y coords of the ball from the strings sent by the JeVois
-  public void ExtractXandY() {
+  public void BallExtractXandY() {
     ReadString();
     if (getReceivedString() != "nah") {
 
@@ -92,6 +111,37 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   
         else if (getReceivedString().charAt(0) == 'y') {
           setBallYcenter(
+            Integer.parseInt(getReceivedString().substring(1))
+                                                      );
+        }
+      }
+      catch (NumberFormatException nfe) {
+        System.out.println("NumberFormatException: Did not receive string from JeVois correctly");
+      }
+      catch (NullPointerException npe) {
+        System.out.println("NullPointerException: Did not receive string from JeVois correctly");
+      }
+      catch (StringIndexOutOfBoundsException siobe) {
+        System.out.println("StringINdexOutOfBoundsException: Did not receive string from JeVois correctly");
+      }
+    }
+  }
+  //#endregion
+
+  //#region Get the X OR Y coords of the high-goal from the strings sent by the JeVois
+  public void GoalExtractXandY() {
+    ReadString();
+    if (getReceivedString() != "nah") {
+
+      try {
+        if (getReceivedString().charAt(0) == 'x') {
+          setGoalXcenter(
+            Integer.parseInt(getReceivedString().substring(1))
+                                                      );  
+        }
+  
+        else if (getReceivedString().charAt(0) == 'y') {
+          setGoalYcenter(
             Integer.parseInt(getReceivedString().substring(1))
                                                       );
         }
