@@ -14,13 +14,14 @@ public class VisionCommand extends CommandBase {
 
   public VisionCommand() {
     addRequirements(Robot.visionSubsystem);
+    addRequirements(Robot.getVisionDataSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     // Intialize serial port and related comms
-    Robot.visionSubsystem.Init();
+    Robot.getVisionDataSubsystem.Init();
   }
 
 
@@ -29,13 +30,18 @@ public class VisionCommand extends CommandBase {
   @Override
   public void execute() {
     // Get EITHER the x or y coord of the ball from every received string
-    Robot.visionSubsystem.ExtractXandY();
+    Robot.getVisionDataSubsystem.ExtractXandY();
 
     if (Robot.visionSubsystem.getTrackingMode() == 0) {
-      // Set and actually drive towards a single ball
       Robot.visionSubsystem.DriveTowardsBall();
     } else if (Robot.visionSubsystem.getTrackingMode() == 1) {
       Robot.visionSubsystem.AlignWithHighgoal();
     }
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    Robot.getVisionDataSubsystem.Cleanup();
   }
 }
