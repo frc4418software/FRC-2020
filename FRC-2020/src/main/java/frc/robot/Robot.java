@@ -14,6 +14,7 @@ import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GetVisionDataSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
   public static GetVisionDataSubsystem getVisionDataSubsystem = new GetVisionDataSubsystem();
+  public static ManipulatorSubsystem manipulatorsubsystem = new ManipulatorSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used for any
