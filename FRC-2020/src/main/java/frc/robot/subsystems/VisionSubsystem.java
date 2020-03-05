@@ -25,14 +25,17 @@ public class VisionSubsystem extends SubsystemBase {
 
   private double maxMotorValue = 50.0;            // CONFIG
 
+  private boolean lockedOntoBall = false;
   private int trackingMode = 0;                   // CONFIG
   
   private short goalXAlignThreshold = 15;         // CONFIG
+  private short ballConfirmTimeThreshold = 1500;  // CONFIG
 
   private short goalYCoordTarget = 200;           // CONFIG
   private short goalYCoordThreshold = 15;         // CONFIG
   
-  private short goalAlignTimeThreshold = 2000;    // CONFIG
+  private short goalAlignXTimeThreshold = 2000;   // CONFIG
+  private short goalAlignYTimeThreshold = 2000;   // CONFIG
 
   private boolean stopwatchStarted = false;
   private long startStopwatch;
@@ -76,6 +79,14 @@ public class VisionSubsystem extends SubsystemBase {
   }
   public void setMaxMotorValue(double maxMotorValue) {
 		this.maxMotorValue = maxMotorValue;
+  }
+  
+  public boolean getLockedOntoBall() {
+    return this.lockedOntoBall;
+  }
+
+  public void setLockedOntoBall(boolean lockedOntoBall) {
+		this.lockedOntoBall = lockedOntoBall;
 	}
 
   public int getTrackingMode() {
@@ -94,6 +105,10 @@ public class VisionSubsystem extends SubsystemBase {
 		this.goalXAlignThreshold = goalXAlignThreshold;
   }
 
+  public short getBallConfirmTimeThreshold() {
+    return this.ballConfirmTimeThreshold;
+  }
+
   public short getGoalYCoordTarget() {
     return this.goalYCoordTarget;
   }
@@ -102,9 +117,21 @@ public class VisionSubsystem extends SubsystemBase {
     return this.goalYCoordThreshold;
   }
 
-  public short getGoalAlignTimeThreshold() {
-    return this.goalAlignTimeThreshold;
+  public short getGoalAlignXTimeThreshold() {
+    return this.goalAlignXTimeThreshold;
   }
+
+  public void setGoalAlignXTimeThreshold(short goalAlignTimeXThreshold) {
+		this.goalAlignXTimeThreshold = goalAlignTimeXThreshold;
+  }
+  
+  public short getGoalAlignYTimeThreshold() {
+    return this.goalAlignYTimeThreshold;
+  }
+
+  public void setGoalAlignYTimeThreshold(short goalAlignTimeYThreshold) {
+		this.goalAlignYTimeThreshold = goalAlignTimeYThreshold;
+	}
 
   public boolean getStopwatchStarted() {
     return this.stopwatchStarted;
@@ -218,6 +245,26 @@ public class VisionSubsystem extends SubsystemBase {
   }
   //#endregion
 
+  //#region Check if high-goal is tracking a valid ball
+  public boolean CheckValidBall() {
+    // Robot is aligned well with high goal if absolute dist between goalXcoord and center of screen is below threshold
+    if ( (Robot.getVisionDataSubsystem.getReceivedString() != "nah") 
+    && (Robot.getVisionDataSubsystem.getReceivedString() != null) ) {
+      if (!getStopwatchStarted()) {
+        setStartStopwatch(System.currentTimeMillis());
+        setStopwatchStarted(true);
+        return false;
+      } else {
+        return (System.currentTimeMillis() - getStartStopwatch()) >= getBallConfirmTimeThreshold();
+      }
+    } else {
+      // Reset the stopwatch
+      setStopwatchStarted(false);
+      return false;
+    }
+  }
+  //#endregion
+
   //#region Check if high-goal is aligned to correct height
   public boolean CheckHighgoalYAlignment() {  
     // Robot is aligned well with high goal if absolute dist between goalXcoord and center of screen is below threshold
@@ -227,7 +274,7 @@ public class VisionSubsystem extends SubsystemBase {
         setStopwatchStarted(true);
         return false;
       } else {
-        return (System.currentTimeMillis() - getStartStopwatch()) >= getGoalAlignTimeThreshold();
+        return (System.currentTimeMillis() - getStartStopwatch()) >= getGoalAlignYTimeThreshold();
       }
     } else {
       // Reset the stopwatch
@@ -246,7 +293,7 @@ public class VisionSubsystem extends SubsystemBase {
         setStopwatchStarted(true);
         return false;
       } else {
-        return (System.currentTimeMillis() - getStartStopwatch()) >= getGoalAlignTimeThreshold();
+        return (System.currentTimeMillis() - getStartStopwatch()) >= getGoalAlignXTimeThreshold();
       }
     } else {
       // Reset the stopwatch

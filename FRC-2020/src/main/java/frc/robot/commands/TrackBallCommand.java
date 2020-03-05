@@ -22,6 +22,7 @@ public class TrackBallCommand extends CommandBase {
   public void initialize() {
     // Intialize serial port and related comms
     Robot.getVisionDataSubsystem.Init();
+    Robot.visionSubsystem.setLockedOntoBall(false);
   }
 
 
@@ -31,7 +32,12 @@ public class TrackBallCommand extends CommandBase {
   public void execute() {
     // Tracking and driving towards the ball
     Robot.getVisionDataSubsystem.BallExtractXandY();
-    Robot.visionSubsystem.DriveTowardsBall();
+    if (Robot.visionSubsystem.CheckValidBall()) {
+      Robot.visionSubsystem.setLockedOntoBall(true);
+    }
+    if (Robot.visionSubsystem.getLockedOntoBall()) {
+      Robot.visionSubsystem.DriveTowardsBall();
+    }    
   }
 
   // Called once the command ends or is interrupted.
