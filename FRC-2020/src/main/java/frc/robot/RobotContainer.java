@@ -56,8 +56,12 @@ public class RobotContainer {
   // Create and assign default buttons
   public static JoystickButton toggleArcadeDriveButton = new JoystickButton(X3D_RIGHT, Constants.TOGGLE_ARCADE_DRIVE_BUTOON_ID);
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
-  public static JoystickButton driveVisionButton = new JoystickButton(GAMEPAD, Constants.VISION_COMMAND_BUTTON_ID);
-
+  public static JoystickButton launchButton = new JoystickButton(X3D_RIGHT, Constants.LAUNCH_BUTTON_ID);
+  public static JoystickButton intakeButton = new JoystickButton(X3D_RIGHT, Constants.INTAKE_BUTTON_ID);
+  public static JoystickButton clearButton = new JoystickButton(X3D_RIGHT, Constants.CLEAR_BUTTON_ID);
+  public static JoystickButton selectButton1 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_1_ID);
+  public static JoystickButton selectButton2 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_2_ID);
+  public static JoystickButton selectButton3 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_3_ID);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -73,14 +77,17 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+  public int selection;
   private void configureButtonBindings() {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
     driveStraightButton.whileHeld(new DriveStraightCommand());
-    driveVisionButton.toggleWhenPressed(new VisionCommand());
-
+    intakeButton.whileHeld(new IntakeCommand());
+    launchButton.whileHeld(new SemiAutoFireCommand());
+    clearButton.whileHeld(new ClearCommand());
+    selectButton1.whenPressed(new SelectLaunch1Command());
+    selectButton2.whenPressed(new SelectLaunch2Command());
+    selectButton3.whenPressed(new SelectLaunch3Command());
   }
-
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

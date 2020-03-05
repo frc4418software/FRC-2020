@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   public static VisionSubsystem visionSubsystem = new VisionSubsystem();
+  public static ManipulatorSubsystem manipulatorsubsystem = new ManipulatorSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used for any
