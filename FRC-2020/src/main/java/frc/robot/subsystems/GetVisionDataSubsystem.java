@@ -30,7 +30,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Initialize needed stuff
   public void Init() {
-    jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
+    jevois = new SerialPort(115200, SerialPort.Port.kMXP);
     jevois.enableTermination();
     jevois.setTimeout(timeoutTime);
   }
