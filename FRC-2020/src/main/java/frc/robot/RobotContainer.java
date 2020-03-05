@@ -34,6 +34,7 @@ public class RobotContainer {
   private static final Joystick X3D_LEFT = new Joystick(Constants.X3D_LEFT_JOYSTICK_ID),
                                 X3D_RIGHT = new Joystick(Constants.X3D_RIGHT_JOYSTICK_ID) ,
                                 GAMEPAD = new Joystick(Constants.GAMEPAD_JOYSTICK_ID);
+                                
   
   // Get axis for specific functions
   public static double getLeftTankDriveAxis() {
@@ -56,7 +57,9 @@ public class RobotContainer {
   // Create and assign default buttons
   public static JoystickButton toggleArcadeDriveButton = new JoystickButton(X3D_RIGHT, Constants.TOGGLE_ARCADE_DRIVE_BUTOON_ID);
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
-  public static JoystickButton driveVisionButton = new JoystickButton(GAMEPAD, Constants.VISION_COMMAND_BUTTON_ID);
+  
+  public static JoystickButton visionTrackBallButton = new JoystickButton(GAMEPAD, Constants.TRACK_BALL_VISION_BUTTON_ID);
+  public static JoystickButton visionTrackHighgoalButton = new JoystickButton(GAMEPAD, Constants.TRACK_HIGHGOAL_VISION_BUTTON_ID);
 
 
   /**
@@ -76,7 +79,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
     driveStraightButton.whileHeld(new DriveStraightCommand());
-    driveVisionButton.toggleWhenPressed(new VisionCommand());
+    
+    visionTrackBallButton.whenPressed(new TrackBallCommand());
+    visionTrackHighgoalButton.whenPressed(new TrackHighgoalCommand());
 
   }
 

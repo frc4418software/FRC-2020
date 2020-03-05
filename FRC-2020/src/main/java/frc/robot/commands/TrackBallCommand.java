@@ -10,9 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class VisionCommand extends CommandBase {
+public class TrackBallCommand extends CommandBase {
 
-  public VisionCommand() {
+  public TrackBallCommand() {
     addRequirements(Robot.visionSubsystem);
     addRequirements(Robot.getVisionDataSubsystem);
   }
@@ -29,26 +29,9 @@ public class VisionCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch (Robot.visionSubsystem.getTrackingMode()) {
-      case 0:
-        // Tracking and driving towards the ball
-        Robot.getVisionDataSubsystem.BallExtractXandY();
-        Robot.visionSubsystem.DriveTowardsBall();
-        break;
-      case 1:
-        // Tracking and aligning robot with high-goal
-        Robot.getVisionDataSubsystem.GoalExtractXandY();
-        if (Robot.visionSubsystem.getAlignStage() != 3) { 
-          Robot.visionSubsystem.AlignToHighgoal(); 
-        } else {
-          Robot.visionSubsystem.setTrackingMode(2);
-        }
-        break;
-      case 2:
-        // Shoot ball into high-goal once aligned
-        //TODO shoot ball into high-goal
-        break;
-    }
+    // Tracking and driving towards the ball
+    Robot.getVisionDataSubsystem.BallExtractXandY();
+    Robot.visionSubsystem.DriveTowardsBall();
   }
 
   // Called once the command ends or is interrupted.

@@ -10,18 +10,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.VisionCommand;
 
 /**
  * Add your docs here.
  */
 public class GetVisionDataSubsystem extends SubsystemBase {
-  //#region Set default command
-  @Override
-  public void periodic() {
-    setDefaultCommand(new VisionCommand());
-  }
-  //#endregion
 
   //#region Init variables
   private float timeoutTime = 60.0f;

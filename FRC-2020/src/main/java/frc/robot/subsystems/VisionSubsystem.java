@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.commands.VisionCommand;
 
 
 public class VisionSubsystem extends SubsystemBase {
@@ -131,14 +130,6 @@ public class VisionSubsystem extends SubsystemBase {
 		this.alignStage = alignStage;
 	}
   //#endregion
-
-  //#region Set default command
-  @Override
-  public void periodic() {
-    setDefaultCommand(new VisionCommand());
-  }
-  //#endregion
-
 
   // #region Set left and right motors to previously calculated motor values (based on percentages)
   public void DriveTowardsBall() {
