@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Init variables
-  private float timeoutTime = 60.0f;
   private static SerialPort jevois;
   private String receivedString;
 
@@ -89,7 +88,6 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   public void ReadString() {
     setReceivedString(jevois.readString());
-    SmartDashboard.putString("JeVois XY: ", getReceivedString());
   }
   //#endregion
   
@@ -127,20 +125,10 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   //#region Get the X OR Y coords of the high-goal from the strings sent by the JeVois
   public void GoalExtractXandY() {
     ReadString();
-    if (getReceivedString() != "nah") {
-
+    if (getReceivedString() != "n") {
       try {
-        if (getReceivedString().charAt(0) == 'x') {
-          setGoalXcenter(
-            Integer.parseInt(getReceivedString().substring(1))
-                                                      );  
-        }
-  
-        else if (getReceivedString().charAt(0) == 'y') {
-          setGoalYcenter(
-            Integer.parseInt(getReceivedString().substring(1))
-                                                      );
-        }
+        setGoalXcenter(goalXcenter);
+        setGoalYcenter(goalYcenter);
       }
       catch (StringIndexOutOfBoundsException siobe) {
         System.out.println("StringIndexOutOfBoundsException: Did not receive string from JeVois correctly");
@@ -151,13 +139,9 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Test serial connection from JeVois to roboRio
   public void TestSerialToJevois() {
-    try {
-      ReadString();
-      System.out.println(getReceivedString());
-    }
-    catch(NullPointerException npe) {
-      System.out.println("NullPointerException: Did not read string from JeVois correctly");
-    }
+    ReadString();
+    SmartDashboard.putString("RECEIVED", getReceivedString());
+    SmartDashboard.putString("getting serial", "");
   }
   //#endregion
 
