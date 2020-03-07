@@ -21,7 +21,10 @@ public class TrackBallCommand extends CommandBase {
   @Override
   public void initialize() {
     // Intialize serial port and related comms
-    Robot.getVisionDataSubsystem.Init();
+    
+    //TODO trackingball init ignored
+    //Robot.getVisionDataSubsystem.Init();
+    
     Robot.visionSubsystem.setLockedOntoBall(false);
   }
 
@@ -39,12 +42,14 @@ public class TrackBallCommand extends CommandBase {
       Robot.visionSubsystem.DriveTowardsBall();
     }
 
+    //TODO Task: Write code for intaking ball after confirming that it is within range
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.getVisionDataSubsystem.Cleanup();
+    //TODO balltracking cleanup ignored
+    //Robot.getVisionDataSubsystem.Cleanup();
   }
 }

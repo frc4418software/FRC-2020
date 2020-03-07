@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
@@ -21,7 +23,9 @@ public class TrackHighgoalCommand extends CommandBase {
   @Override
   public void initialize() {
     // Intialize serial port and related comms
-    Robot.getVisionDataSubsystem.Init();
+    
+    //TODO tracking higoal init ignored
+    //Robot.getVisionDataSubsystem.Init();
   }
 
 
@@ -31,21 +35,36 @@ public class TrackHighgoalCommand extends CommandBase {
   public void execute() {
     // Tracking and aligning robot with high-goal
     Robot.getVisionDataSubsystem.GoalExtractXandY();
+    
+    //DEBUG
+    SmartDashboard.putString("Track higoal", "extracting goal xy");
+
+    /*
     if (Robot.visionSubsystem.getAlignStage() != 3) { 
       Robot.visionSubsystem.AlignToHighgoal();
+      
+      //DEBUG
+      SmartDashboard.putString("Track Highgoal", "aligning to highgoal");
     } else {
       Robot.visionSubsystem.setTrackingMode(2);
     }
 
     if (Robot.visionSubsystem.getTrackingMode() == 2) {
-      // Shoot ball into high-goal once aligned
-      //TODO shoot ball into high-goal
+      Robot.manipulatorsubsystem.semiAutoFire();
+      
+      //DEBUG
+      SmartDashboard.putString("Track Highgoal", "firing ball into highgoal");
     }
+    */
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.getVisionDataSubsystem.Cleanup();
+    //TODO higoal cleanup ignored
+    //Robot.getVisionDataSubsystem.Cleanup();
+    
+    //DEBUG
+    //SmartDashboard.putString("Track Highgoal", "cleaning up");
   }
 }

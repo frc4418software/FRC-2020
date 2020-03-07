@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.hal.util.UncleanStatusException;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,9 +31,17 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Initialize needed stuff
   public void Init() {
-    jevois = new SerialPort(115200, SerialPort.Port.kMXP);
-    jevois.enableTermination();
-    jevois.setTimeout(timeoutTime);
+    try {
+      jevois = new SerialPort(115200, SerialPort.Port.kOnboard);
+      jevois.enableTermination();
+      jevois.setTimeout(timeoutTime);
+    }
+    catch (UncleanStatusException use) {
+      System.out.println("UncleanStatusException: Did not find serial port on roboRIO");
+    }
+    catch (NullPointerException npe) {
+      System.out.println("NullPointerException: I dont freakin know");
+    }
   }
   //#endregion
 
@@ -139,14 +148,8 @@ public class GetVisionDataSubsystem extends SubsystemBase {
                                                       );
         }
       }
-      catch (NumberFormatException nfe) {
-        System.out.println("NumberFormatException: Did not receive string from JeVois correctly");
-      }
-      catch (NullPointerException npe) {
-        System.out.println("NullPointerException: Did not receive string from JeVois correctly");
-      }
       catch (StringIndexOutOfBoundsException siobe) {
-        System.out.println("StringINdexOutOfBoundsException: Did not receive string from JeVois correctly");
+        System.out.println("StringIndexOutOfBoundsException: Did not receive string from JeVois correctly");
       }
     }
   }
@@ -168,11 +171,11 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   public void Cleanup() {
     try {
       jevois.disableTermination();
+      jevois.reset();
     }
     catch (NullPointerException npe) {
       System.out.println("NullPointerException: Did not cleanup the JeVois termination correctly");
     }
-    jevois.reset();
   }
   //#endregion 
 }
