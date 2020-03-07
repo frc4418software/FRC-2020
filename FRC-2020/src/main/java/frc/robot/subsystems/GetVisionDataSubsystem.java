@@ -26,13 +26,20 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   private int goalXcenter;
   private int goalYcenter;
+
+  private int[] xy;
+  private String delims = ",";
+  private String[] parsedData;
+
+  private String nopeString = "n";
+
+  
   //#endregion
 
   //#region Initialize needed stuff
   public void Init() {
     try {
       jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
-      //jevois.enableTermination();
       //jevois.setTimeout(timeoutTime);
     }
     catch (UncleanStatusException use) {
@@ -45,6 +52,29 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   //#endregion
 
   //#region Getters and setters
+  public int[] getXy() {
+    return this.xy;
+  }
+  public void setXy(int[] xy) {
+    this.xy = xy;
+  }
+  
+  public String getDelims() {
+    return this.delims;
+  }
+
+  public String[] getParsedData() {
+    return this.parsedData;
+  }
+
+  public void setParsedData(String[] parsedData) {
+    this.parsedData = parsedData;
+  }
+  
+  public String getNopeString() {
+    return this.nopeString;
+  }
+  
   public String getReceivedString() {
     return this.receivedString;
   }
@@ -125,10 +155,12 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   //#region Get the X OR Y coords of the high-goal from the strings sent by the JeVois
   public void GoalExtractXandY() {
     ReadString();
-    if (getReceivedString() != "n") {
+    if (getReceivedString() != getNopeString()) {
       try {
-        setGoalXcenter(goalXcenter);
-        setGoalYcenter(goalYcenter);
+        SmartDashboard.putString("JeVois received", getReceivedString());
+        setParsedData(getReceivedString().split(getDelims()));
+        setGoalXcenter(Integer.parseInt(getParsedData()[0]));
+        setGoalYcenter(Integer.parseInt(getParsedData()[1]));
       }
       catch (StringIndexOutOfBoundsException siobe) {
         System.out.println("StringIndexOutOfBoundsException: Did not receive string from JeVois correctly");
