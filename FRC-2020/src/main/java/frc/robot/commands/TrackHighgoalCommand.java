@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -23,8 +22,6 @@ public class TrackHighgoalCommand extends CommandBase {
   @Override
   public void initialize() {
     // Intialize serial port and related comms
-    
-    //TODO tracking higoal init ignored
     //Robot.getVisionDataSubsystem.Init();
   }
 
@@ -34,10 +31,12 @@ public class TrackHighgoalCommand extends CommandBase {
   @Override
   public void execute() {
     // Tracking and aligning robot with high-goal
-    Robot.getVisionDataSubsystem.GoalExtractXandY();
+    //Robot.getVisionDataSubsystem.GoalExtractXandY();
     
+    Robot.getVisionDataSubsystem.TestSerialToJevois();
+
     //DEBUG
-    SmartDashboard.putString("Track higoal", "extracting goal xy");
+    SmartDashboard.putString("Track higoal", "testing serial comms");
 
     /*
     if (Robot.visionSubsystem.getAlignStage() != 3) { 
@@ -61,7 +60,6 @@ public class TrackHighgoalCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //TODO higoal cleanup ignored
     //Robot.getVisionDataSubsystem.Cleanup();
     
     //DEBUG

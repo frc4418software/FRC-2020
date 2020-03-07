@@ -19,7 +19,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Init variables
   private float timeoutTime = 60.0f;
-  private SerialPort jevois;
+  private static SerialPort jevois;
   private String receivedString;
 
   private int ballXcenter;
@@ -32,9 +32,9 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   //#region Initialize needed stuff
   public void Init() {
     try {
-      jevois = new SerialPort(115200, SerialPort.Port.kOnboard);
-      jevois.enableTermination();
-      jevois.setTimeout(timeoutTime);
+      jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
+      //jevois.enableTermination();
+      //jevois.setTimeout(timeoutTime);
     }
     catch (UncleanStatusException use) {
       System.out.println("UncleanStatusException: Did not find serial port on roboRIO");
@@ -88,14 +88,8 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   }
 
   public void ReadString() {
-    if (jevois.readString() != "") {
-      setReceivedString(jevois.readString());
-      SmartDashboard.putString("JeVois XY: ", getReceivedString());
-    }
-  }
-
-  public void ReadStringLimit(int limit) {
-    jevois.readString(limit);
+    setReceivedString(jevois.readString());
+    SmartDashboard.putString("JeVois XY: ", getReceivedString());
   }
   //#endregion
   
@@ -169,6 +163,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Cleanup needed stuff
   public void Cleanup() {
+    /*
     try {
       jevois.disableTermination();
       jevois.reset();
@@ -176,6 +171,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
     catch (NullPointerException npe) {
       System.out.println("NullPointerException: Did not cleanup the JeVois termination correctly");
     }
+    */
   }
   //#endregion 
 }
