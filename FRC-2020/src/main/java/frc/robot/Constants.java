@@ -90,7 +90,8 @@ public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI)
 public static final int MAN_FIRE_BOTTOM_TALON_SRX_ID = 30,
   MAN_FIRE_TOP_TALON_SRX_ID = 31,
   MAN_LOAD_TALON_SRX_ID = 32,
-  MAN_INTAKE_VICTOR_SPX_ID = 33;
+  MAN_INTAKE_VICTOR_SPX_ID = 33
+  ;
 
 // Climb Subsystem IDs
 public static final int CLIMBER_ENCODER_CHANNELA_ID = 2, 

@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,6 +26,9 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private WPI_TalonSRX loadMotor;
   private WPI_TalonSRX pivotMotor;
   private WPI_VictorSPX intakeMotor;
+
+  private Encoder topFireEncoder;
+  private Encoder bottomFireEncoder;
 
   private AnalogPotentiometer pivotPotentiometer;
 
@@ -44,6 +48,15 @@ public class ManipulatorSubsystem extends SubsystemBase {
     topFireMotor = new WPI_TalonSRX(Constants.MAN_FIRE_TOP_TALON_SRX_ID);
     loadMotor = new WPI_TalonSRX(Constants.MAN_LOAD_TALON_SRX_ID);
     intakeMotor = new WPI_VictorSPX(Constants.MAN_INTAKE_VICTOR_SPX_ID);
+    
+    topFireEncoder = new Encoder(1,0);
+    bottomFireEncoder = new Encoder(0,1);
+
+    topFireEncoder.setDistancePerPulse(1);
+    bottomFireEncoder.setDistancePerPulse(1);
+
+    topFireEncoder.reset();
+    bottomFireEncoder.reset();
   }
   //set and get the motors stuff
 
@@ -95,6 +108,14 @@ public class ManipulatorSubsystem extends SubsystemBase {
   public double getPivotMotor(){
     return pivotMotor.getMotorOutputPercent(); 
   }
+
+  //read the encoders
+  public double getTopFireEncoder(){
+    return topFireEncoder.getRate();
+  }
+  public double getBottomFireEncoder(){
+    return bottomFireEncoder.getRate();
+  }
   
   // get whether the pivot is up
   public boolean pivotIsUp(){
@@ -122,6 +143,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Bottom Fire", getBottomFireMotor());
     SmartDashboard.putNumber("Top Fire", getTopFireMotor());
     SmartDashboard.putNumber("Load", getLoadMotor());
+    SmartDashboard.putNumber("Top Fire rate", getTopFireEncoder());
+    SmartDashboard.putNumber("Bottom Fire rate", getBottomFireEncoder());
     if(launchPosition == 1){
       bottomFireValue = .24;
       topFireValue = -.6;
