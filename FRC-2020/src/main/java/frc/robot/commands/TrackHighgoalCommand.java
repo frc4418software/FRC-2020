@@ -21,8 +21,7 @@ public class TrackHighgoalCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Intialize serial port and related comms
-    //Robot.getVisionDataSubsystem.Init();
+    
   }
 
 

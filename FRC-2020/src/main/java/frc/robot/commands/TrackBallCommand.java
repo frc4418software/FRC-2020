@@ -20,11 +20,6 @@ public class TrackBallCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Intialize serial port and related comms
-    
-    //TODO trackingball init ignored
-    //Robot.getVisionDataSubsystem.Init();
-    
     Robot.visionSubsystem.setLockedOntoBall(false);
   }
 
@@ -49,7 +44,6 @@ public class TrackBallCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //TODO balltracking cleanup ignored
-    //Robot.getVisionDataSubsystem.Cleanup();
+
   }
 }

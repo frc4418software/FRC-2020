@@ -40,13 +40,20 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   public void Init() {
     try {
       jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
-      //jevois.setTimeout(timeoutTime);
     }
     catch (UncleanStatusException use) {
       System.out.println("UncleanStatusException: Did not find serial port on roboRIO");
     }
     catch (NullPointerException npe) {
       System.out.println("NullPointerException: I dont freakin know");
+    }
+
+
+    try {
+      jevois.writeString("streamon");
+    }
+    catch (Exception e) {
+      e.printStackTrace();
     }
   }
   //#endregion
@@ -110,20 +117,10 @@ public class GetVisionDataSubsystem extends SubsystemBase {
     this.goalYcenter = goalYcenter;
   }
   //#endregion
-
-  //#region Serial sending and receiving methods
-  public void WriteString(String write) {
-    jevois.writeString(write);
-  }
-
-  public void ReadString() {
-    setReceivedString(jevois.readString());
-  }
-  //#endregion
   
   //#region Get the X OR Y coords of the ball from the strings sent by the JeVois
   public void BallExtractXandY() {
-    ReadString();
+    setReceivedString(jevois.readString());
     if (getReceivedString() != "nah") {
 
       try {
@@ -154,7 +151,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Get the X OR Y coords of the high-goal from the strings sent by the JeVois
   public void GoalExtractXandY() {
-    ReadString();
+    setReceivedString(jevois.readString());
     if (getReceivedString() != getNopeString()) {
       try {
         SmartDashboard.putString("JeVois received", getReceivedString());
@@ -171,7 +168,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Test serial connection from JeVois to roboRio
   public void TestSerialToJevois() {
-    ReadString();
+    setReceivedString(jevois.readString());
     SmartDashboard.putString("RECEIVED", getReceivedString());
     SmartDashboard.putString("getting serial", "");
   }
