@@ -21,7 +21,7 @@ public class TrackHighgoalCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    Robot.getVisionDataSubsystem.Init();
   }
 
 

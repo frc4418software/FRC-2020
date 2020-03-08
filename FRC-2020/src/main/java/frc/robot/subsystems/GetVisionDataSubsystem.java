@@ -18,7 +18,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Init variables
-  private static SerialPort jevois;
+  // TODO Setup jevois as private
+  public static SerialPort jevois;
   private String receivedString;
 
   private int ballXcenter;
@@ -51,6 +52,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
     try {
       jevois.writeString("streamon");
+      SmartDashboard.putString("streamon", "");
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -168,7 +170,12 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
   //#region Test serial connection from JeVois to roboRio
   public void TestSerialToJevois() {
-    setReceivedString(jevois.readString());
+    try {
+      setReceivedString(jevois.readString());
+    }
+    catch (NullPointerException npe) {
+      System.out.println("NullPointerException: no string read from Jevois");
+    }
     SmartDashboard.putString("RECEIVED", getReceivedString());
     SmartDashboard.putString("getting serial", "");
   }

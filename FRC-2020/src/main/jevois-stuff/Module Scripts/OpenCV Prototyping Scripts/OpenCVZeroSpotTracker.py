@@ -69,7 +69,7 @@ while(True):
     #cv2.imshow('all contours', contours_frame)
 
     contour_areas = [(cv2.contourArea(contour), contour) for contour in contours]
-
+    
     if (len(contour_areas) != 0):
         # Find the biggest contour by looking for the biggest contour, using the list of contours areas
         biggest_contour = max(contour_areas, key=lambda x: x[0])[1]
