@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
 
 HLS_low_thresh = np.array([21,43,0])
 HLS_high_thresh = np.array([31,255,251])
@@ -19,6 +18,8 @@ bitwise_and_dilate_its = 5
 area_min = 170
 area_max = 6000
 
+
+cap = cv2.VideoCapture(0)
 
 if not (cap.isOpened()):
     print('\nCould not open video device\n')
@@ -50,8 +51,8 @@ while(True):
 
     HSV_mask_dilated = cv2.dilate(HSV_mask_eroded, kernel=None, iterations=HSV_dilate_its, borderType=cv2.BORDER_CONSTANT)
     #cv2.imshow('HSV dilated', HSV_mask_dilated)
-
-
+    
+    
 
     bitwise_and_frame = cv2.bitwise_and(HSL_mask_dilated, HSV_mask_dilated)
     #cv2.imshow('bitwise and', bitwise_and_frame)
@@ -69,7 +70,7 @@ while(True):
     #cv2.imshow('all contours', contours_frame)
 
     contour_areas = [(cv2.contourArea(contour), contour) for contour in contours]
-    
+
     if (len(contour_areas) != 0):
         # Find the biggest contour by looking for the biggest contour, using the list of contours areas
         biggest_contour = max(contour_areas, key=lambda x: x[0])[1]
