@@ -41,6 +41,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   public void Init() {
     try {
       jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
+      SmartDashboard.putString("Step 1", "Created new JeVois serialport");
     }
     catch (UncleanStatusException use) {
       System.out.println("UncleanStatusException: Did not find serial port on roboRIO");
@@ -52,7 +53,7 @@ public class GetVisionDataSubsystem extends SubsystemBase {
 
     try {
       jevois.writeString("streamon");
-      SmartDashboard.putString("streamon", "");
+      SmartDashboard.putString("Step 2", "Commanded JeVois to start streaming");
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -122,30 +123,29 @@ public class GetVisionDataSubsystem extends SubsystemBase {
   
   //#region Get the X OR Y coords of the ball from the strings sent by the JeVois
   public void BallExtractXandY() {
-    setReceivedString(jevois.readString());
-    if (getReceivedString() != "nah") {
-
+    try {
+      setReceivedString(jevois.readString());
+      SmartDashboard.putString("Step 3", "Read string from JeVois");
+    }
+    catch (NullPointerException npe) {
+      SmartDashboard.putString("ReadStringError", "Could not read string from JeVois");
+    }
+    SmartDashboard.putString("Step 4", "Read string is " + getReceivedString());
+    if (getReceivedString() != getNopeString()) {
       try {
-        if (getReceivedString().charAt(0) == 'x') {
-          setBallXcenter(
-            Integer.parseInt(getReceivedString().substring(1))
-                                                      );  
-        }
-  
-        else if (getReceivedString().charAt(0) == 'y') {
-          setBallYcenter(
-            Integer.parseInt(getReceivedString().substring(1))
-                                                      );
-        }
+        setParsedData(getReceivedString().split(getDelims()));
+        setGoalXcenter(Integer.parseInt(getParsedData()[0]));
+        setGoalYcenter(Integer.parseInt(getParsedData()[1]));
+        SmartDashboard.putString("Step 5", "Received xy coords");
       }
       catch (NumberFormatException nfe) {
-        System.out.println("NumberFormatException: Did not receive string from JeVois correctly");
+        SmartDashboard.putString("BallExtractError", "NumberFormatException: Incorrect receive from JeVois");      
       }
       catch (NullPointerException npe) {
-        System.out.println("NullPointerException: Did not receive string from JeVois correctly");
+        SmartDashboard.putString("BallExtractError","NullPointerException: Incorrect receive from JeVois");
       }
       catch (StringIndexOutOfBoundsException siobe) {
-        System.out.println("StringINdexOutOfBoundsException: Did not receive string from JeVois correctly");
+        SmartDashboard.putString("BallExtractError","StringINdexOutOfBoundsException: Incorrect receive from JeVois");
       }
     }
   }

@@ -21,6 +21,7 @@ public class TrackBallCommand extends CommandBase {
   @Override
   public void initialize() {
     Robot.visionSubsystem.setLockedOntoBall(false);
+    Robot.getVisionDataSubsystem.Init();
   }
 
 
@@ -30,12 +31,15 @@ public class TrackBallCommand extends CommandBase {
   public void execute() {
     // Tracking and driving towards the ball
     Robot.getVisionDataSubsystem.BallExtractXandY();
+    
+    /*
     if (Robot.visionSubsystem.CheckValidBall()) {
       Robot.visionSubsystem.setLockedOntoBall(true);
     }
     if (Robot.visionSubsystem.getLockedOntoBall()) {
       Robot.visionSubsystem.DriveTowardsBall();
     }
+    */
 
     //TODO Task: Write code for intaking ball after confirming that it is within range
     

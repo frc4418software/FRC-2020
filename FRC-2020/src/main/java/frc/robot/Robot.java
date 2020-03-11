@@ -41,9 +41,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    
-    //TODO experiment init jevoisSerialPort in robot.java
-    Robot.getVisionDataSubsystem.Init();
   }
 
   /**
@@ -68,8 +65,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     
-    //TODO experiment cleanup JevoisSerialPort in robot.java
-    Robot.getVisionDataSubsystem.Cleanup();
+    //TODO experiment NO cleanup JevoisSerialPort in robot.java
+    //Robot.getVisionDataSubsystem.Cleanup();
   }
 
   @Override

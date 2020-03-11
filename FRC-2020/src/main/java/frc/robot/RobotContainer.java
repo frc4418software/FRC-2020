@@ -59,7 +59,7 @@ public class RobotContainer {
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
   
   public static JoystickButton visionTrackBallButton = new JoystickButton(GAMEPAD, Constants.TRACK_BALL_VISION_BUTTON_ID);
-  public static JoystickButton visionTrackHighgoalButton = new JoystickButton(GAMEPAD, Constants.TRACK_HIGHGOAL_VISION_BUTTON_ID);
+  //public static JoystickButton visionTrackHighgoalButton = new JoystickButton(GAMEPAD, Constants.TRACK_HIGHGOAL_VISION_BUTTON_ID);
 
   public static JoystickButton launchButton = new JoystickButton(X3D_RIGHT, Constants.LAUNCH_BUTTON_ID);
   public static JoystickButton intakeButton = new JoystickButton(X3D_RIGHT, Constants.INTAKE_BUTTON_ID);
@@ -88,7 +88,7 @@ public class RobotContainer {
     driveStraightButton.whileHeld(new DriveStraightCommand());
     
     visionTrackBallButton.whenPressed(new TrackBallCommand());
-    visionTrackHighgoalButton.whenPressed(new TrackHighgoalCommand());
+    //visionTrackHighgoalButton.whenPressed(new TrackHighgoalCommand());
 
     intakeButton.whileHeld(new IntakeCommand());
     launchButton.whileHeld(new SemiAutoFireCommand());
