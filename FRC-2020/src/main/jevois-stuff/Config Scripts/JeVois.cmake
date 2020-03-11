@@ -113,19 +113,19 @@ macro(jevois_project_set_flags)
   add_custom_target(jvpkg
     COMMAND jevois-jvpkg ../${JEVOIS_VENDOR}_${CMAKE_PROJECT_NAME}.jvpkg
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/jvpkg )
-  
+
   # Check for JEVOIS_ROOT environment variable:
   if (DEFINED ENV{JEVOIS_ROOT})
     set(JEVOIS_ROOT $ENV{JEVOIS_ROOT})
   else (DEFINED ENV{JEVOIS_ROOT})
     set(JEVOIS_ROOT "/jevois")
   endif (DEFINED ENV{JEVOIS_ROOT})
-  
+
   # If installing to live microSD inside JeVois, mount it before make install:
   if (JEVOIS_MODULES_TO_LIVE)
     install(CODE "EXECUTE_PROCESS(COMMAND /usr/bin/jevois-usbsd start ${JEVOIS_MICROSD_MOUNTPOINT} ${JEVOIS_USBSERIAL_DEV})")
   endif (JEVOIS_MODULES_TO_LIVE)
-    
+
   # If installing to microSD, add a check that it is here before make install:
   if (JEVOIS_MODULES_TO_MICROSD)
     install(CODE "EXECUTE_PROCESS(COMMAND /bin/ls \"${JEVOIS_MICROSD_MOUNTPOINT}/\" )")
@@ -160,7 +160,7 @@ macro(jevois_project_finalize)
     install(CODE "EXECUTE_PROCESS(COMMAND /usr/bin/jevois-usbsd stop ${JEVOIS_MICROSD_MOUNTPOINT} ${JEVOIS_USBSERIAL_DEV})")
   endif (JEVOIS_MODULES_TO_LIVE)
 endmacro()
-  
+
 ####################################################################################################
 # Setup some modules, base scenario:
 macro(jevois_setup_modules basedir deps)
@@ -171,7 +171,7 @@ macro(jevois_setup_modules basedir deps)
 
     # Find all python source files for this module:
     file(GLOB_RECURSE PYFILES ${basedir}/${JV_MODULE}/*.[Pp][Yy])
-    
+
     if (MODFILES)
       # Get this C++ module compiled:
       message(STATUS "Adding compilation directives for C++ module ${JV_MODULE} base ${basedir}")
@@ -208,9 +208,9 @@ macro(jevois_setup_modules basedir deps)
 	DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${basedir}/${JV_MODULE}/modinfo.yaml" ${CMAKE_CURRENT_SOURCE_DIR}/${basedir}/${JV_MODULE}/${JV_MODULE}.py)
 
     endif (PYFILES)
-    
+
     set(DESTDIR "${JEVOIS_INSTALL_ROOT}/modules/${JEVOIS_VENDOR}")
-    
+
     # Install everything that is in that directory except for the source file:
     install(DIRECTORY ${basedir}/${JV_MODULE} DESTINATION "${DESTDIR}"
       #PATTERN "*.[hHcC]" EXCLUDE
@@ -226,7 +226,7 @@ macro(jevois_setup_modules basedir deps)
     if (MODFILES)
       install(TARGETS ${JV_MODULE} LIBRARY DESTINATION "${DESTDIR}/${JV_MODULE}")
     endif (MODFILES)
-    
+
   endforeach()
 endmacro()
 
@@ -247,7 +247,7 @@ macro(jevois_setup_library basedir libname libversion)
   if (NOT JEVOIS_PLATFORM)
     set_target_properties(${libname} PROPERTIES VERSION "${libversion}" SOVERSION ${libversion})
   endif (NOT JEVOIS_PLATFORM)
-  
+
   link_libraries(${libname})
 
   # On platform, install libraries to /jevois/lib, but on host just install to /usr/lib:
@@ -258,7 +258,7 @@ macro(jevois_setup_library basedir libname libversion)
   else (JEVOIS_PLATFORM)
     install(TARGETS ${libname} LIBRARY DESTINATION lib COMPONENT libs)
   endif (JEVOIS_PLATFORM)
-    
+
 endmacro()
 
 ####################################################################################################
@@ -277,7 +277,7 @@ macro(jevois_setup_library2 srcfile libname libversion)
   if (NOT JEVOIS_PLATFORM)
     set_target_properties(${libname} PROPERTIES VERSION "${libversion}" SOVERSION ${libversion})
   endif (NOT JEVOIS_PLATFORM)
-  
+
   link_libraries(${libname})
 
   # On platform, install libraries to /jevois/lib, but on host just install to /usr/lib:
@@ -288,7 +288,7 @@ macro(jevois_setup_library2 srcfile libname libversion)
   else (JEVOIS_PLATFORM)
     install(TARGETS ${libname} LIBRARY DESTINATION lib COMPONENT libs)
   endif (JEVOIS_PLATFORM)
-    
+
 endmacro()
 
 ####################################################################################################
