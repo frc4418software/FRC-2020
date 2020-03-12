@@ -105,7 +105,7 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
             catch (NumberFormatException nfe) {
                 SmartDashboard.putString("ParseXYError", "NumberFormatException: Something wrong with the formatting of the JeVois string");
             }
-            // TODO NumberFormatException happens here
+            // TODO NumberFormatException happens here, make sure string isn't empty, find out what it is
             // Seperately set the X and Y coords from the parsed string array
             setXCoord(Integer.parseInt(getParsedData()[0]));
             setYCoord(Integer.parseInt(getParsedData()[1]));
