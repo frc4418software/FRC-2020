@@ -7,44 +7,42 @@
 
 package frc.robot.commands;
 
+import java.util.concurrent.TimeUnit;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class SweepLocateHighgoalCmd extends CommandBase {
+public class TestingCodeCmd extends CommandBase {
   /**
-   * Creates a new SweepLocateHighgoalCmd
+   * Creates a new TestingCodeCmd
    */
-  public SweepLocateHighgoalCmd() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.receiveJevoisDataSubsys);
-    addRequirements(Robot.visionHighgoalSubsys);
+  public TestingCodeCmd() {
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init-ed", "SweepLocateHighgoalCmd");
-
+    SmartDashboard.putString("TESTING CODE", "RUNNING");
     Robot.receiveJevoisDataSubsys.InitSerialPort();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO write code to make surveyMode chosen by joystick, instead of just setting it to 1
-    Robot.visionHighgoalSubsys.SurveyTurnForHighgoal(1);
+    Robot.receiveJevoisDataSubsys.ReadAndParseXY();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putString("CMD Done", "SweepLocateHighgoalCmd");
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Robot.visionHighgoalSubsys.getIsSweepFinished();
+    return false;
   }
 }

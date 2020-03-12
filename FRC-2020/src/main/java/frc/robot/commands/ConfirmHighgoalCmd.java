@@ -16,12 +16,14 @@ public class ConfirmHighgoalCmd extends CommandBase {
    * Creates a new ConfirmHighgoalCmd
    */
   public ConfirmHighgoalCmd() {
-    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Robot.receiveJevoisDataSubsys);
+    addRequirements(Robot.visionHighgoalSubsys);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.

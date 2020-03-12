@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.GetVisionDataSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.ReceiveJevoisDataSubsys;
+import frc.robot.subsystems.VisionHighgoalSubsys;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -28,9 +28,11 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
-  public static VisionSubsystem visionSubsystem = new VisionSubsystem();
-  public static GetVisionDataSubsystem getVisionDataSubsystem = new GetVisionDataSubsystem();
   public static ManipulatorSubsystem manipulatorsubsystem = new ManipulatorSubsystem();
+  
+  public static ReceiveJevoisDataSubsys receiveJevoisDataSubsys = new ReceiveJevoisDataSubsys();
+  public static VisionHighgoalSubsys visionHighgoalSubsys = new VisionHighgoalSubsys();
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -65,7 +67,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     
-    //TODO experiment NO cleanup JevoisSerialPort in robot.java
+    // experiment NO cleanup JevoisSerialPort in robot.java
     //Robot.getVisionDataSubsystem.Cleanup();
   }
 

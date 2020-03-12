@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
+import frc.robot.subsystems.VisionHighgoalSubsys;
 import frc.robot.Constants;
 //import frc.robot.subsystems.*;
 
@@ -58,8 +59,11 @@ public class RobotContainer {
   public static JoystickButton toggleArcadeDriveButton = new JoystickButton(X3D_RIGHT, Constants.TOGGLE_ARCADE_DRIVE_BUTOON_ID);
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
   
-  public static JoystickButton visionTrackBallButton = new JoystickButton(GAMEPAD, Constants.TRACK_BALL_VISION_BUTTON_ID);
-  //public static JoystickButton visionTrackHighgoalButton = new JoystickButton(GAMEPAD, Constants.TRACK_HIGHGOAL_VISION_BUTTON_ID);
+  // Gamepad button B
+  public static JoystickButton testCodeButton = new JoystickButton(GAMEPAD, Constants.TRACK_BALL_VISION_BUTTON_ID);
+  
+  // Gamepad button X
+  public static JoystickButton visionTrackHighgoalButton = new JoystickButton(GAMEPAD, Constants.TRACK_HIGHGOAL_VISION_BUTTON_ID);
 
   public static JoystickButton launchButton = new JoystickButton(X3D_RIGHT, Constants.LAUNCH_BUTTON_ID);
   public static JoystickButton intakeButton = new JoystickButton(X3D_RIGHT, Constants.INTAKE_BUTTON_ID);
@@ -87,8 +91,11 @@ public class RobotContainer {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
     driveStraightButton.whileHeld(new DriveStraightCommand());
     
-    visionTrackBallButton.whenPressed(new TrackBallCommand());
-    //visionTrackHighgoalButton.whenPressed(new TrackHighgoalCommand());
+    // Run test code when gamepad button B is pressed
+    testCodeButton.whenPressed(new TestingCodeCmd());
+
+    // Run vision code for shooting into high goal when gamepad button X is pressed
+    visionTrackHighgoalButton.whenPressed(new HighgoalVisionCmdGroup());
 
     intakeButton.whileHeld(new IntakeCommand());
     launchButton.whileHeld(new SemiAutoFireCommand());
