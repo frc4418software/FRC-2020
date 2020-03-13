@@ -245,45 +245,6 @@
 //   }
 //   //#endregion
 
-//   //#region Check if high-goal is tracking a valid ball
-//   public boolean CheckValidBall() {
-//     // Robot is aligned well with high goal if absolute dist between goalXcoord and center of screen is below threshold
-//     if ( (Robot.getVisionDataSubsystem.getReceivedString() != "nah") 
-//     && (Robot.getVisionDataSubsystem.getReceivedString() != null) ) {
-//       if (!getStopwatchStarted()) {
-//         setStartStopwatch(System.currentTimeMillis());
-//         setStopwatchStarted(true);
-//         return false;
-//       } else {
-//         return (System.currentTimeMillis() - getStartStopwatch()) >= getBallConfirmTimeThreshold();
-//       }
-//     } else {
-//       // Reset the stopwatch
-//       setStopwatchStarted(false);
-//       return false;
-//     }
-//   }
-//   //#endregion
-
-//   //#region Check if high-goal is aligned to correct height
-//   public boolean CheckHighgoalYAlignment() {  
-//     // Robot is aligned well with high goal if absolute dist between goalXcoord and center of screen is below threshold
-//     if ( (Math.abs(Robot.getVisionDataSubsystem.getGoalYcenter() - getGoalYCoordTarget()) <= getGoalYCoordThreshold()) ) {
-//       if (!getStopwatchStarted()) {
-//         setStartStopwatch(System.currentTimeMillis());
-//         setStopwatchStarted(true);
-//         return false;
-//       } else {
-//         return (System.currentTimeMillis() - getStartStopwatch()) >= getGoalAlignYTimeThreshold();
-//       }
-//     } else {
-//       // Reset the stopwatch
-//       setStopwatchStarted(false);
-//       return false;
-//     }
-//   }
-//   //#endregion
-
 //   //#region Check if robot is well-aligned with high-goal (by x-axis) to shoot
 //   public boolean CheckHighgoalXAlignment() {  
 //     // Robot is aligned well with high goal if absolute dist between goalXcoord and center of screen is below threshold
@@ -299,27 +260,6 @@
 //       // Reset the stopwatch
 //       setStopwatchStarted(false);
 //       return false;
-//     }
-//   }
-//   //#endregion
-
-//   //#region Use alignment stages to align robot to x and y axis
-//   public void AlignToHighgoal() {
-//     if (getAlignStage() == 1) {
-//       // If robot is aligned with y-axis
-//       if (CheckHighgoalYAlignment()) {
-//         setAlignStage(2);
-//       } else {
-//         AlignYCoordWithHighgoal();
-//       }
-//     } else if (getAlignStage() == 2) {
-//       if (CheckHighgoalXAlignment()) {
-//         setAlignStage(3);
-//       } else {
-//         AlignXCoordWithHighgoal();
-//       }
-//     } else {
-//       setAlignStage(1);
 //     }
 //   }
 //   //#endregion

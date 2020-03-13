@@ -85,15 +85,23 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
         }
     }
     //================================================================
+    // Sub-function
+    public boolean IsReceivedStringValidData() {
+        if ((!getJevoisString().contains(getNopeString())) && (!getJevoisString().isBlank())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //================================================================
     public void ReadAndParseXY() {
         // Get raw, received data from the JeVois
         setJevoisString(getJevois().readString());
-        SmartDashboard.putString("Step 2", "Receiving raw data from JeVois");
-        SmartDashboard.putString("Feature_1", "Raw Jevois string: " + getJevoisString());    
+        SmartDashboard.putString("Raw Jevois string: ", getJevoisString());    
 
         // If the string is NOT the nopeString
             // The "nope" string is the string to indicate no successful output found from the vision pipeline
-        if ((!getJevoisString().contains(getNopeString())) && (!getJevoisString().isBlank())) {
+        if (IsReceivedStringValidData()) {
             try {
                 // Split the valid data (assumed that the data is x and y coords) into elements of a parsed string array
                 setParsedData(getJevoisString().split(getDelims()));
@@ -109,7 +117,7 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
             // Seperately set the X and Y coords from the parsed string array
             setXCoord(Integer.parseInt(getParsedData()[0]));
             setYCoord(Integer.parseInt(getParsedData()[1]));
-          
+
             // Status feature 2: Receiving X and Y coordinates from JeVois raw string
             SmartDashboard.putString("Feature_2", "X: " + Integer.toString(getXCoord()) + 
                                                "   Y: " + Integer.toString(getYCoord()));

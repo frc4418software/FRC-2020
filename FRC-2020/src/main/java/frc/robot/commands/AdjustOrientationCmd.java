@@ -17,11 +17,14 @@ public class AdjustOrientationCmd extends CommandBase {
    */
   public AdjustOrientationCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Robot.receiveJevoisDataSubsys);
+    addRequirements(Robot.visionHighgoalSubsys);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putString("CMD Init-ed", "AdjustOrientationCmd");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +36,7 @@ public class AdjustOrientationCmd extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    SmartDashboard.putString("CMD Done", "AdjustOrientationCmd");
   }
 
   // Returns true when the command should end.
