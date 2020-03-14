@@ -107,11 +107,9 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
             try {
                 // Split the valid data (assumed that the data is x and y coords) into elements of a parsed string array
                 setParsedData(getJevoisString().split(getDelims()));
-                
-
             }
             catch (StringIndexOutOfBoundsException siobe) {
-                SmartDashboard.putString("ParseXYError","StringIndexOutOfBoundsException: big not work");
+                SmartDashboard.putString("ParseXYError","StringIndexOutOfBoundsException: tried to set parsedData to split jevoisString");
             }
             
             try {
@@ -120,17 +118,14 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
                 setYCoord(Integer.parseInt(getParsedData()[1]));
             }
             catch (NumberFormatException nfe) {
-                SmartDashboard.putString("ParseXYError", "NumberFormatException: big bad happen");
-
-                
+                SmartDashboard.putString("ParseXYError", "NumberFormatException: tried to set XY coords to toInt-casted elements of parsedData");            
             }
             
-            // Status feature 2: Receiving X and Y coordinates from JeVois raw string
             SmartDashboard.putString("Coords", "X: " + Integer.toString(getXCoord()) + 
                                                "   Y: " + Integer.toString(getYCoord()));
         // If the string IS the nopeString
         } else {
-            // TODO figure out what to do here, if anything is even needed
+            SmartDashboard.putString("Coords", "No valid XY found");
         }
     }
     //#endregion    END OF FUNCTIONS SECTION===============================================================

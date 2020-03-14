@@ -7,14 +7,54 @@
 
 package frc.robot.subsystems;
 
-import java.util.concurrent.TimeUnit;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 
 
 public class VisionHighgoalSubsys extends SubsystemBase {
+    //#region   |||||||||||||||||||||||BEGINNING OF MULTI-COMPONENT VARIABLES||||||||||||||||||||||||||||||||||
+    private int backupConfirmedHighgoalXCoord;
+    public int getBackupConfirmedHighgoalXCoord() {
+        return this.backupConfirmedHighgoalXCoord;
+    }
+    public void setBackupConfirmedHighgoalXCoord(int backupConfirmedHighgoalXCoord) {
+        this.backupConfirmedHighgoalXCoord = backupConfirmedHighgoalXCoord;
+    }
+    //=======================================================================
+    private int backupConfirmedHighgoalYCoord;
+    public int getBackupConfirmedHighgoalYCoord() {
+        return this.backupConfirmedHighgoalYCoord;
+    }
+    public void setBackupConfirmedHighgoalYCoord(int backupConfirmedHighgoalYCoord) {
+        this.backupConfirmedHighgoalYCoord = backupConfirmedHighgoalYCoord;
+    }
+    //=======================================================================
+    private int jevoisCamWidth = 320;       // CONFIG SET THE PIXEL WIDTH OF THE JEVOIS VIEW
+    public int getJevoisCamWidth() {
+        return this.jevoisCamWidth;
+    }
+    public void setJevoisCamWidth(int jevoisCamWidth) {
+		this.jevoisCamWidth = jevoisCamWidth;
+    }
+    //=======================================================================
+    private int jevoisCamHeight = 240;      // CONFIG SET THE PIXEL HEIGHT OF THE JEVOIS VIEW
+    public int getJevoisCamHeight() {
+        return this.jevoisCamHeight;
+    }
+    public void setJevoisCamHeight(int jevoisCamHeight) {
+		this.jevoisCamHeight = jevoisCamHeight;
+    }
+    //=======================================================================
+    private double maxBothMotorOutputPercent = 0.75;      // CONFIG SET THE MAXIMUM PERCENT SPEED OF BOTH MOTORS
+    public double getMaxBothMotorOutputPercent() {
+        return this.maxBothMotorOutputPercent;
+    }
+    public void setMaxBothMotorOutputPercent(double maxBothMotorOutputPercent) {
+		this.maxBothMotorOutputPercent = maxBothMotorOutputPercent;
+	}
+    //#endregion
+    
     //#region   ====================BEGINNING OF SWEEP VARIABLES SECTION=======================================
     private int msTimeForFullSideRotation = 1000;           // CONFIG TODO Find correct time for this, is an est
     public int getMsTimeForFullSideRotation() {
@@ -72,26 +112,31 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 		this.sweepStopwatchTime = sweepStopwatchTime;
 	}
     //=======================================================================
-
+    private long sweepStopwatchStartTime = 0;
+    public long getSweepStopwatchStartTime() {
+        return this.sweepStopwatchStartTime;
+    }
+    public void setSweepStopwatchStartTime(long sweepStopwatchStartTime) {
+		this.sweepStopwatchStartTime = sweepStopwatchStartTime;
+	}
     //#endregion ====================END OF SWEEP VARIABLES SECTION=======================================
 
     //#region   ====================BEGINNING OF CONFIRM VARIABLES SECTION=======================================
     //TODO Write needed variables for adjusting the perceived brightness/lighting of the JeVois
-    //=======================================================================
-    private boolean startConfirmTimeoutStopwatch = false;
-    public boolean getStartConfirmTimeoutStopwatch() {
-        return this.startConfirmTimeoutStopwatch;
-    }
-    public void setStartConfirmTimeoutStopwatch(boolean startConfirmTimeoutStopwatch) {
-		this.startConfirmTimeoutStopwatch = startConfirmTimeoutStopwatch;
-    }
-    //=======================================================================
     private long confirmStopwatchTime = 0;
     public long getConfirmStopwatchTime() {
         return this.confirmStopwatchTime;
     }
     public void setConfirmStopwatchTime(long confirmStopwatchTime) {
 		this.confirmStopwatchTime = confirmStopwatchTime;
+    }
+    //=======================================================================
+    private long confirmStopwatchResetTime = 0;
+    public long getConfirmStopwatchResetTime() {
+        return this.confirmStopwatchResetTime;
+    }
+    public void setConfirmStopwatchResetTime(long confirmStopwatchResetTime) {
+		this.confirmStopwatchResetTime = confirmStopwatchResetTime;
 	}
     //=======================================================================
     private long consistentHighgoalConfirmMsTime = 1300;   // CONFIG TIME OF CONSISTENT XY RECEIVE FOR CONFIRMED HIGHGOAL
@@ -101,23 +146,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void setConsistentHighgoalConfirmMsTime(long consistentHighgoalConfirmMsTime) {
 		this.consistentHighgoalConfirmMsTime = consistentHighgoalConfirmMsTime;
 	}
-    //=======================================================================
-    private int backupConfirmedHighgoalXCoord;
-    public int getBackupConfirmedHighgoalXCoord() {
-        return this.backupConfirmedHighgoalXCoord;
-    }
-    public void setBackupConfirmedHighgoalXCoord(int backupConfirmedHighgoalXCoord) {
-        this.backupConfirmedHighgoalXCoord = backupConfirmedHighgoalXCoord;
-    }
-    //=======================================================================
-    private int backupConfirmedHighgoalYCoord;
-    public int getBackupConfirmedHighgoalYCoord() {
-        return this.backupConfirmedHighgoalYCoord;
-    }
-    public void setBackupConfirmedHighgoalYCoord(int backupConfirmedHighgoalYCoord) {
-        this.backupConfirmedHighgoalYCoord = backupConfirmedHighgoalYCoord;
-    }
-    //=======================================================================
+    //=======================================================================    
     private long confirmStopwatchMsTimeout = 2500;    // CONFIG MAX TIME TO LOOK FOR CONSISTENT STREAM OF XY, MUST BE LARGER THAN MS CONFIRM TIME
     public long getConfirmStopwatchMsTimeout() {
         return this.confirmStopwatchMsTimeout;
@@ -144,35 +173,82 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //#endregion    ====================END OF CONFIRM VARIABLES SECTION=======================================
 
     //#region   ====================BEGINNING OF FACE VARIABLES SECTION=======================================
-    private int highgoalXCoordThreshold = 15;   // CONFIG DISTANCE FROM WANTED X CENTER ALLOWED
-    public int getHighgoalXCoordThreshold() {
-        return this.highgoalXCoordThreshold;
+    private int faceXCoordThreshold = 12;   // CONFIG DISTANCE FROM WANTED X CENTER ALLOWED
+    public int getFaceXCoordThreshold() {
+        return this.faceXCoordThreshold;
     }
-    public void setHighgoalXCoordThreshold(int highgoalXCoordThreshold) {
-		this.highgoalXCoordThreshold = highgoalXCoordThreshold;
+    public void setFaceXCoordThreshold(int faceXCoordThreshold) {
+		this.faceXCoordThreshold = faceXCoordThreshold;
+    }
+    //=======================================================================
+    private long faceStopwatchTime = 0;
+    public long getFaceStopwatchTime() {
+        return this.faceStopwatchTime;
+    }
+    public void setFaceStopwatchTime(long faceStopwatchTime) {
+		this.faceStopwatchTime = faceStopwatchTime;
+	}
+    //=======================================================================
+    private long faceMsTimeThreshold = 700;        // CONFIG TIME NEEDED TO CONFIRM THAT 
+    public long getFaceMsTimeThreshold() {
+        return this.faceMsTimeThreshold;
+    }
+    public void setFaceMsTimeThreshold(long faceMsTimeThreshold) {
+		this.faceMsTimeThreshold = faceMsTimeThreshold;
+    }
+    //=======================================================================
+    private long faceStopwatchResetTime = 0;
+    public long getFaceStopwatchResetTime() {
+        return this.faceStopwatchResetTime;
+    }
+    public void setFaceStopwatchResetTime(long faceStopwatchResetTime) {
+        this.faceStopwatchResetTime = faceStopwatchResetTime;
+    }
+    //=======================================================================
+    private boolean isFaceHighgoalComplete = false;
+    public boolean getIsFaceHighgoalComplete() {
+        return this.isFaceHighgoalComplete;
+    }
+    public void setIsFaceHighgoalComplete(boolean isFaceHighgoalComplete) {
+		this.isFaceHighgoalComplete = isFaceHighgoalComplete;
 	}
     //#endregion    ====================END OF FACE VARIABLES SECTION=======================================
 
 
+
+
+
+
+    //#region   ||||||||||||||||||||||BEGINNING OF MULTI-COMPONENT FUNCTIONS||||||||||||||||||||||||||||||
+    // Sub-function
+    public boolean IsHighgoalOnLeftOfXCenter() {
+        if (Robot.receiveJevoisDataSubsys.getXCoord() >= (getJevoisCamWidth()/2)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    //#endregion
 
     //#region   ====================BEGINNING OF SWEEP FUNCTIONS SECTION=======================================
     // Sub-function
     public void StopwatchTurnAndStop(long msDelayTime, boolean turningLeft) {
         // If sweep stopwatch is not started
         if (getStartSweepStopwatch() != true) {
+            setSweepStopwatchStartTime(System.currentTimeMillis());
             setStartSweepStopwatch(true);
         // If sweep stopwatch is started
         } else {
             if (turningLeft) {
                 // Set motors to turn to face its left
-                Robot.driveSubsystem.setLeftMotorValue(-50 * getSweepLeftMotorMaxPercent());
-                Robot.driveSubsystem.setRightMotorValue(50 * getSweepRightMotorMaxPercent());
+                Robot.driveSubsystem.setLeftMotorValue(-1 * getSweepLeftMotorMaxPercent());
+                Robot.driveSubsystem.setRightMotorValue(1 * getSweepRightMotorMaxPercent());
             } else {
                 // Set motors to turn to face its right
                 Robot.driveSubsystem.setLeftMotorValue(50 * getSweepLeftMotorMaxPercent());
                 Robot.driveSubsystem.setRightMotorValue(-50 * getSweepRightMotorMaxPercent());
             }
-            setSweepStopwatchTime(System.currentTimeMillis());
+            setSweepStopwatchTime(System.currentTimeMillis() - getSweepStopwatchStartTime());
         }
 
         // If sweep duration is fulfilled
@@ -188,6 +264,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             setIsSweepFinished(true);
         }
     }
+    //======================================================================================================
     public void SurveyTurnForHighgoal(int surveyMode) {
         switch (surveyMode) {
             case 1:
@@ -218,61 +295,89 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             setBackupConfirmedHighgoalXCoord(Robot.receiveJevoisDataSubsys.getXCoord());
             setBackupConfirmedHighgoalYCoord(Robot.receiveJevoisDataSubsys.getYCoord());
 
-            // Reset the stopwatch for timing a consistently found highgoal
-            setStartConfirmTimeoutStopwatch(false);
-
             // Save that we have found a highgoal to follow
             setConsistentHighgoalFound(true);
-
             // Stop the robot from trying to confirm a consistently-time highgoal
             setStopConfirmCmd(true);
         }
     }
     //======================================================================================================
-    // Sub-function
-    public void ResetTimeIfDataIsNotValid() {
-        // Update amount of time robot has received constant XY highgoal that is not the "nopeString" or blank
-        if (Robot.receiveJevoisDataSubsys.IsReceivedStringValidData()) {
-            setConfirmStopwatchTime(System.currentTimeMillis());
-        } else {
-            setConfirmStopwatchTime(0);
-        }
-    }
-    //======================================================================================================
     public void ConfirmHighgoalXYWithTimeout() {
-        // If the timeout stopwatch for confirming a highgoal is NOT started
-        if (!getStartConfirmTimeoutStopwatch()) {
-            setStartConfirmTimeoutStopwatch(true);
-        // If the timeout stopwatch for confirming a highgoal is started
-        } else {
-            // If the robot has NOT been trying to confirm a consistent highgoal for the max time allowed
-            if (getConfirmStopwatchTime() >= getConfirmStopwatchMsTimeout()) {
-                // Reset the confirm stopwatch is the received XY data is the "nopeString" or is blank
-                    // Functionn also keeps updating the confirmStopwatch while detecting highgoal XY coords
-                ResetTimeIfDataIsNotValid();
-
-                // Stop the robot from trying to confirm a highgoal if a constant stream of XY highgoal coords was found
-                StopConfirmCmdIfConsistentHighgoalIsFound();
-
-            // If the robot has been trying to confirm a consistent highgoal for the max time allowed
+        // If the robot has NOT been trying to confirm a consistent highgoal for the max time allowed
+        if (getConfirmStopwatchTime() < getConfirmStopwatchMsTimeout()) {
+            if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData()) {
+                setConfirmStopwatchTime(0);
+                setConfirmStopwatchResetTime(System.currentTimeMillis());
             } else {
-                // Reset the stopwatch for timing a consistently found highgoal
-                setStartConfirmTimeoutStopwatch(false);
-
-                // Save that we have NOT found a highgoal to follow
-                setConsistentHighgoalFound(false);
-                
-                // Stop the robot from trying to confirm a consistently-time highgoal
-                setStopConfirmCmd(true);
+                setConfirmStopwatchTime(System.currentTimeMillis() - getConfirmStopwatchResetTime());
             }
-        }  
+
+            // Stop the robot from trying to confirm a highgoal if a constant stream of XY highgoal coords was found
+            StopConfirmCmdIfConsistentHighgoalIsFound();
+
+        // If the robot has been trying to confirm a consistent highgoal for the max time allowed
+        } else {
+            // Save that we have NOT found a highgoal to follow
+            setConsistentHighgoalFound(false);
+            // Stop the robot from trying to confirm a consistently-time highgoal
+            setStopConfirmCmd(true);
+        }
     }
     //#endregion    ====================END OF CONFIRM FUNCTIONS SECTION=======================================
 
     //#region   ====================BEGINNING OF FACE FUNCTIONS SECTION=======================================
-    public boolean IsHighgoalXCoordWithinThreshold() {
-        // TODO Finish check for highgoal X coord within threshold
-        return true;
+    // Sub-function
+    public boolean IsHighgoalXCoordWithinFaceThreshold() {
+        // If the highgoal's distance from the x axis' center is within threshold
+        if (    (Robot.receiveJevoisDataSubsys.getXCoord() >= ((getJevoisCamWidth()/2) - getFaceXCoordThreshold())) && 
+                (Robot.receiveJevoisDataSubsys.getXCoord() <= ((getJevoisCamWidth()/2) + getFaceXCoordThreshold()))    ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //======================================================================================================
+    // Sub-function
+    public double HighgoalXCenterOtherDiffPercentage() {
+        // If the found highgoal x coord is on the left side of the cam's x-center line
+        if (IsHighgoalOnLeftOfXCenter()) {
+            return (    (1 - (Robot.receiveJevoisDataSubsys.getXCoord() / (getJevoisCamWidth()/2))  )   );
+        // If the found highgoal x coord is on the right side of the cam's x-center line
+        } else {
+            return (    (1 - ((Robot.receiveJevoisDataSubsys.getXCoord() - (getJevoisCamWidth()/2)) / (getJevoisCamWidth()/2))  )   );
+        }
+    }
+    //======================================================================================================
+    // Sub-function
+    public void DriveTurnToFaceHighgoal() {
+        // If the highgoal is on the left half of the jevois cam's view
+        if (IsHighgoalOnLeftOfXCenter()) {
+            Robot.driveSubsystem.setLeftMotorValue(     (-1) * (HighgoalXCenterOtherDiffPercentage())  );
+            Robot.driveSubsystem.setRightMotorValue(    (1) * (HighgoalXCenterOtherDiffPercentage())   );
+        // If the highgoal is on the right half of the jevois cam's view
+        } else {
+            Robot.driveSubsystem.setLeftMotorValue(     (1) * (HighgoalXCenterOtherDiffPercentage())  );
+            Robot.driveSubsystem.setRightMotorValue(    (-1) * (HighgoalXCenterOtherDiffPercentage())   );
+        }
+    }
+    //======================================================================================================
+    public void TurnToFaceHighgoalWithTimedThreshold() {
+        if (getFaceStopwatchTime() >= getFaceMsTimeThreshold()) {
+            Robot.driveSubsystem.stopDrive();
+            setIsFaceHighgoalComplete(true);
+        } else {
+            DriveTurnToFaceHighgoal();
+            if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData() ||
+            (! IsHighgoalXCoordWithinFaceThreshold())  ) {
+                
+                setFaceStopwatchTime(0);
+                setFaceStopwatchResetTime(System.currentTimeMillis());
+            }
+
+            if (IsHighgoalXCoordWithinFaceThreshold()) {
+                setFaceStopwatchTime(System.currentTimeMillis() - getFaceStopwatchResetTime());
+            }
+        }
     }
     //#endregion    ====================END OF FACE FUNCTIONS SECTION=======================================
 }
