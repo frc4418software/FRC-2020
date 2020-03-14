@@ -18,6 +18,7 @@ public class ConfirmHighgoalCmd extends CommandBase {
   public ConfirmHighgoalCmd() {
     addRequirements(Robot.receiveJevoisDataSubsys);
     addRequirements(Robot.visionHighgoalSubsys);
+    addRequirements(Robot.driveSubsystem);
   }
 
   // Called when the command is initially scheduled.

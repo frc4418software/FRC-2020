@@ -214,6 +214,10 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 	}
     //#endregion    ====================END OF FACE VARIABLES SECTION=======================================
 
+    //#region   ====================BEGINNING OF DRIVE VARIABLES SECTION======================================
+    
+    //#endregion
+
 
 
 
@@ -248,16 +252,15 @@ public class VisionHighgoalSubsys extends SubsystemBase {
                 Robot.driveSubsystem.setLeftMotorValue(50 * getSweepLeftMotorMaxPercent());
                 Robot.driveSubsystem.setRightMotorValue(-50 * getSweepRightMotorMaxPercent());
             }
+
             setSweepStopwatchTime(System.currentTimeMillis() - getSweepStopwatchStartTime());
         }
 
         // If sweep duration is fulfilled
         if (getSweepStopwatchTime() >= msDelayTime) {
-            // TODO figure out how to properly stop the robot's drive motors
-            Robot.driveSubsystem.setLeftMotorValue(0);
-            Robot.driveSubsystem.setRightMotorValue(0);
+            Robot.driveSubsystem.stopDrive();
 
-            // Stop the sweep stopwatch
+            // Reset the sweep stopwatch
             setStartSweepStopwatch(false);
 
             // Confirm that the sweep has fulfilled its delay time
@@ -380,4 +383,8 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         }
     }
     //#endregion    ====================END OF FACE FUNCTIONS SECTION=======================================
+
+    //#region   ====================BEGINNING OF DRIVE FUNCTIONS SECTION========================================
+
+    //#endregion
 }

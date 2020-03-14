@@ -19,6 +19,7 @@ public class SweepLocateHighgoalCmd extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.receiveJevoisDataSubsys);
     addRequirements(Robot.visionHighgoalSubsys);
+    addRequirements(Robot.driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -32,7 +33,7 @@ public class SweepLocateHighgoalCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO write code to make surveyMode chosen by joystick, instead of just setting it to 1
+    // TODO write code to make surveyMode chosen by joystick, instead of just setting it to 1 for robot at leftmost position
     Robot.visionHighgoalSubsys.SurveyTurnForHighgoal(1);
   }
 

@@ -70,6 +70,8 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
     //#endregion    END OF VARIABLES SECTION============================================================
 
 
+
+
     //#region   BEGINNING OF FUNCTIONS SECTION============================================================
     public void InitSerialPort() {
         try {
