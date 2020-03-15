@@ -30,6 +30,22 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         this.backupConfirmedHighgoalYCoord = backupConfirmedHighgoalYCoord;
     }
     //=======================================================================
+    private boolean consistentHighgoalFound = false;
+    public boolean getConsistentHighgoalFound() {
+        return this.consistentHighgoalFound;
+    }
+    public void setConsistentHighgoalFound(boolean consistentHighgoalFound) {
+		this.consistentHighgoalFound = consistentHighgoalFound;
+    }
+    //=======================================================================
+    private boolean isUsingBackupCoordsAsDefault = false;      // CONFIG SET WHETHER ROBOT FACES HIGHGOAL USING BACKUP COORDS OR NOT
+    public boolean getIsUsingBackupCoordsAsDefault() {
+        return this.isUsingBackupCoordsAsDefault;
+    }
+    public void setIsUsingBackupCoordsAsDefault(boolean isUsingBackupCoordsAsDefault) {
+		this.isUsingBackupCoordsAsDefault = isUsingBackupCoordsAsDefault;
+    }
+    //=======================================================================
     private int jevoisCamWidth = 320;       // CONFIG SET THE PIXEL WIDTH OF THE JEVOIS VIEW
     public int getJevoisCamWidth() {
         return this.jevoisCamWidth;
@@ -154,14 +170,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void setConfirmStopwatchMsTimeout(long confirmStopwatchMsTimeout) {
 		this.confirmStopwatchMsTimeout = confirmStopwatchMsTimeout;
 	} 
-    //=======================================================================
-    private boolean consistentHighgoalFound = false;
-    public boolean getConsistentHighgoalFound() {
-        return this.consistentHighgoalFound;
-    }
-    public void setConsistentHighgoalFound(boolean consistentHighgoalFound) {
-		this.consistentHighgoalFound = consistentHighgoalFound;
-    }
     //=======================================================================
     private boolean stopConfirmCmd = false;
     public boolean getStopConfirmCmd() {
@@ -341,26 +349,56 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     }
     //======================================================================================================
     // Sub-function
-    public double HighgoalXCenterOtherDiffPercentage() {
+    public double HighgoalXCenterOtherDiffPercentage(int highgoalXCoord) {
         // If the found highgoal x coord is on the left side of the cam's x-center line
         if (IsHighgoalOnLeftOfXCenter()) {
-            return (    (1 - (Robot.receiveJevoisDataSubsys.getXCoord() / (getJevoisCamWidth()/2))  )   );
+            return (    (1 - (highgoalXCoord / (getJevoisCamWidth()/2))  )   );
         // If the found highgoal x coord is on the right side of the cam's x-center line
         } else {
-            return (    (1 - ((Robot.receiveJevoisDataSubsys.getXCoord() - (getJevoisCamWidth()/2)) / (getJevoisCamWidth()/2))  )   );
+            return (    (1 - ((highgoalXCoord - (getJevoisCamWidth()/2)) / (getJevoisCamWidth()/2))  )   );
         }
     }
     //======================================================================================================
     // Sub-function
-    public void DriveTurnToFaceHighgoal() {
-        // If the highgoal is on the left half of the jevois cam's view
-        if (IsHighgoalOnLeftOfXCenter()) {
-            Robot.driveSubsystem.setLeftMotorValue(     (-1) * (HighgoalXCenterOtherDiffPercentage())  );
-            Robot.driveSubsystem.setRightMotorValue(    (1) * (HighgoalXCenterOtherDiffPercentage())   );
-        // If the highgoal is on the right half of the jevois cam's view
+    public void TurnToHighgoalWithOtherDiffPercent(boolean usingBackupCoords) {
+        if (usingBackupCoords) {
+            // If the highgoal is on the left half of the jevois cam's view
+            if (IsHighgoalOnLeftOfXCenter()) {
+                Robot.driveSubsystem.setLeftMotorValue(     (-1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))  );
+                Robot.driveSubsystem.setRightMotorValue(    (1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))   );
+            // If the highgoal is on the right half of the jevois cam's view
+            } else {
+                Robot.driveSubsystem.setLeftMotorValue(     (1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))  );
+                Robot.driveSubsystem.setRightMotorValue(    (-1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))   );
+            }
         } else {
-            Robot.driveSubsystem.setLeftMotorValue(     (1) * (HighgoalXCenterOtherDiffPercentage())  );
-            Robot.driveSubsystem.setRightMotorValue(    (-1) * (HighgoalXCenterOtherDiffPercentage())   );
+            // If the highgoal is on the left half of the jevois cam's view
+            if (IsHighgoalOnLeftOfXCenter()) {
+                Robot.driveSubsystem.setLeftMotorValue(     (-1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))  );
+                Robot.driveSubsystem.setRightMotorValue(    (1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))   );
+            // If the highgoal is on the right half of the jevois cam's view
+            } else {
+                Robot.driveSubsystem.setLeftMotorValue(     (1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))  );
+                Robot.driveSubsystem.setRightMotorValue(    (-1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))   );
+            }
+        }
+    }
+    //======================================================================================================
+    public void UpdateBackupCoords() {
+        // TODO write math calculations for updating backup coords
+        //setBackupConfirmedHighgoalXCoord(backupConfirmedHighgoalXCoord);
+        //setBackupConfirmedHighgoalYCoord(backupConfirmedHighgoalYCoord);
+    }
+    //======================================================================================================
+    // Sub-function
+    public void DriveTurnToFaceHighgoal() {
+        // If the robot has backup coords to use, and is by default set to face highgoal based on backup coords
+        if (getIsUsingBackupCoordsAsDefault() && getConsistentHighgoalFound()) {
+            UpdateBackupCoords();
+            TurnToHighgoalWithOtherDiffPercent(true);
+        // If the robot does NOT (have backup coords AND default setting to face highgoal based on backup coords)
+        } else {
+            TurnToHighgoalWithOtherDiffPercent(false);
         }
     }
     //======================================================================================================
