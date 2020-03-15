@@ -52,6 +52,14 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
         this.yCoord = yCoord;
     }
     //================================================================
+    private int rectSize;
+    public int getRectSize() {
+        return this.rectSize;
+    }
+    public void setRectSize(int rectSize) {
+        this.rectSize = rectSize;
+    }
+    //================================================================
     private String delims = ",";
     public String getDelims() {
         return this.delims;
@@ -118,6 +126,10 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
                 // Seperately set the X and Y coords from the parsed string array
                 setXCoord(Integer.parseInt(getParsedData()[0]));
                 setYCoord(Integer.parseInt(getParsedData()[1]));
+
+                // TODO change all jevois scripts to also send the rect size after a second comma (2nd comma after the y coord)
+                // Also seperately set the found rectangle's size from the parsed string array
+                setRectSize(Integer.parseInt(getParsedData()[3]));
             }
             catch (NumberFormatException nfe) {
                 SmartDashboard.putString("ParseXYError", "NumberFormatException: tried to set XY coords to toInt-casted elements of parsedData");            
@@ -125,6 +137,7 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
             
             SmartDashboard.putString("Coords", "X: " + Integer.toString(getXCoord()) + 
                                                "   Y: " + Integer.toString(getYCoord()));
+            SmartDashboard.putString("RectSize", Integer.toString(getRectSize()));
         // If the string IS the nopeString
         } else {
             SmartDashboard.putString("Coords", "No valid XY found");

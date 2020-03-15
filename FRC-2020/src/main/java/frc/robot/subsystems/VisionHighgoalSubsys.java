@@ -68,6 +68,22 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     }
     public void setMaxBothMotorOutputPercent(double maxBothMotorOutputPercent) {
 		this.maxBothMotorOutputPercent = maxBothMotorOutputPercent;
+    }
+    //=======================================================================
+    private int leftMotorDirFlip = 1;           // CONFIG USE TO FLIP THE DIRECTION OF THE LEFT MOTOR
+    public int getLeftMotorDirFlip() {
+        return this.leftMotorDirFlip;
+    }
+    public void setLeftMotorDirFlip(int leftMotorDirFlip) {
+		this.leftMotorDirFlip = leftMotorDirFlip;
+    }
+    //=======================================================================
+    private int rightMotorDirFlip = -1;         // CONFIG USE TO FLIP THE DIRECTION OF THE RIGHT MOTOR
+    public int getRightMotorDirFlip() {
+        return this.rightMotorDirFlip;
+    }
+    public void setRightMotorDirFlip(int rightMotorDirFlip) {
+		this.rightMotorDirFlip = rightMotorDirFlip;
 	}
     //#endregion
     
@@ -197,7 +213,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 		this.faceStopwatchTime = faceStopwatchTime;
 	}
     //=======================================================================
-    private long faceMsTimeThreshold = 700;        // CONFIG TIME NEEDED TO CONFIRM THAT 
+    private long faceMsTimeThreshold = 700;        // CONFIG TIME NEEDED TO CONFIRM THAT ROBOT IS CONSISTENTLY FACING THE HIGHGOAL
     public long getFaceMsTimeThreshold() {
         return this.faceMsTimeThreshold;
     }
@@ -223,7 +239,47 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //#endregion    ====================END OF FACE VARIABLES SECTION=======================================
 
     //#region   ====================BEGINNING OF DRIVE VARIABLES SECTION======================================
-    
+                // TODO FIND RIGHT BOX SIZE TO USE
+    private int highgoalRectAreaThreshold = 150;         // CONFIG SET SIZE OF HIGHGOAL THRESHOLD WHEN ROBOT GETS CLOSE ENOUGH
+    public int getHighgoalRectAreaThreshold() {
+        return this.highgoalRectAreaThreshold;
+    }
+    public void setHighgoalRectAreaThreshold(int highgoalRectAreaThreshold) {
+		this.highgoalRectAreaThreshold = highgoalRectAreaThreshold;
+	}
+    //=======================================================================
+    private int highCenterPosDistFromHighgoal;
+    public int getHighCenterPosDistFromHighgoal() {
+        return this.highCenterPosDistFromHighgoal;
+    }
+    public void setHighCenterPosDistFromHighgoal(int highCenterPosDistFromHighgoal) {
+        this.highCenterPosDistFromHighgoal = highCenterPosDistFromHighgoal;
+    }
+    //=======================================================================
+    private int trueHighgoalDist;
+    public int getTrueHighgoalDist() {
+        return this.trueHighgoalDist;
+    }
+    public void setTrueHighgoalDist(int trueHighgoalDist) {
+        this.trueHighgoalDist = trueHighgoalDist;
+    }
+    //=======================================================================
+            // TODO FIND RIGHT DIST TO USE
+    private int highgoalDistThreshold = 20;     // CONFIG SET ULTRASONIC DIST THRESHOLD FROM HIGHGOAL WHEN ROBOT GETS CLOSE ENOUGH 
+    public int getHighgoalDistThreshold() {
+        return this.highgoalDistThreshold;
+    }
+    public void setHighgoalDistThreshold(int highgoalDistThreshold) {
+		this.highgoalDistThreshold = highgoalDistThreshold;
+    }
+    //=======================================================================
+    private boolean hasReachedHighgoal = false;
+    public boolean getHasReachedHighgoal() {
+        return this.hasReachedHighgoal;
+    }
+    public void setHasReachedHighgoal(boolean hasReachedHighgoal) {
+		this.hasReachedHighgoal = hasReachedHighgoal;
+	}
     //#endregion
 
 
@@ -253,12 +309,12 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         } else {
             if (turningLeft) {
                 // Set motors to turn to face its left
-                Robot.driveSubsystem.setLeftMotorValue(-1 * getSweepLeftMotorMaxPercent());
-                Robot.driveSubsystem.setRightMotorValue(1 * getSweepRightMotorMaxPercent());
+                Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (-1) * getSweepLeftMotorMaxPercent() )    );
+                Robot.driveSubsystem.setRightMotorValue(    (getRightMotorDirFlip()) * ( (1) * getSweepRightMotorMaxPercent() )    );
             } else {
                 // Set motors to turn to face its right
-                Robot.driveSubsystem.setLeftMotorValue(50 * getSweepLeftMotorMaxPercent());
-                Robot.driveSubsystem.setRightMotorValue(-50 * getSweepRightMotorMaxPercent());
+                Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (50) * getSweepLeftMotorMaxPercent() )    );
+                Robot.driveSubsystem.setRightMotorValue(    (getRightMotorDirFlip()) * ( (-50) * getSweepRightMotorMaxPercent() )      );
             }
 
             setSweepStopwatchTime(System.currentTimeMillis() - getSweepStopwatchStartTime());
@@ -364,22 +420,22 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         if (usingBackupCoords) {
             // If the highgoal is on the left half of the jevois cam's view
             if (IsHighgoalOnLeftOfXCenter()) {
-                Robot.driveSubsystem.setLeftMotorValue(     (-1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))  );
-                Robot.driveSubsystem.setRightMotorValue(    (1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))   );
+                Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (-1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord())) )  );
+                Robot.driveSubsystem.setRightMotorValue(    (getRightMotorDirFlip()) * ( (1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord())) )   );
             // If the highgoal is on the right half of the jevois cam's view
             } else {
-                Robot.driveSubsystem.setLeftMotorValue(     (1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))  );
-                Robot.driveSubsystem.setRightMotorValue(    (-1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord()))   );
+                Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord())) )  );
+                Robot.driveSubsystem.setRightMotorValue(    (getRightMotorDirFlip()) * ( (-1) * (HighgoalXCenterOtherDiffPercentage(getBackupConfirmedHighgoalXCoord())) )   );
             }
         } else {
             // If the highgoal is on the left half of the jevois cam's view
             if (IsHighgoalOnLeftOfXCenter()) {
-                Robot.driveSubsystem.setLeftMotorValue(     (-1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))  );
-                Robot.driveSubsystem.setRightMotorValue(    (1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))   );
+                Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (-1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord())) )  );
+                Robot.driveSubsystem.setRightMotorValue(    (getRightMotorDirFlip()) * ( (1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord())) )   );
             // If the highgoal is on the right half of the jevois cam's view
             } else {
-                Robot.driveSubsystem.setLeftMotorValue(     (1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))  );
-                Robot.driveSubsystem.setRightMotorValue(    (-1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord()))   );
+                Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord())) )  );
+                Robot.driveSubsystem.setRightMotorValue(    (getRightMotorDirFlip()) * ( (-1) * (HighgoalXCenterOtherDiffPercentage(Robot.receiveJevoisDataSubsys.getXCoord())) )   );
             }
         }
     }
@@ -423,6 +479,50 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //#endregion    ====================END OF FACE FUNCTIONS SECTION=======================================
 
     //#region   ====================BEGINNING OF DRIVE FUNCTIONS SECTION========================================
+    // Sub-function
+    public boolean IsCloseEnoughToHighgoal(boolean usingBoxAndDistThresh) {
+        if (usingBoxAndDistThresh) {
+            if (    (Robot.receiveJevoisDataSubsys.getRectSize() >= getHighgoalRectAreaThreshold()) && 
+            (getHighCenterPosDistFromHighgoal() <= getHighgoalDistThreshold())    ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (     (Robot.receiveJevoisDataSubsys.getRectSize() >= getHighgoalRectAreaThreshold()) || 
+            (getHighCenterPosDistFromHighgoal() <= getHighgoalDistThreshold())    ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    //======================================================================================================
+    // Sub-function
+    public void UpdateDistFromHighgoal() {
+        // TODO figure out how to get ultrasonic sensor input
+        //setHighCenterPosDistFromHighgoal(highCenterPosDistFromHighgoal);
 
+        // TODO if using multiple distance sensors, do math here
+        //setTrueHighgoalDist(getHighCenterPosDistFromHighgoal());
+    }
+    //======================================================================================================
+    public void DriveUntilCloseToHighgoal() {
+        // If the robot is close enough to the highgoal by the setup thresholds (ultrasonic distance AND/OR highgoal overall contour rect size)
+        if (IsCloseEnoughToHighgoal(false)) {
+            // Stop the robot's driving motors
+            Robot.driveSubsystem.stopDrive();
+
+            // Indicate that we have reached the highgoal
+            setHasReachedHighgoal(true);
+        } else {
+            // Drive the robot's drive motors at max driving speed (config)
+            Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (1) * (getMaxBothMotorOutputPercent()) )    );
+            Robot.driveSubsystem.setRightMotorValue(     (getRightMotorDirFlip()) * ( (1) * (getMaxBothMotorOutputPercent()) )    );
+            
+            // Use distance(ultrasonic) sensors to update our known distance from the highgoal
+            UpdateDistFromHighgoal();
+        }
+    }
     //#endregion
 }

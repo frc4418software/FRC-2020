@@ -30,18 +30,21 @@ public class DriveToHighgoalCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    Robot.visionHighgoalSubsys.DriveUntilCloseToHighgoal();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // Reset drive detection to get close enough to highgoal using dist thresh AND/OR highgoal rect size
+    Robot.visionHighgoalSubsys.setHasReachedHighgoal(false);
+
     SmartDashboard.putString("CMD Done", "DriveToHighgoalCmd");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Robot.visionHighgoalSubsys.getHasReachedHighgoal();
   }
 }
