@@ -43,9 +43,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public boolean getIsUsingBackupCoordsAsDefault() {
         return this.isUsingBackupCoordsAsDefault;
     }
-    public void setIsUsingBackupCoordsAsDefault(boolean isUsingBackupCoordsAsDefault) {
-		this.isUsingBackupCoordsAsDefault = isUsingBackupCoordsAsDefault;
-    }
     //=======================================================================
     private int jevoisCamWidth = 320;       // CONFIG SET THE PIXEL WIDTH OF THE JEVOIS VIEW
     public int getJevoisCamWidth() {
@@ -68,26 +65,17 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public double getMaxBothMotorOutputPercent() {
         return this.maxBothMotorOutputPercent;
     }
-    public void setMaxBothMotorOutputPercent(double maxBothMotorOutputPercent) {
-		this.maxBothMotorOutputPercent = maxBothMotorOutputPercent;
-    }
     //=======================================================================
             // TODO CONFIG whether 1 or -1 makes the left motor turn forward
     private int leftMotorDirFlip = 1;           // CONFIG USE TO FLIP THE DIRECTION OF THE LEFT MOTOR
     public int getLeftMotorDirFlip() {
         return this.leftMotorDirFlip;
     }
-    public void setLeftMotorDirFlip(int leftMotorDirFlip) {
-		this.leftMotorDirFlip = leftMotorDirFlip;
-    }
     //=======================================================================
             // TODO CONFIG whether 1 or -1 makes the right motor turn forward
     private int rightMotorDirFlip = -1;         // CONFIG USE TO FLIP THE DIRECTION OF THE RIGHT MOTOR
     public int getRightMotorDirFlip() {
         return this.rightMotorDirFlip;
-    }
-    public void setRightMotorDirFlip(int rightMotorDirFlip) {
-		this.rightMotorDirFlip = rightMotorDirFlip;
     }
     //=======================================================================
     private int highCenterPosDistFromHighgoal;
@@ -113,18 +101,12 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public int getMsTimeForFullSideRotation() {
         return this.msTimeForFullSideRotation;
     }
-    public void getMsTimeForFullSideRotation(int msTimeForFullSideRotation) {
-		this.msTimeForFullSideRotation = msTimeForFullSideRotation;
-    }
     //=======================================================================
             // TODO CONFIG WITH MATH to find time for robot to do partial turn when in centermost
     private int msTimeForCenterSideRotation = 417;         // CONFIG SET TIME FOR ROBOT TO TURN A LITTLE TOWARDS HIGHGOAL WHEN IN CENTERMOST
     public int getMsTimeForCenterSideRotation() {
         return this.msTimeForCenterSideRotation;
     }
-    public void setMsTimeForCenterSideRotation(int msTimeForCenterSideRotation) {
-		this.msTimeForCenterSideRotation = msTimeForCenterSideRotation;
-	}
     //=======================================================================
             // TODO CONFIG whether the robot should go through the "sweep" stage or not
     private boolean isSweepFinished = false;      // CONFIG SET WHETHER SWEEP IS NEEDED FOR NOT, TRUE FOR NOT NEEDED
@@ -162,6 +144,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 
     //#region   ====================BEGINNING OF CONFIRM VARIABLES SECTION=======================================
     //TODO WRITE needed variables for adjusting the perceived brightness/lighting of the JeVois
+    //=======================================================================
     private long confirmStopwatchTime = 0;
     public long getConfirmStopwatchTime() {
         return this.confirmStopwatchTime;
@@ -178,23 +161,17 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 		this.confirmStopwatchResetTime = confirmStopwatchResetTime;
 	}
     //=======================================================================
-                // TODO CONFIG a good time for a consisten receival of highgoal XY coords
+                // TODO CONFIG good time for a consistent receival of highgoal XY coords
     private long consistentHighgoalConfirmMsTime = 1300;   // CONFIG TIME OF CONSISTENT XY RECEIVE FOR CONFIRMED HIGHGOAL
     public long getConsistentHighgoalConfirmMsTime() {
         return this.consistentHighgoalConfirmMsTime;
     }
-    public void setConsistentHighgoalConfirmMsTime(long consistentHighgoalConfirmMsTime) {
-		this.consistentHighgoalConfirmMsTime = consistentHighgoalConfirmMsTime;
-	}
     //=======================================================================    
-                // TODO CONFIG a good maximum time for robot to look for a consistent strema of highgoal XY coords
+                // TODO CONFIG good max time to look for a consistent stream of highgoal XY coords
     private long confirmStopwatchMsTimeout = 2500;    // CONFIG MAX TIME TO LOOK FOR CONSISTENT STREAM OF XY, MUST BE LARGER THAN MS CONFIRM TIME
     public long getConfirmStopwatchMsTimeout() {
         return this.confirmStopwatchMsTimeout;
     }
-    public void setConfirmStopwatchMsTimeout(long confirmStopwatchMsTimeout) {
-		this.confirmStopwatchMsTimeout = confirmStopwatchMsTimeout;
-	} 
     //=======================================================================
     private boolean stopConfirmCmd = false;
     public boolean getStopConfirmCmd() {
@@ -211,9 +188,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public int getFaceXCoordThreshold() {
         return this.faceXCoordThreshold;
     }
-    public void setFaceXCoordThreshold(int faceXCoordThreshold) {
-		this.faceXCoordThreshold = faceXCoordThreshold;
-    }
     //=======================================================================
     private long faceStopwatchTime = 0;
     public long getFaceStopwatchTime() {
@@ -227,9 +201,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     private long faceMsTimeThreshold = 700;        // CONFIG TIME NEEDED TO CONFIRM THAT ROBOT IS CONSISTENTLY FACING THE HIGHGOAL
     public long getFaceMsTimeThreshold() {
         return this.faceMsTimeThreshold;
-    }
-    public void setFaceMsTimeThreshold(long faceMsTimeThreshold) {
-		this.faceMsTimeThreshold = faceMsTimeThreshold;
     }
     //=======================================================================
     private long faceStopwatchResetTime = 0;
@@ -255,9 +226,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public int getHighgoalRectAreaThreshold() {
         return this.highgoalRectAreaThreshold;
     }
-    public void setHighgoalRectAreaThreshold(int highgoalRectAreaThreshold) {
-		this.highgoalRectAreaThreshold = highgoalRectAreaThreshold;
-	}
     //=======================================================================
     private int trueHighgoalDist;
     public int getTrueHighgoalDist() {
@@ -272,17 +240,11 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public int getHighgoalDistThreshold() {
         return this.highgoalDistThreshold;
     }
-    public void setHighgoalDistThreshold(int highgoalDistThreshold) {
-		this.highgoalDistThreshold = highgoalDistThreshold;
-    }
     //=======================================================================
             // TODO (IF NEEDED) CONFIG y threshold for when to stop driving towards highgoal            
     private int driveToHighgoalYThresh = 75;            // CONFIG SET Y HEIGHT HIGHGOAL SHOULD BE AT WHEN ROBOT GETS CLOSE ENOUGH TO HIGHGOAL
     public int getDriveToHighgoalYThresh() {
         return this.driveToHighgoalYThresh;
-    }
-    public void setDriveToHighgoalYThresh(int driveToHighgoalYThresh) {
-		this.driveToHighgoalYThresh = driveToHighgoalYThresh;
     }
     //=======================================================================
     private boolean isCloseEnoughToHighgoal = false;
@@ -325,9 +287,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public long getAdjustHighgoalConfirmMsTime() {
         return this.adjustHighgoalConfirmMsTime;
     }
-    public void setAdjustHighgoalConfirmMsTime(long adjustHighgoalConfirmMsTime) {
-		this.adjustHighgoalConfirmMsTime = adjustHighgoalConfirmMsTime;
-    }
     //=======================================================================
     private boolean adjustHighgoalFound = false;
     public boolean getAdjustHighgoalFound() {
@@ -351,9 +310,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public long getAdjustConfirmStopwatchMsTimeout() {
         return this.adjustConfirmStopwatchMsTimeout;
     }
-    public void setAdjustConfirmStopwatchMsTimeout(long adjustConfirmStopwatchMsTimeout) {
-		this.adjustConfirmStopwatchMsTimeout = adjustConfirmStopwatchMsTimeout;
-    }
     //=======================================================================
     private long adjustConfirmStopwatchResetTime = 0;
     public long getAdjustConfirmStopwatchResetTime() {
@@ -361,7 +317,57 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     }
     public void setAdjustConfirmStopwatchResetTime(long adjustConfirmStopwatchResetTime) {
 		this.adjustConfirmStopwatchResetTime = adjustConfirmStopwatchResetTime;
-	}
+    }
+    //=======================================================================
+    private long adjustFaceStopwatchTime = 0;
+    public long getAdjustFaceStopwatchTime() {
+        return this.adjustFaceStopwatchTime;
+    }
+    public void setAdjustFaceStopwatchTime(long adjustFaceStopwatchTime) {
+		this.adjustFaceStopwatchTime = adjustFaceStopwatchTime;
+    }
+    //=======================================================================
+                // TODO CONFIG time needed to know that re-face is within the x threshold
+    private long adjustFaceMsTimeThreshold = 500;       // CONFIG TIME THAT RE-FACE IS WITHIN THRESHOLD
+    public long getAdjustFaceMsTimeThreshold() {
+        return this.adjustFaceMsTimeThreshold;
+    }
+    //=======================================================================
+    private boolean isAdjustFaceHighgoalComplete = false;
+    public boolean getIsAdjustFaceHighgoalComplete() {
+        return this.isAdjustFaceHighgoalComplete;
+    }
+    public void setIsAdjustFaceHighgoalComplete(boolean isAdjustFaceHighgoalComplete) {
+		this.isAdjustFaceHighgoalComplete = isAdjustFaceHighgoalComplete;
+    }
+    //=======================================================================
+            // TODO CONFIG x threshold for re-facing the highgoal
+    private int adjustFaceXCoordThreshold = 8;      // CONFIG CLOSE-UP X THRESHOLD FOR RE-FACING HIGHGOAL
+    public int getAdjustFaceXCoordThreshold() {
+        return this.adjustFaceXCoordThreshold;
+    }
+    //=======================================================================
+    private long adjustFaceStopwatchResetTime = 0;
+    public long getAdjustFaceStopwatchResetTime() {
+        return this.adjustFaceStopwatchResetTime;
+    }
+    public void setAdjustFaceStopwatchResetTime(long adjustFaceStopwatchResetTime) {
+		this.adjustFaceStopwatchResetTime = adjustFaceStopwatchResetTime;
+    }
+    //=======================================================================
+    private long adjustFaceHighgoalStartTime;
+    public long getAdjustFaceHighgoalStartTime() {
+        return this.adjustFaceHighgoalStartTime;
+    }
+    public void setAdjustFaceHighgoalStartTime(long adjustFaceHighgoalStartTime) {
+        this.adjustFaceHighgoalStartTime = adjustFaceHighgoalStartTime;
+    }
+    //=======================================================================
+            // TODO CONFIG maximum time allowed to re-face highgoal
+    private long adjustFaceHighgoalTimeMax = 800;       // CONFIG TIME GREATER THAN RE-FACE TIME WHEN TO STOP TRYING TO RE-FACE
+    public long getAdjustFaceHighgoalTimeMax() {
+        return this.adjustFaceHighgoalTimeMax;
+    }
     //#endregion
 
 
@@ -693,21 +699,45 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     }
     //======================================================================================================
     // Sub-function
-    public void AdjustFaceHighgoalTimedThreshold() {
-        if (getFaceStopwatchTime() >= getFaceMsTimeThreshold()) {
-            Robot.driveSubsystem.stopDrive();
-            setIsFaceHighgoalComplete(true);
+    public boolean IsHighgoalXCoordWithinAdjustFaceThreshold() {
+        // If the highgoal's distance from the x axis' center is within threshold
+        if (    (Robot.receiveJevoisDataSubsys.getXCoord() >= ((getJevoisCamWidth()/2) - getAdjustFaceXCoordThreshold())) && 
+                (Robot.receiveJevoisDataSubsys.getXCoord() <= ((getJevoisCamWidth()/2) + getAdjustFaceXCoordThreshold()))    ) {
+            return true;
         } else {
-            DriveTurnToFaceHighgoal();
-            if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData() ||
-            (! IsHighgoalXCoordWithinFaceThreshold())  ) {
-                
-                setFaceStopwatchTime(0);
-                setFaceStopwatchResetTime(System.currentTimeMillis());
-            }
+            return false;
+        }
+    }
+    //======================================================================================================
+    // Sub-function
+    public boolean IsAdjustFaceHighgoalTimedOut() {
+        if (    (   System.currentTimeMillis() - getAdjustFaceHighgoalStartTime()  ) > (getAdjustFaceHighgoalTimeMax())   ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //======================================================================================================
+    // Sub-function
+    public void AdjustFaceHighgoalTimedThreshold() {
+        if (getAdjustFaceStopwatchTime() >= getAdjustFaceMsTimeThreshold()) {
+            Robot.driveSubsystem.stopDrive();
+            setIsAdjustFaceHighgoalComplete(true);
+        } else {
+            if (! IsAdjustFaceHighgoalTimedOut()) {
+                DriveTurnToFaceHighgoal();
+                if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData() ||
+                (! IsHighgoalXCoordWithinAdjustFaceThreshold())  ) {
+                    
+                    setAdjustFaceStopwatchTime(0);
+                    setAdjustFaceStopwatchResetTime(System.currentTimeMillis());
+                }
 
-            if (IsHighgoalXCoordWithinFaceThreshold()) {
-                setFaceStopwatchTime(System.currentTimeMillis() - getFaceStopwatchResetTime());
+                if (IsHighgoalXCoordWithinAdjustFaceThreshold()) {
+                    setAdjustFaceStopwatchTime(System.currentTimeMillis() - getAdjustFaceStopwatchResetTime());
+                }
+            } else {
+                
             }
         }
     }
