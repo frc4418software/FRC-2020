@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class ShootIntoHighgoalCmd extends CommandBase {
+
+  // LITERALLY COPY AND PASTED FROM THE SEMIAUTOFIRECOMMAND THAT BEN WROTE XD
+
+
   /**
    * Creates a new ShootIntoHighgoalCmd
    */
@@ -20,6 +24,7 @@ public class ShootIntoHighgoalCmd extends CommandBase {
     addRequirements(Robot.receiveJevoisDataSubsys);
     addRequirements(Robot.visionHighgoalSubsys);
     addRequirements(Robot.driveSubsystem);
+    addRequirements(Robot.manipulatorsubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -31,12 +36,16 @@ public class ShootIntoHighgoalCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    Robot.manipulatorsubsystem.semiAutoFire(true, Robot.constants.getShootLoadDelayTime());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Robot.manipulatorsubsystem.stopBottomFireMotor();
+    Robot.manipulatorsubsystem.stopTopFireMotor();
+    Robot.manipulatorsubsystem.stopLoadMotor();
+
     SmartDashboard.putString("CMD Done", "ShootIntoHighgoalCmd");
   }
 

@@ -109,30 +109,30 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   //Potentiometer stuffs (I hope this works)
   //read potentiometer
-  public double getPivotPotentiometer(){
+  public double getPivotPotentiometer() {
     return pivotPotentiometer.get();
   }
 
-  public void selectLaunch(int p){
+  public void selectLaunch(int p) {
     launchPosition = p;
     SmartDashboard.putNumber("Launch Selection", launchPosition);
   }
 
-  public void semiAutoFire(){
+  public void semiAutoFire(boolean usingLoadDelay, long loadDelayTime) {
     SmartDashboard.putNumber("Bottom Fire", getBottomFireMotor());
     SmartDashboard.putNumber("Top Fire", getTopFireMotor());
     SmartDashboard.putNumber("Load", getLoadMotor());
-    if(launchPosition == 1){
+    if(launchPosition == 1) {
       bottomFireValue = .24;
       topFireValue = -.6;
       waitTime = 1500;
     }
-    else if(launchPosition == 2){
+    else if(launchPosition == 2) {
       bottomFireValue = .5;
       topFireValue = -.5;
       waitTime = 1000;
     }
-    else if(launchPosition == 3){
+    else if(launchPosition == 3) {
       bottomFireValue = .3;
       topFireValue = -.3;
       waitTime = 250;
@@ -141,11 +141,15 @@ public class ManipulatorSubsystem extends SubsystemBase {
     setTopFireMotor(topFireValue);
     try{
       Thread.sleep(waitTime);
-    } catch (InterruptedException e){
+    } catch (InterruptedException e) {
       e.printStackTrace();
     }
+    
     setLoadMotor(.5);
 
+    if (usingLoadDelay) {
+
+    }
   }
 
 

@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   public static ReceiveJevoisDataSubsys receiveJevoisDataSubsys = new ReceiveJevoisDataSubsys();
   public static VisionHighgoalSubsys visionHighgoalSubsys = new VisionHighgoalSubsys();
 
-
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
