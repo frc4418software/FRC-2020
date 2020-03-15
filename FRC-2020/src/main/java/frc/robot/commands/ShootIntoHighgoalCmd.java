@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class ShootIntoHighgoalCmd extends CommandBase {
@@ -36,22 +37,23 @@ public class ShootIntoHighgoalCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.manipulatorsubsystem.semiAutoFire(true, Robot.constants.getShootLoadDelayTime());
+    Robot.manipulatorsubsystem.semiAutoFire(true, Constants.shootLoadDelayTime);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.manipulatorsubsystem.stopBottomFireMotor();
-    Robot.manipulatorsubsystem.stopTopFireMotor();
-    Robot.manipulatorsubsystem.stopLoadMotor();
+    // Stop manipulator motors and reset timers
+    Robot.manipulatorsubsystem.StopAndResetManipulator();
 
+    // Print to smartdash that the "shoot" stage of highgoal-vision is done
     SmartDashboard.putString("CMD Done", "ShootIntoHighgoalCmd");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    // Is based on the fact that manipulator motors' speed are ready for ball once loading phase is finished
+    return Robot.manipulatorsubsystem.getStopShootLoadDelay();
   }
 }

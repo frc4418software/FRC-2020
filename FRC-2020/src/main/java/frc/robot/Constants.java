@@ -16,7 +16,37 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    // Controller abstractions
+  //#region ============================BEGINNING OF VISION CONSTANTS==========================
+  //#region -----------BEGINNING OF SWEEP CONSTANTS----------
+
+  //#endregion  -----------END OF SWEEP CONSTANTS------------
+
+  //#region -----------BEGINNING OF CONFIRM CONSTANTS----------
+
+  //#endregion  -----------END OF CONFIRM CONSTANTS------------
+
+  //#region -----------BEGINNING OF FACE CONSTANTS----------
+
+  //#endregion  -----------END OF FACE CONSTANTS------------
+
+  //#region -----------BEGINNING OF DRIVE CONSTANTS----------
+
+  //#endregion  -----------END OF DRIVE CONSTANTS------------
+
+  //#region -----------BEGINNING OF ADJUST CONSTANTS----------
+
+  //#endregion  -----------END OF ADJUST CONSTANTS------------
+
+  //#region -----------BEGINNING OF SHOOT CONSTANTS----------
+  public static final long
+        shootLoadDelayTime = 2000;    // TODO CONFIG TIME TO LOAD THE BALL BEFORE SHOOTING
+  
+  public static final double
+        shootLoadMotorSpeedPercent = 0.5;
+  //#endregion  -----------END OF SHOOT CONSTANTS------------
+  //#endregion  =========================END OF VISION CONSTANTS===========================
+  
+  //#region ======================BEGINNING OF CONTROLLER ABSTRACTIONS===========================
   private static final int //GAMEPAD_AXIS_LEFT_X = 0, // Gamepad axis
   GAMEPAD_AXIS_LEFT_Y = 1,
   /*GAMEPAD_AXIS_RIGHT_X = 4,
@@ -50,9 +80,10 @@ public final class Constants {
   //X3D_BUTTON_10 = 10,
   //X3D_BUTTON_11 = 11,
   /*X3D_BUTTON_12 = 12*/;
+  //#endregion  ======================END OF CONTROLLER ABSTRACTIONS===========================
 
-
-// Controller IDs
+  //#region =============================BEGINNING OF CONTROLLER IDS=========================
+  // Controller IDs
 public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
   X3D_RIGHT_JOYSTICK_ID = 1,
   GAMEPAD_JOYSTICK_ID = 2,
@@ -71,8 +102,10 @@ public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
   SELECT_BUTTON_2_ID = X3D_BUTTON_8,
   SELECT_BUTTON_3_ID = X3D_BUTTON_9,
   CLIMB_AXIS_ID = GAMEPAD_AXIS_LEFT_Y;
+  //#endregion =============================END OF CONTROLLER IDS=========================
 
-// Drive Subsystem IDs
+  //#region =============================BEGINNING OF DRIVE SUBSYSTEM IDS=========================
+  // Drive Subsystem IDs
 public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10, 
   DRIVE_LEFT_B_TALON_SRX_ID = 11,
   DRIVE_RIGHT_A_TALON_SRX_ID = 20, 
@@ -87,25 +120,32 @@ public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10,
   DRIVE_BACK_DISTANCE_PING_ID = 12, 
   DRIVE_BACK_DISTANCE_ECHO_ID = 13;
 public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI) / 256; // diameter * pi = circumference. circumference / 256 = distance per pulse
+  //#endregion  =============================END OF DRIVE SUBSYSTEM IDS=========================
 
-// Manipulator Subsystem IDs
+  //#region =============================BEGINNING OF MANIPULATOR SUBSYSTEM CONSTANTS=========================
+  // Manipulator Subsystem IDs
 public static final int MAN_FIRE_BOTTOM_TALON_SRX_ID = 30,
   MAN_FIRE_TOP_TALON_SRX_ID = 31,
   MAN_LOAD_TALON_SRX_ID = 32,
   MAN_INTAKE_VICTOR_SPX_ID = 33;
+public static final double teleopLoadMotorPercent = 0.5;
+  //#endregion  =============================END OF MANIPULATOR SUBSYSTEM IDS=========================
 
-// Climb Subsystem IDs
+  //#region =============================BEGINNING OF CLIMB SUBSYSTEM IDS=========================
+  // Climb Subsystem IDs
 public static final int CLIMBER_ENCODER_CHANNELA_ID = 2, 
   CLIMBER_FRONT_ENCODER_CHANNELB_ID = 3, 
   CLIMBER_TALON_SRX_ID = 30;
 //public static final double CLIMBER_ENCODER_DISTANCE_PER_PULSE = ;          tbd
+  //#endregion  =============================END OF CLIMB SUBSYSTEM IDS=========================
 
+  //#region =============================BEGINNING OF RIO POST INFO=========================
 // RIO Post Info
 public static int[] expectedTalonIDs = {DRIVE_LEFT_A_TALON_SRX_ID, DRIVE_LEFT_B_TALON_SRX_ID, DRIVE_RIGHT_A_TALON_SRX_ID, 
                 DRIVE_RIGHT_B_TALON_SRX_ID};
 public static int[] expectedDIOEncoders = {DRIVE_LEFT_ENCODER_CHANNELA_ID,DRIVE_LEFT_ENCODER_CHANNELB_ID, DRIVE_RIGHT_A_TALON_SRX_ID,
                     DRIVE_RIGHT_B_TALON_SRX_ID};
 public static int expectedGyro = DRIVE_GYRO_ID;
-public static int[] expectedDIOUltrasonic = {DRIVE_FRONT_DISTANCE_PING_ID,DRIVE_FRONT_DISTANCE_ECHO_ID,DRIVE_BACK_DISTANCE_PING_ID,
-                       DRIVE_BACK_DISTANCE_ECHO_ID};
+public static int[] expectedDIOUltrasonic = {DRIVE_FRONT_DISTANCE_PING_ID,DRIVE_FRONT_DISTANCE_ECHO_ID,DRIVE_BACK_DISTANCE_PING_ID,DRIVE_BACK_DISTANCE_ECHO_ID};
+  //#endregion  =============================END OF RIO POST INFO=========================
 }

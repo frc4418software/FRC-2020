@@ -37,9 +37,8 @@ public class SemiAutoFireCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.manipulatorsubsystem.stopBottomFireMotor();
-    Robot.manipulatorsubsystem.stopTopFireMotor();
-    Robot.manipulatorsubsystem.stopLoadMotor();
+    // Stop manipulator motors and reset timers
+    Robot.manipulatorsubsystem.StopAndResetManipulator();
   }
 
   // Returns true when the command should end.

@@ -24,20 +24,22 @@ import frc.robot.subsystems.VisionHighgoalSubsys;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
+  
+  //#region ===================BEGINNING OF ROBOT SUBSYSTEMS====================
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   public static ManipulatorSubsystem manipulatorsubsystem = new ManipulatorSubsystem();
   
   public static ReceiveJevoisDataSubsys receiveJevoisDataSubsys = new ReceiveJevoisDataSubsys();
   public static VisionHighgoalSubsys visionHighgoalSubsys = new VisionHighgoalSubsys();
-
+  //#endregion  =======================END OF ROBOT SUBSYSTEMS======================
   
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
+  //#region ==================BEGINNING OF VISION ROBOT VARIABLES======================
+  
+  //#endregion  =====================END OF VISION ROBOT VARIBLES=======================
+  
+  
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -45,13 +47,6 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -61,23 +56,15 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
   }
 
-  /**
-   * This function is called once each time the robot enters Disabled mode.
-   */
   @Override
   public void disabledInit() {
     
-    // experiment NO cleanup JevoisSerialPort in robot.java
-    //Robot.getVisionDataSubsystem.Cleanup();
   }
 
   @Override
   public void disabledPeriodic() {
   }
 
-  /**
-   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
-   */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -88,9 +75,6 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /**
-   * This function is called periodically during autonomous.
-   */
   @Override
   public void autonomousPeriodic() {
 
@@ -107,9 +91,6 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /**
-   * This function is called periodically during operator control.
-   */
   @Override
   public void teleopPeriodic() {
     
@@ -121,9 +102,6 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
   }
 
-  /**
-   * This function is called periodically during test mode.
-   */
   @Override
   public void testPeriodic() {
   }
