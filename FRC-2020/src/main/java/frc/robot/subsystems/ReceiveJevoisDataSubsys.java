@@ -127,7 +127,7 @@ public class ReceiveJevoisDataSubsys extends SubsystemBase {
                 setXCoord(Integer.parseInt(getParsedData()[0]));
                 setYCoord(Integer.parseInt(getParsedData()[1]));
 
-                // TODO change all jevois scripts to also send the rect size after a second comma (2nd comma after the y coord)
+                // TODO CHANGE all jevois scripts to also send the rect size after a second comma (2nd comma after the y coord)
                 // Also seperately set the found rectangle's size from the parsed string array
                 setRectSize(Integer.parseInt(getParsedData()[3]));
             }

@@ -33,7 +33,7 @@ public class SweepLocateHighgoalCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO write code to make surveyMode chosen by joystick, instead of 1 as default for robot at leftmost position
+    // TODO WRITE code to make surveyMode chosen by joystick, instead of 1 as default for robot at leftmost position
     Robot.visionHighgoalSubsys.SurveyTurnForHighgoal(1);
   }
 
