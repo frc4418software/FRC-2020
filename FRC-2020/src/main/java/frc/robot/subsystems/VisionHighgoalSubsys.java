@@ -78,12 +78,12 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         return this.rightMotorDirFlip;
     }
     //=======================================================================
-    private int highCenterPosDistFromHighgoal;
-    public int getHighCenterPosDistFromHighgoal() {
-        return this.highCenterPosDistFromHighgoal;
+    private int distFromHighgoal;
+    public int getDistFromHighgoal() {
+        return this.distFromHighgoal;
     }
-    public void setHighCenterPosDistFromHighgoal(int highCenterPosDistFromHighgoal) {
-        this.highCenterPosDistFromHighgoal = highCenterPosDistFromHighgoal;
+    public void setDistFromHighgoal(int distFromHighgoal) {
+        this.distFromHighgoal = distFromHighgoal;
     }
     //=======================================================================
     private int backupConfirmedHighgoalRectSize;
@@ -265,6 +265,16 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //#endregion
 
     //#region   ====================BEGINNING OF ADJUST VARIABLES SECTION=====================================
+    //#region   -------------BEGINNING OF ADJUST-MULTI-PART-VARIABLES----------------
+    public boolean stopAdjustCmd = false;
+    public boolean getStopAdjustCmd() {
+        return this.stopAdjustCmd;
+    }
+    public void setStopAdjustCmd(boolean stopAdjustCmd) {
+		this.stopAdjustCmd = stopAdjustCmd;
+	}
+    //#endregion    -----------END OF ADJUST-MULTI-PART-VARIABLES-----------------
+    //#region   -------------BEGINNING OF ADJUST-CONFIRM-VARIABLES--------------
     // TODO CONFIG correct pos for jevois servo when it points up to adjust to highgoal
     private int jevoisServoAdjustPos = 30;
     public int getJevoisServoAdjustPos() {
@@ -318,7 +328,8 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void setAdjustConfirmStopwatchResetTime(long adjustConfirmStopwatchResetTime) {
 		this.adjustConfirmStopwatchResetTime = adjustConfirmStopwatchResetTime;
     }
-    //=======================================================================
+    //#endregion    -------------END OF ADJUST-CONFIRM-VARIABLES--------------
+    //#region   -------------BEGINNING OF ADJUST-FACE-VARIABLES--------------
     private long adjustFaceStopwatchTime = 0;
     public long getAdjustFaceStopwatchTime() {
         return this.adjustFaceStopwatchTime;
@@ -368,6 +379,52 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public long getAdjustFaceHighgoalTimeMax() {
         return this.adjustFaceHighgoalTimeMax;
     }
+    //=======================================================================
+    private boolean startAdjustFaceStopwatch = false;
+    public boolean getStartAdjustFaceStopwatch() {
+        return this.startAdjustFaceStopwatch;
+    }
+    public void setStartAdjustFaceStopwatch(boolean startAdjustFaceStopwatch) {
+		this.startAdjustFaceStopwatch = startAdjustFaceStopwatch;
+	}
+    //#endregion    -------------END OF ADJUST-FACE-VARIABLES--------------
+    //#region   -------------BEGINNING OF ADJUST-DRIVE-VARIABLES--------------
+            // TODO CONFIG max distance from highgoal allowed when adjusting to highgoal
+    private int highgoalAdjustDistMax = 20;     // CONFIG MAXIMUM ADJUST DIST FROM HIGHGOAL
+    public int getHighgoalAdjustDistMax() {
+        return this.highgoalAdjustDistMax;
+    }
+    public void setHighgoalAdjustDistMax(int highgoalAdjustDistMax) {
+		this.highgoalAdjustDistMax = highgoalAdjustDistMax;
+    }
+    //=======================================================================
+            // TODO CONFIG min dist from highgoal allowed when adjusting
+    private int highgoalAdjustDistMin = 10;     // CONFIG MINIMUM ADJUST DIST FROM HIGHGOAL
+	public int getHighgoalAdjustDistMin() {
+		return this.highgoalAdjustDistMin;
+	}
+	public void setHighgoalAdjustDistMin(int highgoalAdjustDistMin) {
+		this.highgoalAdjustDistMin = highgoalAdjustDistMin;
+    }
+    //=======================================================================
+    private boolean adjustDrivedWithinHighgoal = false;
+    public boolean getAdjustDrivedWithinHighgoal() {
+        return this.adjustDrivedWithinHighgoal;
+    }
+    public void setAdjustDrivedWithinHighgoal(boolean adjustDrivedWithinHighgoal) {
+		this.adjustDrivedWithinHighgoal = adjustDrivedWithinHighgoal;
+	}
+    //=======================================================================
+    private boolean hasAdjustReachedHighgoal = false;
+    public boolean getHasAdjustReachedHighgoal() {
+        return this.hasAdjustReachedHighgoal;
+    }
+    public void setHasAdjustReachedHighgoal(boolean hasAdjustReachedHighgoal) {
+		this.hasAdjustReachedHighgoal = hasAdjustReachedHighgoal;
+    }
+    //=======================================================================
+
+    //#endregion    -------------END OF ADJUST-DRIVE-VARIABLES--------------------
     //#endregion
 
 
@@ -392,6 +449,15 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         setBackupConfirmedHighgoalYCoord(Robot.receiveJevoisDataSubsys.getYCoord());
         // Also set the backup highgoal rect size to the parsed, found, and usable integer size
         setBackupConfirmedHighgoalRectSize(Robot.receiveJevoisDataSubsys.getRectSize());
+    }
+    //======================================================================================================
+    // Sub-function
+    public void UpdateDistFromHighgoal() {
+        // TODO WRITE how to get ultrasonic sensor input
+        //setHighCenterPosDistFromHighgoal(highCenterPosDistFromHighgoal);
+
+        // TODO (IF NEEDED) WRITE math here for setting true dist from highgoal using multiple dist sensors
+        //setTrueHighgoalDist(getHighCenterPosDistFromHighgoal());
     }
     //#endregion
 
@@ -577,55 +643,12 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 
     //#region   ====================BEGINNING OF DRIVE FUNCTIONS SECTION========================================
     // Sub-function
-    public void CheckIfReachedHighgoal(int threshMode) {
-        // TODO CONFIG the best mode for checking if we have reached the highgoal
-        switch (threshMode) {
-            // Case 1 uses ONLY distance
-            case 1:
-                if (getHighCenterPosDistFromHighgoal() <= getHighgoalDistThreshold()) {
-                    setIsCloseEnoughToHighgoal(true);
-                } else {
-                    setIsCloseEnoughToHighgoal(false);
-                }
-                break;
-            // Case 2 uses rectSize AND distance
-            case 2:
-                if (    (Robot.receiveJevoisDataSubsys.getRectSize() >= getHighgoalRectAreaThreshold()) && 
-                (getHighCenterPosDistFromHighgoal() <= getHighgoalDistThreshold())    ) {
-                    setIsCloseEnoughToHighgoal(true);
-                } else {
-                    setIsCloseEnoughToHighgoal(false);
-                }
-                break;
-            // Case 3 uses rectSize OR distance
-            case 3:
-                if (     (Robot.receiveJevoisDataSubsys.getRectSize() >= getHighgoalRectAreaThreshold()) || 
-                (getHighCenterPosDistFromHighgoal() <= getHighgoalDistThreshold())    ) {
-                    setIsCloseEnoughToHighgoal(true);
-                } else {
-                    setIsCloseEnoughToHighgoal(false);
-                }
-                break;
-            // Case 4 uses (rectSize AND distance) AND yCoord
-            case 4:
-                if (    ( (Robot.receiveJevoisDataSubsys.getRectSize() >= getHighgoalRectAreaThreshold()) && 
-                (getHighCenterPosDistFromHighgoal() <= getHighgoalDistThreshold()) ) && 
-                (Robot.receiveJevoisDataSubsys.getYCoord() <= getDriveToHighgoalYThresh())    ) {
-                    setIsCloseEnoughToHighgoal(true);
-                } else {
-                    setIsCloseEnoughToHighgoal(false);
-                }
-                break;
+    public void CheckIfReachedHighgoal() {
+        if (getDistFromHighgoal() <= getHighgoalDistThreshold()) {
+            setIsCloseEnoughToHighgoal(true);
+        } else {
+            setIsCloseEnoughToHighgoal(false);
         }
-    }
-    //======================================================================================================
-    // Sub-function
-    public void UpdateDistFromHighgoal() {
-        // TODO WRITE how to get ultrasonic sensor input
-        //setHighCenterPosDistFromHighgoal(highCenterPosDistFromHighgoal);
-
-        // TODO (IF NEEDED) WRITE math here for setting true dist from highgoal using multiple dist sensors
-        //setTrueHighgoalDist(getHighCenterPosDistFromHighgoal());
     }
     //======================================================================================================
     public void DriveUntilCloseToHighgoal() {
@@ -644,13 +667,13 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             // Use distance(ultrasonic) sensors to update our known distance from the highgoal
             UpdateDistFromHighgoal();
             // Check if we have reached the highgoal
-            // TODO CONFIG to the chosen best mode for checking if reached highgoal
-            CheckIfReachedHighgoal(1);
+            CheckIfReachedHighgoal();
         }
     }
     //#endregion
 
     //#region   ====================BEGINNING OF ADJUST FUNCTIONS SECTION=======================================
+    //#region   --------------BEGINNING OF ADJUST-CONFIRM-FUNCTIONS------------------------------------
     // Sub-function
     public void AimJevoisServoForAdjusting() {
         // TODO WRITE code to set the jevois servo to the pos needed
@@ -697,7 +720,8 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             setStopAdjustConfirmComponent(true);
         }
     }
-    //======================================================================================================
+    //#endregion    --------------END OF ADJUST-CONFIRM-FUNCTIONS------------------------------------
+    //#region   --------------BEGINNING OF ADJUST-FACE-FUNCTIONS------------------------------------
     // Sub-function
     public boolean IsHighgoalXCoordWithinAdjustFaceThreshold() {
         // If the highgoal's distance from the x axis' center is within threshold
@@ -719,11 +743,27 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     }
     //======================================================================================================
     // Sub-function
+    public void StopResetCompleteAdjustFacing() {
+        // Stop the robot's drive motors
+        Robot.driveSubsystem.stopDrive();
+        // Reset the adjust-face stopwatch
+        setStartAdjustFaceStopwatch(false);
+        // Indicate that we have finished adjust-facing the highgoal
+        setIsAdjustFaceHighgoalComplete(true);
+    }
+    //======================================================================================================
+    // Sub-function
     public void AdjustFaceHighgoalTimedThreshold() {
+        if (! getStartAdjustFaceStopwatch()) {
+            setStartAdjustFaceStopwatch(true);
+            setAdjustFaceHighgoalStartTime(System.currentTimeMillis());
+        }
+
         if (getAdjustFaceStopwatchTime() >= getAdjustFaceMsTimeThreshold()) {
-            Robot.driveSubsystem.stopDrive();
-            setIsAdjustFaceHighgoalComplete(true);
+            StopResetCompleteAdjustFacing();
+            
         } else {
+            // If adjust stage has NOT timed out for trying to re-face
             if (! IsAdjustFaceHighgoalTimedOut()) {
                 DriveTurnToFaceHighgoal();
                 if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData() ||
@@ -736,12 +776,56 @@ public class VisionHighgoalSubsys extends SubsystemBase {
                 if (IsHighgoalXCoordWithinAdjustFaceThreshold()) {
                     setAdjustFaceStopwatchTime(System.currentTimeMillis() - getAdjustFaceStopwatchResetTime());
                 }
+            // If adjust stage has timed out for trying to re-face
             } else {
-                
+                StopResetCompleteAdjustFacing();
             }
         }
     }
+    //#endregion    --------------END OF ADJUST-FACE-FUNCTIONS------------------------------------
+    //#region   --------------BEGINNING OF ADJUST-DRIVE-FUNCTIONS--------------------------------
+    // Sub-function
+    public void CheckIfAdjustReachedHighgoal() {
+        if (    ( getDistFromHighgoal() <= getHighgoalAdjustDistMax() ) &&
+        (getDistFromHighgoal() >= getHighgoalAdjustDistMin())    ) {
+            setAdjustDrivedWithinHighgoal(true);
+        } else {
+            setAdjustDrivedWithinHighgoal(false);
+        }
+    }
     //======================================================================================================
+    // Sub-function
+    public void AdjustDriveUntilCloseToHighgoal() {
+        // If the robot is close enough to the highgoal by the setup thresholds (ultrasonic distance AND/OR highgoal overall contour rect size)
+        if (getAdjustDrivedWithinHighgoal()) {
+            // Stop the robot's driving motors
+            Robot.driveSubsystem.stopDrive();
+
+            // Indicate that we have reached the highgoal
+            setHasAdjustReachedHighgoal(true);
+        } else {
+            // Drive the robot's drive motors at max driving speed (config)
+            Robot.driveSubsystem.setLeftMotorValue(     (getLeftMotorDirFlip()) * ( (1) * (getMaxBothMotorOutputPercent()) )    );
+            Robot.driveSubsystem.setRightMotorValue(     (getRightMotorDirFlip()) * ( (1) * (getMaxBothMotorOutputPercent()) )    );
+            
+            // Use distance(ultrasonic) sensors to update our known distance from the highgoal
+            UpdateDistFromHighgoal();
+            // Check if we have reached the highgoal
+            CheckIfAdjustReachedHighgoal();
+        }
+    }
+    //======================================================================================================
+    // Sub-function
+    public void StopAdjustCmdOnceDrivenWithinThresh() {
+        // Re-drive-to the highgoal, get within threshold of shooting dist
+        if (! getHasAdjustReachedHighgoal()) {
+            AdjustDriveUntilCloseToHighgoal();
+        // Stop adjusting, the robot is now prepared to shoot
+        } else {
+            setStopAdjustCmd(true);
+        }
+    }
+    //#endregion    ------------END OF ADJUST-DRIVE-FUNCTIONS-------------------------
     public void AdjustRobotForShooting() {
         AimJevoisServoForAdjusting();
         // If we have NOT timed out for trying to re-confirm a highgoal to re-face
@@ -749,12 +833,17 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             TryToConfirmHighgoalForAdjusting();
         // If we have timed out for trying to re-confirm a highgoal to re-face
         } else {
-            // If we did re-confirm a highgoal to use to re-face
+            // If we did re-confirm a highgoal to use to re-face and re-drive-to
             if (getAdjustHighgoalFound()) {
-
+                // Re-face the highgoal
+                if (! getIsAdjustFaceHighgoalComplete()) {
+                    AdjustFaceHighgoalTimedThreshold();
+                } else {
+                    StopAdjustCmdOnceDrivenWithinThresh();
+                }
             // If we did NOT re-confirm a highgoal to use to re-face
             } else {
-
+                StopAdjustCmdOnceDrivenWithinThresh();
             }
         }
     }
