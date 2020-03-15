@@ -93,7 +93,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void setBackupConfirmedHighgoalRectSize(int backupConfirmedHighgoalRectSize) {
         this.backupConfirmedHighgoalRectSize = backupConfirmedHighgoalRectSize;
     }
-    //#endregion
+    //#endregion    |||||||||||||||||||||||END OF MULTI-COMPONENT VARIABLES||||||||||||||||||||||||||||||||||
     
     //#region   ====================BEGINNING OF SWEEP VARIABLES SECTION=======================================
             // TODO CONFIG WITH MATH to find time for robot to do a jevois-180 deg's full left/right turn
@@ -262,7 +262,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void setHasReachedHighgoal(boolean hasReachedHighgoal) {
 		this.hasReachedHighgoal = hasReachedHighgoal;
 	}
-    //#endregion
+    //#endregion    ====================END OF DRIVE VARIABLES SECTION=======================================
 
     //#region   ====================BEGINNING OF ADJUST VARIABLES SECTION=====================================
     //#region   -------------BEGINNING OF ADJUST-MULTI-PART-VARIABLES----------------
@@ -425,7 +425,11 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //=======================================================================
 
     //#endregion    -------------END OF ADJUST-DRIVE-VARIABLES--------------------
-    //#endregion
+    //#endregion    ====================END OF ADJUST VARIABLES SECTION=======================================
+
+    //#region   ====================BEGINNING OF SHOOT VARIABLES SECTION=====================================
+    
+    //#endregion    ====================END OF SHOOT VARIABLES SECTION=======================================
 
 
 
@@ -459,7 +463,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         // TODO (IF NEEDED) WRITE math here for setting true dist from highgoal using multiple dist sensors
         //setTrueHighgoalDist(getHighCenterPosDistFromHighgoal());
     }
-    //#endregion
+    //#endregion    ||||||||||||||||||||||END OF MULTI-COMPONENT FUNCTIONS||||||||||||||||||||||||||||||
 
     //#region   ====================BEGINNING OF SWEEP FUNCTIONS SECTION=======================================
     // Sub-function
@@ -670,7 +674,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             CheckIfReachedHighgoal();
         }
     }
-    //#endregion
+    //#endregion    ====================END OF DRIVE FUNCTIONS SECTION=======================================
 
     //#region   ====================BEGINNING OF ADJUST FUNCTIONS SECTION=======================================
     //#region   --------------BEGINNING OF ADJUST-CONFIRM-FUNCTIONS------------------------------------
@@ -847,5 +851,9 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             }
         }
     }
-    //#endregion
+    //#endregion    ====================END OF ADJUST-DRIVE-FUNCTIONS SECTION=======================================
+
+    //#region   ====================BEGINNING OF SHOOT FUNCTIONS SECTION========================================
+    
+    //#endregion    ====================END OF SHOOT FUNCTIONS SECTION=======================================
 }
