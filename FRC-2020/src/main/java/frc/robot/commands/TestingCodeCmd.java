@@ -23,7 +23,7 @@ public class TestingCodeCmd extends CommandBase {
   @Override
   public void initialize() {
     SmartDashboard.putString("TESTING CODE", "RUNNING");
-    Robot.receiveJevoisDataSubsys.InitSerialPort();
+    Robot.receiveJevoisDataSubsys.InitJevois();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -36,7 +36,36 @@ public class Robot extends TimedRobot {
   //#endregion  =======================END OF ROBOT SUBSYSTEMS======================
   
   //#region ==================BEGINNING OF VISION ROBOT VARIABLES======================
+  //#region -----------BEGINNING OF *JEVOIS RECEIVE* ROBOT VARS----------------
+  public static String 
+        jevoisString;
+
+  public static int 
+        xCoord, 
+        yCoord, 
+        rectSize;
+  //#endregion  ------------END OF *JEVOIS RECEIVE* ROBOT VARS----------------
   
+  //#region -----------BEGINNING OF MULTI-COMPONENT ROBOT VARS----------------
+  public static int
+        backupHighgoalXCoord, 
+        backupHighgoalYCoord,
+        distFromHighgoal,
+        backupHighgoalRectSize;
+
+  public static boolean 
+        consistentHighgoalFound = false;
+  //#endregion  -----------END OF MULTI-COMPONENT ROBOT VARS----------------
+
+  //#region -----------BEGINNING OF SWEEP ROBOT VARS----------
+  public static boolean
+          isSweepFinished = false;                    // TODO CONFIG whether the robot should go through the "sweep" stage or not
+  //#endregion  -----------END OF SWEEP ROBOT VARS------------
+
+  //#region -----------BEGINNING OF ADJUST ROBOT VARS----------
+  public static boolean 
+          stopAdjustConfirmComponent = false;      // TODO CONFIG if robot defaultly adjusts-face using a re-confirmation of the highgoal
+  //#endregion  -----------END OF ADJUST ROBOT VARS------------
   //#endregion  =====================END OF VISION ROBOT VARIBLES=======================
   
   
