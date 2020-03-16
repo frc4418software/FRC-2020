@@ -66,7 +66,6 @@ public final class Constants {
   //#region -----------BEGINNING OF DRIVE CONSTANTS----------
   public static final int 
           highgoalDistThreshold = 20;                 // TODO CONFIG "close enough" dist thresh for when to stop driving towards highgoal
-
   //#endregion  -----------END OF DRIVE CONSTANTS------------
 
   //#region -----------BEGINNING OF ADJUST CONSTANTS----------
@@ -77,8 +76,6 @@ public final class Constants {
   public static final long 
           adjustHighgoalConfirmMsTime = 900,          // TODO CONFIG time for confirming a highgoal for the adjust stage
           adjustConfirmStopwatchMsTimeout = 1200;     // TODO CONFIG max time for adjust stage to try re-confirming a highgoal in order to re-face
-    
-  
   //#endregion  -   -   -   -   END OF ADJUST-CONFIRM CONSTANTS   -   -   -
   //#region -   -   -   -   BEGINNING OF ADJUST-FACE CONSTANTS   -   -   -
   public static final long
@@ -98,7 +95,6 @@ public final class Constants {
   //#region -----------BEGINNING OF SHOOT CONSTANTS----------
   public static final long
         shootLoadDelayTime = 2000;    // TODO CONFIG TIME TO LOAD THE BALL BEFORE SHOOTING
-  
   public static final double
         shootLoadMotorSpeedPercent = 0.5;
   //#endregion  -----------END OF SHOOT CONSTANTS------------
