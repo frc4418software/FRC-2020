@@ -57,8 +57,11 @@ def Pipeline:
             str_xcenter = str(xcenter)
             str_ycenter = str(ycenter)
 
-            # Use hard-wired serial port to send the rectangle center coords as strings, with the terminating char 's'
-            jevois.sendSerial(str_xcenter+','+str_ycenter)
+            # Cast the calculated area of the drawn rectangle into a string
+            str_rect_size = str(w * h)
+
+            # Use hard-wired serial port to send the rectangle center coords and rectangle size as strings
+            jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
 
             # NOTE:  to see if getting center of rectangle is correct
             #frame_center = cv2.circle(frame_rect, (xcenter, ycenter), 2, (255, 0, 0), -1)
@@ -106,10 +109,13 @@ class PythonHSVTracker:
         # Instantiate a JeVois Timer to measure our processing framerate:
         self.timer = jevois.Timer("sandbox", 100, jevois.LOG_INFO)
 
-        global lowHue, highHue, lowSat, highSat, lowVal, highVal, area_min, area_max, colorLow, colorHigh, nopeString
+        global lowHue, highHue, lowSat, highSat, lowVal, highVal, area_min, area_max, colorLow, colorHigh, nopeString, str_delim
 
         # String to say there's nothing
         nopeString = "n"
+
+        # String to seperate data to be parsed
+        str_delim = ','
 
         # Threhold for hue in HSV
         lowHue = 23

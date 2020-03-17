@@ -4,7 +4,7 @@ import numpy as np
 
 # @videomapping YUYV 340 252 60.0 YUYV 340 252 60.0 JeVois FRC2020
 
-def Pipeline:
+def Pipeline(has_out_frame):
     # Start measuring image processing time (NOTE: does not account for input conversion time):
     #self.timer.start()
 
@@ -76,8 +76,11 @@ def Pipeline:
             str_xcenter = str(xcenter)
             str_ycenter = str(ycenter)
 
+            # Cast the calculated area of the drawn rectangle into a string
+            str_rect_size = str(w * h)
+
             # Use hard-wired serial port to send the rectangle center coords as strings, with the terminating char 's'
-            jevois.sendSerial(str_xcenter+','+str_ycenter)
+            jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
 
             # Set debugging output image to 'found contours' image with rectangle drawn around the largest contour
             outimg = frame_rect
@@ -105,9 +108,9 @@ def Pipeline:
     #==============================================================================================
 
     #fps = self.timer.stop()
-
-    # Convert our OpenCv output image to video output format and send to host over USB:
-    #outframe.sendCv(outimg)
+    if has_out_frame == True:
+        # Convert our OpenCv output image to video output format and send to host over USB:
+        outframe.sendCv(outimg)
 
 
 class PythonZeroSpotTracker:
@@ -118,10 +121,13 @@ class PythonZeroSpotTracker:
         self.timer = jevois.Timer("sandbox", 100, jevois.LOG_INFO)
 
 
-        global HLS_low_thresh, HLS_high_thresh, HLS_erode_its, HLS_dilate_its, HSV_low_thresh, HSV_high_thresh, HSV_erode_its, HSV_dilate_its, bitwise_and_erode_its, bitwise_and_dilate_its, area_min, area_max, nopeString
+        global HLS_low_thresh, HLS_high_thresh, HLS_erode_its, HLS_dilate_its, HSV_low_thresh, HSV_high_thresh, HSV_erode_its, HSV_dilate_its, bitwise_and_erode_its, bitwise_and_dilate_its, area_min, area_max, nopeString, str_delim
 
         # String to say there's nothing
         nopeString = "n"
+
+        # String to seperate data to be parsed
+        str_delim = ','
 
         # HLS (aka HSL) range
         HLS_low_thresh = np.array([21, 43, 0])
@@ -146,8 +152,8 @@ class PythonZeroSpotTracker:
         area_max = 6000
 
     def processNoUSB(self, inframe):
-        Pipeline()
+        Pipeline(False)
 
     ## Process function with USB output
     def process(self, inframe, outframe):
-        Pipeline()
+        Pipeline(True)

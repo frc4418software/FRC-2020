@@ -34,9 +34,12 @@ def Pipeline:
         # Cast the calculated center coords of the rectangle into a string
         str_xcenter = str(x + (w/2))
         str_ycenter = str(y + (h/2))
+        
+        # Cast the calculated area of the drawn rectangle into a string
+        str_rect_size = str(w * h)
 
-        # Use hard-wired serial port to send the rectangle center coords as strings, with the terminating char 's'
-        jevois.sendSerial(str_xcenter+','+str_ycenter)
+        # Use hard-wired serial port to send the rectangle center coords and area as strings
+        jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
 
         outimg = rect_frame
 
@@ -67,10 +70,13 @@ class PythonCascadeTracker:
         # Instantiate a JeVois Timer to measure our processing framerate:
         self.timer = jevois.Timer("cascade-classifier", 100, jevois.LOG_INFO)
 
-        global power_cell_cascade, scale_factor, , nopeString
+        global power_cell_cascade, scale_factor, min_neighbors, str_delim, nopeString
 
         # String to say there's nothing
         nopeString = "n"
+
+        # String to seperate data to be parsed
+        str_delim = ','
 
         weights_path = "/jevois/data/cascade.xml"
 
