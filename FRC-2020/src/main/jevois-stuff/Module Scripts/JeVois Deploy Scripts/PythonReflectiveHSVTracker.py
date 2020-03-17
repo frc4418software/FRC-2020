@@ -24,39 +24,47 @@ def Pipeline(inimg, has_out_frame=False):
     height, width, _ = inimg.shape
     min_x, min_y = width, height
     max_x = max_y = 0
+    
+    jevois.sendSerial(str(hierarchy))
 
-    # Computes the bounding box for the contour, and draws it on the frame,
-    for contour, hier in zip(contours, hierarchy):
-        (x,y,w,h) = cv2.boundingRect(contour)
-        min_x, max_x = min(x, min_x), max(x+w, max_x)
-        min_y, max_y = min(y, min_y), max(y+h, max_y)
-        if w > 80 and h > 80:
-            complete_rect_frame = cv2.rectangle(inimg, (x,y), (x+w,y+h), (255, 0, 0), 2)
+    # Cleanest way if saying "hey, is the list of contours empty?"
+    if not contours:
+        SendNoValidData()
+        outimg = inimg
+    else:
+        # Computes the bounding box for the contour, and draws it on the frame,
+        for contour, hier in zip(contours, hierarchy):
+            (x,y,w,h) = cv2.boundingRect(contour)
+            min_x, max_x = min(x, min_x), max(x+w, max_x)
+            min_y, max_y = min(y, min_y), max(y+h, max_y)
+            if w > 80 and h > 80:
+                complete_rect_frame = cv2.rectangle(inimg, (x,y), (x+w,y+h), (255, 0, 0), 2)
+            else:
+                SendNoValidData()
+
+        # If the overall contour's size is bigger than nothing
+        if max_x - min_x > 0 and max_y - min_y > 0:
+            complete_rect_frame = cv2.rectangle(inimg, (min_x, min_y), (max_x, max_y), (255, 0, 0), 2)
+            outimg = complete_rect_frame
+
+            # Calculate the center of the rectangle containing the biggest contour
+            xcenter = int((max_x - min_x) / 2)
+            ycenter = int((max_y - min_y) / 2)
+            # Cast the calculated center coords of the rectangle into a string
+            str_xcenter = str(xcenter)
+            str_ycenter = str(ycenter)
+
+            # Cast the calculated area of the drawn rectangle into a string
+            str_rect_size = str(w * h)
+
+            # Use hard-wired serial port to send the rectangle center coords and rectangle size as strings
+            jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
         else:
             SendNoValidData()
 
-    # If the overall contour's size is bigger than nothing
-    if max_x - min_x > 0 and max_y - min_y > 0:
-        complete_rect_frame = cv2.rectangle(inimg, (min_x, min_y), (max_x, max_y), (255, 0, 0), 2)
-        outimg = complete_rect_frame
+            # Use post-processed image (that does NOT have contour within area threshold) as the output image
+            outimg = resized_frame
 
-        # Calculate the center of the rectangle containing the biggest contour
-        xcenter = int((max_x - min_x) / 2)
-        ycenter = int((max_y - min_y) / 2)
-        # Cast the calculated center coords of the rectangle into a string
-        str_xcenter = str(xcenter)
-        str_ycenter = str(ycenter)
-
-        # Cast the calculated area of the drawn rectangle into a string
-        str_rect_size = str(w * h)
-
-        # Use hard-wired serial port to send the rectangle center coords and rectangle size as strings
-        jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
-    else:
-        SendNoValidData()
-
-        # Use post-processed image (that does NOT have contour within area threshold) as the output image
-        outimg = resized_frame
 
     if has_out_frame == True:
         # Convert our output image to video output format and send to host over USB:
