@@ -19,9 +19,9 @@ def Pipeline(inimg, has_out_frame=False):
     #cv2.imshow('HSV dilated', HSV_mask_dilated)
 
 
-    contours, hierarchy = cv2.findContours(inimg, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(HSV_mask_dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    height, width, _ = resized_frame.shape
+    height, width, _ = inimg.shape
     min_x, min_y = width, height
     max_x = max_y = 0
 
@@ -31,18 +31,18 @@ def Pipeline(inimg, has_out_frame=False):
         min_x, max_x = min(x, min_x), max(x+w, max_x)
         min_y, max_y = min(y, min_y), max(y+h, max_y)
         if w > 80 and h > 80:
-            complete_rect_frame = cv2.rectangle(resized_frame, (x,y), (x+w,y+h), (255, 0, 0), 2)
+            complete_rect_frame = cv2.rectangle(inimg, (x,y), (x+w,y+h), (255, 0, 0), 2)
         else:
             SendNoValidData()
-    
+
     # If the overall contour's size is bigger than nothing
     if max_x - min_x > 0 and max_y - min_y > 0:
-        complete_rect_frame = cv2.rectangle(resized_frame, (min_x, min_y), (max_x, max_y), (255, 0, 0), 2)
+        complete_rect_frame = cv2.rectangle(inimg, (min_x, min_y), (max_x, max_y), (255, 0, 0), 2)
         outimg = complete_rect_frame
 
         # Calculate the center of the rectangle containing the biggest contour
         xcenter = int((max_x - min_x) / 2)
-        ycenter = int((y_max - y_min) / 2)
+        ycenter = int((max_y - min_y) / 2)
         # Cast the calculated center coords of the rectangle into a string
         str_xcenter = str(xcenter)
         str_ycenter = str(ycenter)
@@ -60,7 +60,7 @@ def Pipeline(inimg, has_out_frame=False):
 
     if has_out_frame == True:
         # Convert our output image to video output format and send to host over USB:
-        outframe.sendCv(outimg)
+        return outimg
 
 
 
@@ -98,4 +98,5 @@ class PythonReflectiveHSVTracker:
     ## Process function with USB output
     def process(self, inframe, outframe):
         get_inframe = inframe.getCvBGR()
-        Pipeline(inimg=get_inframe, has_out_frame=True)
+        outimg = Pipeline(inimg=get_inframe, has_out_frame=True)
+        outframe.sendCv(outimg)
