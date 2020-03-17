@@ -4,19 +4,16 @@ import numpy as np
 
 # @videomapping YUYV 340 240 60.0 YUYV 340 240 60.0 JeVois PythonCascadeTracker
 
-def Pipeline(has_out_frame):
+def Pipeline(inimg, has_out_frame=False):
     # Start measuring image processing time (NOTE: does not account for input conversion time):
-    self.timer.start()
+    #self.timer.start()
 
 
     #================== ACTUAL PIPELINE ===========================================================
     #==============================================================================================
     #==============================================================================================
 
-
-    bgr_frame = inframe.getCvBGR()
-
-    gray_frame = cv2.cvtColor(bgr_frame, cv2.COLOR_BGR2GRAY)
+    gray_frame = cv2.cvtColor(inimg, cv2.COLOR_BGR2GRAY)
 
     gray_frame = cv2.equalizeHist(gray_frame)
 
@@ -29,11 +26,11 @@ def Pipeline(has_out_frame):
 
             center = (x + (w//2), y + (h//2))
 
-            rect_frame = cv2.rectangle(bgr_frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            rect_frame = cv2.rectangle(inimg, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         # Cast the calculated center coords of the rectangle into a string
-        str_xcenter = str(x + (w/2))
-        str_ycenter = str(y + (h/2))
+        str_xcenter = str(x + (w//2))
+        str_ycenter = str(y + (h//2))
         
         # Cast the calculated area of the drawn rectangle into a string
         str_rect_size = str(w * h)
@@ -49,7 +46,7 @@ def Pipeline(has_out_frame):
         jevois.sendSerial(nopeString)
 
         # Output BGR image without rectangles (without identified balls because couldn't find any)
-        outimg = bgr_frame
+        outimg = inimg
 
     #================== END OF PIPELINE ===========================================================
     #==============================================================================================
@@ -57,11 +54,10 @@ def Pipeline(has_out_frame):
 
 
     # Write frames/s info from our timer into the edge map (NOTE: does not account for output conversion time):
-    fps = self.timer.stop()
+    #fps = self.timer.stop()
 
-    if has_out_frame == True:
-        # Convert our OpenCv output image to video output format and send to host over USB:
-        outframe.sendCv(outimg)
+    if has_out_frame == True:        
+        return outimg
 
 
 
@@ -92,8 +88,12 @@ class PythonCascadeTracker:
 
     # Process function without USB output
     def processNoUSB(self, inframe):
-        Pipeline(False)
+        bgr_frame = inframe.getCvBGR()
+        Pipeline(inimg=bgr_frame, has_out_frame=False)
 
     # Process function with USB output
     def process(self, inframe, outframe):
-        Pipeline(True)
+        bgr_frame = inframe.getCvBGR()
+        outimg = Pipeline(inimg=bgr_frame, has_out_frame=True)
+        # Convert our OpenCv output image to video output format and send to host over USB:
+        outframe.sendCv(outimg)

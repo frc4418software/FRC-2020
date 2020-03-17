@@ -4,7 +4,7 @@ import numpy as np
 
 # @videomapping YUYV 340 252 60.0 YUYV 340 252 60.0 JeVois FRC2020
 
-def Pipeline(has_out_frame):
+def Pipeline(inimg, has_out_frame=False):
     # Start measuring image processing time (NOTE: does not account for input conversion time):
     #self.timer.start()
 
@@ -12,11 +12,8 @@ def Pipeline(has_out_frame):
     #==============================================================================================
     #==============================================================================================
 
-    # Get JeVois BGR image input
-    bgr_frame = inframe.getCvBGR()
-
     # Convert BGR JeVois input image to HSL
-    frame_HLS = cv2.cvtColor(bgr_frame, cv2.COLOR_BGR2HLS)
+    frame_HLS = cv2.cvtColor(inimg, cv2.COLOR_BGR2HLS)
     # Make HSL mask using defined range
     HLS_mask = cv2.inRange(frame_HLS, HLS_low_thresh, HLS_high_thresh)
 
@@ -27,7 +24,7 @@ def Pipeline(has_out_frame):
 
 
     # Convert BGR JeVois input image to HSV
-    frame_HSV = cv2.cvtColor(bgr_frame, cv2.COLOR_BGR2HSV)
+    frame_HSV = cv2.cvtColor(inimg, cv2.COLOR_BGR2HSV)
     # Make HSV mask using defined range
     HSV_mask = cv2.inRange(frame_HSV, HSV_low_thresh, HSV_high_thresh)
 
@@ -48,7 +45,7 @@ def Pipeline(has_out_frame):
     # Store a list of all found contours
     contours, hierarchy = cv2.findContours(bitwise_and_dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     # New frame that is copy of JeVois input image, but with the contours drawn on top of it
-    contours_frame = cv2.drawContours(bgr_frame, contours, -1, (0,255,0), 3)
+    contours_frame = cv2.drawContours(inimg, contours, -1, (0,255,0), 3)
     # Get the size of each contour in the list of contours
     contour_areas = [(cv2.contourArea(contour), contour) for contour in contours]
 
@@ -64,7 +61,7 @@ def Pipeline(has_out_frame):
         area = cv2.contourArea(biggest_contour)
 
         # Draw a generalized rectangle around this biggest contour using the calculated bounding cornor points
-        frame_rect = cv2.rectangle(bgr_frame,(x,y),(x+w,y+h),(0,255,0),2)
+        frame_rect = cv2.rectangle(inimg,(x,y),(x+w,y+h),(0,255,0),2)
 
         # If the largest contour found is within the size (aka area) range
         if ((area > area_min) and (area < area_max)):
@@ -108,9 +105,8 @@ def Pipeline(has_out_frame):
     #==============================================================================================
 
     #fps = self.timer.stop()
-    if has_out_frame == True:
-        # Convert our OpenCv output image to video output format and send to host over USB:
-        outframe.sendCv(outimg)
+    if has_out_frame == True:        
+        return outimg
 
 
 class PythonZeroSpotTracker:
@@ -152,8 +148,14 @@ class PythonZeroSpotTracker:
         area_max = 6000
 
     def processNoUSB(self, inframe):
-        Pipeline(False)
+        # Get JeVois BGR image input
+        bgr_frame = inframe.getCvBGR()
+        Pipeline(inimg=bgr_frame, has_out_frame=False)
 
     ## Process function with USB output
     def process(self, inframe, outframe):
-        Pipeline(True)
+        # Get JeVois BGR image input
+        bgr_frame = inframe.getCvBGR()
+        outimg = Pipeline(inimg=bgr_frame, has_out_frame=True)
+        # Convert our OpenCv output image to video output format and send to host over USB:
+        outframe.sendCv(outimg)

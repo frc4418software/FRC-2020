@@ -4,20 +4,17 @@ import numpy as np
 
 # @videomapping YUYV 340 252 60.0 YUYV 340 252 60.0 JeVois FRC2020
 
-def Pipeline:
+def Pipeline(inimg, has_out_frame=False):
     # Start measuring image processing time (NOTE: does not account for input conversion time):
-    self.timer.start()
+    #self.timer.start()
 
 
     #================== ACTUAL PIPELINE ===========================================================
     #==============================================================================================
     #==============================================================================================
 
-    # STEP ONE: Get BGR image input
-    frame = inframe.getCvBGR()
-
     # STEP TWO: Convert BGR input image to first HSV output
-    frameHSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    frameHSV = cv2.cvtColor(inimg, cv2.COLOR_BGR2HSV)
 
     # STEP THREE: Create HSV threshold mask image from first HSV output
     mask = cv2.inRange(frameHSV, colorLow, colorHigh)
@@ -26,7 +23,7 @@ def Pipeline:
     contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     # Draw contours after finding contours from mask image
-    frame_with_contours = cv2.drawContours(frame, contours, -1, (0,255,0), 3)
+    frame_with_contours = cv2.drawContours(inimg, contours, -1, (0,255,0), 3)
 
     # Create list of all contour areas from all found contours
     contour_areas = [(cv2.contourArea(contour), contour) for contour in contours]
@@ -44,14 +41,14 @@ def Pipeline:
         area = cv2.contourArea(biggest_contour)
 
         # Draw a generalized rectangle around this biggest contour using the calculated bounding cornor points
-        frame_rect = cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)
+        frame_rect = cv2.rectangle(inimg,(x,y),(x+w,y+h),(0,255,0),2)
 
         # If largest contour found is within area threshold
         if ((area > area_min) and (area < area_max)):
 
             # Calculate the center of the rectangle containing the biggest contour
-            xcenter = int(x + (w/2))
-            ycenter = int(y + (h/2))
+            xcenter = int(x + (w//2))
+            ycenter = int(y + (h//2))
 
             # Cast the calculated center coords of the rectangle into a string
             str_xcenter = str(xcenter)
@@ -94,13 +91,13 @@ def Pipeline:
 
 
     # Write frames/s info from our timer into the edge map (NOTE: does not account for output conversion time):
-    fps = self.timer.stop()
+    #fps = self.timer.stop()
     #outheight = outimg.shape[0]
     #outwidth = outimg.shape[1]
     #cv2.putText(outimg, fps, (3, outheight - 6), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255))
-
-    # Convert our OpenCv output image to video output format and send to host over USB:
-    outframe.sendCv(outimg)
+    
+    if has_out_frame == True:
+        return outimg
 
 
 class PythonHSVTracker:
@@ -135,11 +132,15 @@ class PythonHSVTracker:
 
         # Threshold for largest contour found
         area_min = 170
-        area_max =
+        area_max = 6000
 
     def processNoUSB(self, inframe):
-        Pipeline()
+        bgr_frame = inframe.getCvBGR()
+        Pipeline(inimg=bgr_frame, has_out_frame=False)
 
     ## Process function with USB output
     def process(self, inframe, outframe):
-        Pipeline()
+        bgr_frame = inframe.getCvBGR()
+        outimg = Pipeline(inimg=bgr_frame, has_out_frame=True)
+        # Convert our OpenCv output image to video output format and send to host over USB:
+        outframe.sendCv(outimg)

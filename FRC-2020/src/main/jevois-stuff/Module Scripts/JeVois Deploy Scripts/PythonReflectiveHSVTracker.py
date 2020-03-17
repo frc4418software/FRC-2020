@@ -2,10 +2,6 @@ import libjevois as jevois
 import cv2
 import numpy as np
 
-def SendNoValidData():
-    # Send filler message saying that there is no valid data to send
-    jevois.sendSerial(nopeString)
-
 def Pipeline(inimg, has_out_frame=False):
 
     frame_HSV = cv2.cvtColor(inimg, cv2.COLOR_BGR2HSV)
@@ -21,49 +17,55 @@ def Pipeline(inimg, has_out_frame=False):
 
     contours, hierarchy = cv2.findContours(HSV_mask_dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
+    # Get input image shape to set initial min and max xy
     height, width, _ = inimg.shape
+    
     min_x, min_y = width, height
     max_x = max_y = 0
-    
-    jevois.sendSerial(str(hierarchy))
 
     # Cleanest way if saying "hey, is the list of contours empty?"
     if not contours:
-        SendNoValidData()
+        jevois.sendSerial(nopeString)
         outimg = inimg
+    # If list of contours is NOT empty
     else:
-        # Computes the bounding box for the contour, and draws it on the frame,
+        # Computes the bounding box for the total rect contour
         for contour, hier in zip(contours, hierarchy):
             (x,y,w,h) = cv2.boundingRect(contour)
+            # Keep updating the mininum and maximum for x and y
+                # Starting minimum xy is inimg width/height and starting maximum xy is 0
+                    # Initial min and max xy values are meant to make any valid coord within frame
+                    # the obvious min or max xy value initially
             min_x, max_x = min(x, min_x), max(x+w, max_x)
             min_y, max_y = min(y, min_y), max(y+h, max_y)
-            if w > 80 and h > 80:
-                complete_rect_frame = cv2.rectangle(inimg, (x,y), (x+w,y+h), (255, 0, 0), 2)
-            else:
-                SendNoValidData()
+
+        total_width = max_x - min_x
+        total_height = max_y - min_y
 
         # If the overall contour's size is bigger than nothing
-        if max_x - min_x > 0 and max_y - min_y > 0:
-            complete_rect_frame = cv2.rectangle(inimg, (min_x, min_y), (max_x, max_y), (255, 0, 0), 2)
-            outimg = complete_rect_frame
-
+        if total_width >= width_min and total_height >= height_min:
+            # Draws the total rect contour on the input image
+            total_rect_frame = cv2.rectangle(inimg, (min_x, min_y), (max_x, max_y), (255,0,0), 2)
+            
             # Calculate the center of the rectangle containing the biggest contour
-            xcenter = int((max_x - min_x) / 2)
-            ycenter = int((max_y - min_y) / 2)
+            xcenter = (max_x - min_x) // 2
+            ycenter = (max_y - min_y) // 2
             # Cast the calculated center coords of the rectangle into a string
             str_xcenter = str(xcenter)
             str_ycenter = str(ycenter)
 
             # Cast the calculated area of the drawn rectangle into a string
-            str_rect_size = str(w * h)
+            str_rect_size = str(total_width * total_height)
 
             # Use hard-wired serial port to send the rectangle center coords and rectangle size as strings
             jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
+            
+            outimg = total_rect_frame
         else:
-            SendNoValidData()
+            jevois.sendSerial(nopeString)
 
             # Use post-processed image (that does NOT have contour within area threshold) as the output image
-            outimg = resized_frame
+            outimg = inimg
 
 
     if has_out_frame == True:
