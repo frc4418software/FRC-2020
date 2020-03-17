@@ -4,7 +4,7 @@ import numpy as np
 
 # @videomapping YUYV 340 240 60.0 YUYV 340 240 60.0 JeVois PythonCascadeTracker
 
-def Pipeline:
+def Pipeline(has_out_frame):
     # Start measuring image processing time (NOTE: does not account for input conversion time):
     self.timer.start()
 
@@ -59,8 +59,9 @@ def Pipeline:
     # Write frames/s info from our timer into the edge map (NOTE: does not account for output conversion time):
     fps = self.timer.stop()
 
-    # Convert our OpenCv output image to video output format and send to host over USB:
-    outframe.sendCv(outimg)
+    if has_out_frame == True:
+        # Convert our OpenCv output image to video output format and send to host over USB:
+        outframe.sendCv(outimg)
 
 
 
@@ -91,8 +92,8 @@ class PythonCascadeTracker:
 
     # Process function without USB output
     def processNoUSB(self, inframe):
-        Pipeline()
+        Pipeline(False)
 
     # Process function with USB output
     def process(self, inframe, outframe):
-        Pipeline()
+        Pipeline(True)
