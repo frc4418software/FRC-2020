@@ -16,12 +16,12 @@ public class HighgoalVisionCmdGroup extends SequentialCommandGroup {
   public HighgoalVisionCmdGroup() {
     addCommands(
       //new SweepLocateHighgoalCmd(), 
-      //new ConfirmHighgoalCmd(), 
+      new ConfirmHighgoalCmd()
       //new FaceHighgoalCmd(),
       //new DriveToHighgoalCmd(),
       //new AdjustOrientationCmd(),
       //new ShootIntoHighgoalCmd()
-      new TestingCodeCmd()
+      //new TestingCodeCmd()
     );
     
     //#region Auto-generated comment tips for edu.wpi.first.wpilibj.command.CommandGroup
