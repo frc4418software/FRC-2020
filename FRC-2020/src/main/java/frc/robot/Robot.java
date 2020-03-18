@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
   //#endregion  -----------END OF ADJUST ROBOT VARS------------
   //#endregion  =====================END OF VISION ROBOT VARIBLES=======================
   
-  
+  //#region ||||||||||||||||||||||| Robot Functions ||||||||||||||||||||
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -84,16 +84,9 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
+  //#endregion ||||||||||||||| End of Robot Functions ||||||||||||||||
 
-  @Override
-  public void disabledInit() {
-    
-  }
-
-  @Override
-  public void disabledPeriodic() {
-  }
-
+  //#region |||||||||||||||||| Autonomous Functions ||||||||||||||||||
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -106,9 +99,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-
+    
   }
+  //#endregion |||||||||||||| End of Autonomous Functions ||||||||||||||||
 
+  //#region |||||||||||||||||| Teleop Functions ||||||||||||||||||
   @Override
   public void teleopInit() {
     // This makes sure that the autonomous stops running when
@@ -124,7 +119,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     
   }
+  //#endregion ||||||||||||| End of Teleop Functions |||||||||||||
 
+  //#region |||||||||||||||| Test Functions |||||||||||||||||
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
@@ -134,4 +131,16 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+  //#endregion |||||||||||||| End of Test Functions ||||||||||||||
+
+  //#region |||||||||||||||||| Disabled Functions ||||||||||||||||||
+  @Override
+  public void disabledInit() {
+    
+  }
+
+  @Override
+  public void disabledPeriodic() {
+  }
+  //#endregion |||||||||||| End of Disabled Functions ||||||||||||||
 }

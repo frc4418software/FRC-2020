@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -310,7 +309,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
         if (getConfirmStopwatchTime() >= Constants.consistentHighgoalConfirmMsTime) {
             // Read the latest XY and parse it into usable integer coordinates
-            Robot.receiveJevoisDataSubsys.ReadAndParseXY();
+            Robot.receiveJevoisDataSubsys.ReadAndParseXYSize();
 
             // Store the confirmed highgoal's XY coords and rect size in the backup* vars
             SaveBackupHighgoalXYRectSize();
@@ -477,7 +476,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
         if (getAdjustConfirmStopwatchTime() >= Constants.adjustHighgoalConfirmMsTime) {
             // Read the latest XY and parse it into usable integer coordinates
-            Robot.receiveJevoisDataSubsys.ReadAndParseXY();
+            Robot.receiveJevoisDataSubsys.ReadAndParseXYSize();
 
             // Store the re-confirmed highgoal's XY coords and rect size in the backup* vars
             SaveBackupHighgoalXYRectSize();

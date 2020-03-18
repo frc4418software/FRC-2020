@@ -26,6 +26,7 @@ public final class Constants {
   public static final String 
           nopeString = "n",
           delims = ",";
+          
   public static final int
           jevoisCamWidth = 320,         // CONFIG set pixel width of jevois view resolution
           jevoisCamHeight = 240;        // CONFIG set pixel height of jevois view resolution

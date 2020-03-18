@@ -58,7 +58,7 @@ def Pipeline(inimg, has_out_frame=False):
             str_rect_size = str(total_width * total_height)
 
             # Use hard-wired serial port to send the rectangle center coords and rectangle size as strings
-            jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
+            jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size + str_delim)
             
             outimg = total_rect_frame
         else:
@@ -78,13 +78,13 @@ class PythonReflectiveHSVTracker:
     # ###################################################################################################
     ## Constructor
     def __init__(self):
-        global nopeString, HSV_low_thresh, HSV_high_thresh, HSV_erode_its, HSV_dilate_its, width_min, height_min, str_delim
-
-        # String to say there's nothing
-        nopeString = "n"
+        global nopeString, HSV_low_thresh, HSV_high_thresh, HSV_erode_its, HSV_dilate_its, width_min, height_min, str_delim, str_termi_char
 
         # String to seperate data to be parsed
         str_delim = ','
+
+        # String to say there's nothing
+        nopeString = "n"
 
         # Simple HSV array low-to-high threshold
         HSV_low_thresh = np.array([78, 30, 229])

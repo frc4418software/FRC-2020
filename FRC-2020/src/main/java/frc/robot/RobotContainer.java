@@ -7,14 +7,20 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.*;
-import frc.robot.Constants;
-//import frc.robot.subsystems.*;
+import frc.robot.commands.ClearCommand;
+import frc.robot.commands.DriveStraightCommand;
+import frc.robot.commands.HighgoalVisionCmdGroup;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.SelectLaunch1Command;
+import frc.robot.commands.SelectLaunch2Command;
+import frc.robot.commands.SelectLaunch3Command;
+import frc.robot.commands.SemiAutoFireCommand;
+import frc.robot.commands.TestingCodeCmd;
+import frc.robot.commands.ToggleArcadeDriveCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -23,19 +29,14 @@ import frc.robot.Constants;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  //private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-  
+  //#region Create joysticks
   // Create joysticks
   private static final Joystick X3D_LEFT = new Joystick(Constants.X3D_LEFT_JOYSTICK_ID),
                                 X3D_RIGHT = new Joystick(Constants.X3D_RIGHT_JOYSTICK_ID) ,
                                 GAMEPAD = new Joystick(Constants.GAMEPAD_JOYSTICK_ID);
+  //#endregion
                                 
-  
+  //#region Get axis for specific functions
   // Get axis for specific functions
   public static double getLeftTankDriveAxis() {
     return X3D_LEFT.getRawAxis(Constants.LEFT_TANK_DRIVE_AXIS_ID);
@@ -53,7 +54,9 @@ public class RobotContainer {
   public static double getClimberAxis() {
     return GAMEPAD.getRawAxis(Constants.CLIMB_AXIS_ID);
   }
+  //#endregion
 
+  //#region Create and assign default buttons
   // Create and assign default buttons
   public static JoystickButton toggleArcadeDriveButton = new JoystickButton(X3D_RIGHT, Constants.TOGGLE_ARCADE_DRIVE_BUTOON_ID);
   public static JoystickButton driveStraightButton = new JoystickButton(X3D_RIGHT, Constants.DRIVE_STRAIGHT_BUTTON_ID);
@@ -70,7 +73,9 @@ public class RobotContainer {
   public static JoystickButton selectButton1 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_1_ID);
   public static JoystickButton selectButton2 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_2_ID);
   public static JoystickButton selectButton3 = new JoystickButton(X3D_RIGHT, Constants.SELECT_BUTTON_3_ID);
+  //#endregion
 
+  //#region Robot Container
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -78,13 +83,9 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
+  //#endregion
 
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
+  //#region Button bindings
   public int selection;
   private void configureButtonBindings() {
     toggleArcadeDriveButton.whenPressed(new ToggleArcadeDriveCommand());
@@ -103,14 +104,12 @@ public class RobotContainer {
     selectButton2.whenPressed(new SelectLaunch2Command());
     selectButton3.whenPressed(new SelectLaunch3Command());
   }
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
+  //#endregion
+
+  //#region Pass Autonomous Command to Main
   public Command getAutonomousCommand() {
-    return null;
-    // An ExampleCommand will run in autonomous
-    //return m_autoCommand;
+    SequentialCommandGroup m_autoCommand = new HighgoalVisionCmdGroup();
+    return m_autoCommand;
   }
+  //#endregion
 }

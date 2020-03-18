@@ -36,7 +36,7 @@ def Pipeline(inimg, has_out_frame=False):
         str_rect_size = str(w * h)
 
         # Use hard-wired serial port to send the rectangle center coords and area as strings
-        jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size)
+        jevois.sendSerial(str_xcenter + str_delim + str_ycenter + str_delim + str_rect_size + str_delim)
 
         outimg = rect_frame
 
