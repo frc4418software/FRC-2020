@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
-import frc.robot.subsystems.ReceiveJevoisDataSubsys;
+import frc.robot.subsystems.GetJevoisDataSubsys;
 import frc.robot.subsystems.VisionHighgoalSubsys;
 
 /**
@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   public static ManipulatorSubsystem manipulatorsubsystem = new ManipulatorSubsystem();
   
-  public static ReceiveJevoisDataSubsys receiveJevoisDataSubsys = new ReceiveJevoisDataSubsys();
+  public static GetJevoisDataSubsys getJevoisDataSubsys = new GetJevoisDataSubsys();
   public static VisionHighgoalSubsys visionHighgoalSubsys = new VisionHighgoalSubsys();
   //#endregion  =======================END OF ROBOT SUBSYSTEMS======================
   

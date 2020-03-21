@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class TestingCodeCmd extends CommandBase {
+public class DEPTestingVisionCmd extends CommandBase {
   /**
    * Creates a new TestingCodeCmd
    */
-  public TestingCodeCmd() {
+  public DEPTestingVisionCmd() {
     
   }
 
@@ -23,13 +23,13 @@ public class TestingCodeCmd extends CommandBase {
   @Override
   public void initialize() {
     SmartDashboard.putString("TESTING CODE", "RUNNING");
-    Robot.receiveJevoisDataSubsys.InitJevois();
+    Robot.getJevoisDataSubsys.InitJevois();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.receiveJevoisDataSubsys.ReadAndParseXYSize();
+    Robot.getJevoisDataSubsys.ReadAndParseXYSize();
   }
 
   // Called once the command ends or is interrupted.

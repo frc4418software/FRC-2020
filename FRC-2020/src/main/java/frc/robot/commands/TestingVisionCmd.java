@@ -11,38 +11,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class FaceHighgoalCmd extends CommandBase {
-  /**
-   * Creates a new FaceHighgoalCmd
-   */
-  public FaceHighgoalCmd() {
+public class TestingVisionCmd extends CommandBase {
+  public TestingVisionCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.getJevoisDataSubsys);
-    addRequirements(Robot.visionHighgoalSubsys);
-    addRequirements(Robot.driveSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init-ed", "FaceHighgoalCmd");
+    SmartDashboard.putString("TESTING CODE", "RUNNING");
+    Robot.getJevoisDataSubsys.InitJevois();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.visionHighgoalSubsys.FaceHighgoalTimedThreshold();
+    Robot.getJevoisDataSubsys.ReadAndParseXYSize();
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putString("CMD Done", "FaceHighgoalCmd");
+
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Robot.visionHighgoalSubsys.getIsFaceHighgoalComplete();
+    return false;
   }
 }

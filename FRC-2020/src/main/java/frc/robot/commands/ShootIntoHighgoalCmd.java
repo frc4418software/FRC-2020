@@ -22,7 +22,7 @@ public class ShootIntoHighgoalCmd extends CommandBase {
    */
   public ShootIntoHighgoalCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.receiveJevoisDataSubsys);
+    addRequirements(Robot.getJevoisDataSubsys);
     addRequirements(Robot.visionHighgoalSubsys);
     addRequirements(Robot.driveSubsystem);
     addRequirements(Robot.manipulatorsubsystem);

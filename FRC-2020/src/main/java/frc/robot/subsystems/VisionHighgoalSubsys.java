@@ -309,7 +309,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
         if (getConfirmStopwatchTime() >= Constants.consistentHighgoalConfirmMsTime) {
             // Read the latest XY and parse it into usable integer coordinates
-            Robot.receiveJevoisDataSubsys.ReadAndParseXYSize();
+            Robot.getJevoisDataSubsys.ReadAndParseXYSize();
 
             // Store the confirmed highgoal's XY coords and rect size in the backup* vars
             SaveBackupHighgoalXYRectSize();
@@ -324,7 +324,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void ConfirmHighgoalXYWithTimeout() {
         // If the robot has NOT been trying to confirm a consistent highgoal for the max time allowed
         if (getConfirmStopwatchTime() < Constants.confirmStopwatchMsTimeout) {
-            if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData()) {
+            if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData()) {
                 setConfirmStopwatchTime(0);
                 setConfirmStopwatchResetTime(System.currentTimeMillis());
             } else {
@@ -417,7 +417,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             setIsFaceHighgoalComplete(true);
         } else {
             DriveTurnToFaceHighgoal();
-            if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData() ||
+            if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData() ||
             (! IsHighgoalXCoordWithinFaceThreshold())  ) {
                 
                 setFaceStopwatchTime(0);
@@ -472,11 +472,16 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     }
     //======================================================================================================
     // Sub-function
+    public void ResetJevoisServoAngle() {
+        // TODO WRITE code to reset the jevois servo to the considered-normal angle to reset for next vision cycle
+    }
+    //======================================================================================================
+    // Sub-function
     public void StopAdjustConfirmIfHighgoalFound() {
         // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
         if (getAdjustConfirmStopwatchTime() >= Constants.adjustHighgoalConfirmMsTime) {
             // Read the latest XY and parse it into usable integer coordinates
-            Robot.receiveJevoisDataSubsys.ReadAndParseXYSize();
+            Robot.getJevoisDataSubsys.ReadAndParseXYSize();
 
             // Store the re-confirmed highgoal's XY coords and rect size in the backup* vars
             SaveBackupHighgoalXYRectSize();
@@ -492,7 +497,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void TryToConfirmHighgoalForAdjusting() {
         // If the robot has NOT been trying to confirm a consistent highgoal for the max time allowed
         if (getAdjustConfirmStopwatchTime() < Constants.adjustConfirmStopwatchMsTimeout) {
-            if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData()) {
+            if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData()) {
                 setAdjustConfirmStopwatchTime(0);
                 setAdjustConfirmStopwatchResetTime(System.currentTimeMillis());
             } else {
@@ -556,7 +561,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
             // If adjust stage has NOT timed out for trying to re-face
             if (! IsAdjustFaceHighgoalTimedOut()) {
                 DriveTurnToFaceHighgoal();
-                if (! Robot.receiveJevoisDataSubsys.IsReceivedStringValidData() ||
+                if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData() ||
                 (! IsHighgoalXCoordWithinAdjustFaceThreshold())  ) {
                     
                     setAdjustFaceStopwatchTime(0);

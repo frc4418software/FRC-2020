@@ -17,7 +17,7 @@ public class DriveToHighgoalCmd extends CommandBase {
    */
   public DriveToHighgoalCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.receiveJevoisDataSubsys);
+    addRequirements(Robot.getJevoisDataSubsys);
     addRequirements(Robot.visionHighgoalSubsys);
     addRequirements(Robot.driveSubsystem);
   }

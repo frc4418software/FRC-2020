@@ -19,7 +19,7 @@ import frc.robot.commands.SelectLaunch1Command;
 import frc.robot.commands.SelectLaunch2Command;
 import frc.robot.commands.SelectLaunch3Command;
 import frc.robot.commands.SemiAutoFireCommand;
-import frc.robot.commands.TestingCodeCmd;
+import frc.robot.commands.TestingVisionCmd;
 import frc.robot.commands.ToggleArcadeDriveCommand;
 
 /**
@@ -92,7 +92,7 @@ public class RobotContainer {
     driveStraightButton.whileHeld(new DriveStraightCommand());
     
     // Run test code when gamepad button B is pressed
-    testCodeButton.whenPressed(new TestingCodeCmd());
+    testCodeButton.whenPressed(new TestingVisionCmd());
 
     // Run vision code for shooting into high goal when gamepad button X is pressed
     visionTrackHighgoalButton.whenPressed(new HighgoalVisionCmdGroup());

@@ -14,7 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 
-public class ReceiveJevoisDataSubsys extends SubsystemBase {
+public class GetJevoisDataSubsys extends SubsystemBase {
     //#region   BEGINNING OF VARIABLES SECTION==========================================================
     private String[] parsedData;
     public String[] getParsedData() {

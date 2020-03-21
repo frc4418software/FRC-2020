@@ -162,20 +162,20 @@
 //   public void DriveTowardsBall() {
 //     // Perform necessary calculations to locate and drive towards the ball
 //     // if ball is on left side of camera view
-//     if (Robot.receiveJevoisDataSubsys.getXCoord() <= getHalfWidth()) {
+//     if (Robot.getJevoisDataSubsys.getXCoord() <= getHalfWidth()) {
 //       // Left motor pivot math
-//       setLeftMotorPercent(getPivotMotorPercent() * (1 - (Robot.receiveJevoisDataSubsys.getXCoord() / getHalfWidth())) );
+//       setLeftMotorPercent(getPivotMotorPercent() * (1 - (Robot.getJevoisDataSubsys.getXCoord() / getHalfWidth())) );
     
 //       // Set right motor to full speed
 //       setRightMotorPercent(getMaxMotorPercent());
 //     } 
 //     // if ball is on right side of camera view
-//     else if (Robot.receiveJevoisDataSubsys.getXCoord() > getHalfWidth()) {
+//     else if (Robot.getJevoisDataSubsys.getXCoord() > getHalfWidth()) {
 //       // Set left motor to full speed
 //       setLeftMotorPercent(getMaxMotorPercent());
       
 //       // Right motor pivot math
-//       setRightMotorPercent(getPivotMotorPercent() * (1 - ((Robot.receiveJevoisDataSubsys.getXCoord() - getHalfWidth()) / getHalfWidth())) );
+//       setRightMotorPercent(getPivotMotorPercent() * (1 - ((Robot.getJevoisDataSubsys.getXCoord() - getHalfWidth()) / getHalfWidth())) );
 //     }
 
 
@@ -190,20 +190,20 @@
 //   //#region Align robot with x-axis of high-goal in order to shoot
 //   public void AlignXCoordWithHighgoal() {
 //     // if goal is on left side of camera view
-//     if (Robot.receiveJevoisDataSubsys.getXCoord() <= getHalfWidth()) {
+//     if (Robot.getJevoisDataSubsys.getXCoord() <= getHalfWidth()) {
 //       // Left motor pivot math
-//       setLeftMotorPercent( (-1) * (Robot.receiveJevoisDataSubsys.getXCoord() / getHalfWidth()) );
+//       setLeftMotorPercent( (-1) * (Robot.getJevoisDataSubsys.getXCoord() / getHalfWidth()) );
 
 //       // Right motor pivot math
-//       setRightMotorPercent( Robot.receiveJevoisDataSubsys.getXCoord() / getHalfWidth() );
+//       setRightMotorPercent( Robot.getJevoisDataSubsys.getXCoord() / getHalfWidth() );
 //     }
 //     // if goal is on right side of camera view
-//     else if (Robot.receiveJevoisDataSubsys.getXCoord() > getHalfWidth()) {
+//     else if (Robot.getJevoisDataSubsys.getXCoord() > getHalfWidth()) {
 //       // Left motor pivot math
-//       setLeftMotorPercent( ((Robot.receiveJevoisDataSubsys.getXCoord() - getHalfWidth()) / getHalfWidth()) );
+//       setLeftMotorPercent( ((Robot.getJevoisDataSubsys.getXCoord() - getHalfWidth()) / getHalfWidth()) );
 
 //       // Right motor pivot math
-//       setRightMotorPercent( (-1) * ((Robot.receiveJevoisDataSubsys.getXCoord() - getHalfWidth())) / getHalfWidth() );
+//       setRightMotorPercent( (-1) * ((Robot.getJevoisDataSubsys.getXCoord() - getHalfWidth())) / getHalfWidth() );
 //     }
 
 //     // Set left motor speed (by value) based on calculated pivot OR full speed
@@ -217,23 +217,23 @@
 //   //#region Align robot with y-axis of high-goal in order to shoot
 //   public void AlignYCoordWithHighgoal() {
 //     // if goal is above target y coord
-//     if (Robot.receiveJevoisDataSubsys.getYCoord() >= getGoalYCoordTarget()) {
+//     if (Robot.getJevoisDataSubsys.getYCoord() >= getGoalYCoordTarget()) {
 //       // Left motor pivot math
-//       setLeftMotorPercent( (-1) * ((Math.abs(Robot.receiveJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
+//       setLeftMotorPercent( (-1) * ((Math.abs(Robot.getJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
 //       / (getFullHeight() - getGoalYCoordTarget())) );
 
 //       // Right motor pivot math
-//       setRightMotorPercent( ((Math.abs(Robot.receiveJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
+//       setRightMotorPercent( ((Math.abs(Robot.getJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
 //       / (getFullHeight() - getGoalYCoordTarget())) );
 //     }
 //     // if goal is below target y coord
-//     else if (Robot.receiveJevoisDataSubsys.getYCoord() < getGoalYCoordTarget()) {
+//     else if (Robot.getJevoisDataSubsys.getYCoord() < getGoalYCoordTarget()) {
 //       // Left motor pivot math
-//       setLeftMotorPercent( ((Math.abs(Robot.receiveJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
+//       setLeftMotorPercent( ((Math.abs(Robot.getJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
 //       / (getFullHeight() - getGoalYCoordTarget())) );
 
 //       // Right motor pivot math
-//       setRightMotorPercent( (-1) * ((Math.abs(Robot.receiveJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
+//       setRightMotorPercent( (-1) * ((Math.abs(Robot.getJevoisDataSubsys.getYCoord() - getGoalYCoordTarget())) 
 //       / (getFullHeight() - getGoalYCoordTarget())) );
 //     }
 

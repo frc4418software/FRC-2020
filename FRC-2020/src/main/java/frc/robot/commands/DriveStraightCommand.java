@@ -17,7 +17,7 @@ public class DriveStraightCommand extends CommandBase {
    */
   public DriveStraightCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.receiveJevoisDataSubsys);
+    addRequirements(Robot.getJevoisDataSubsys);
     addRequirements(Robot.visionHighgoalSubsys);
   }
 

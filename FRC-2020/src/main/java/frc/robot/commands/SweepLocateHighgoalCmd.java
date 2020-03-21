@@ -17,7 +17,7 @@ public class SweepLocateHighgoalCmd extends CommandBase {
    */
   public SweepLocateHighgoalCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.receiveJevoisDataSubsys);
+    addRequirements(Robot.getJevoisDataSubsys);
     addRequirements(Robot.visionHighgoalSubsys);
     addRequirements(Robot.driveSubsystem);
   }
@@ -27,7 +27,7 @@ public class SweepLocateHighgoalCmd extends CommandBase {
   public void initialize() {
     SmartDashboard.putString("CMD Init-ed", "SweepLocateHighgoalCmd");
 
-    //Robot.receiveJevoisDataSubsys.InitSerialPort();
+    //Robot.getJevoisDataSubsys.InitSerialPort();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
