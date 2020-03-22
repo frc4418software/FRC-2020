@@ -17,9 +17,9 @@ public class FaceHighgoalCmd extends CommandBase {
    */
   public FaceHighgoalCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.getJevoisDataSubsys);
-    addRequirements(Robot.visionHighgoalSubsys);
-    addRequirements(Robot.driveSubsystem);
+    addRequirements(Robot.getJevoisDataSubsys,
+                    Robot.visionHighgoalSubsys,
+                    Robot.driveSubsystem);
   }
 
   // Called when the command is initially scheduled.

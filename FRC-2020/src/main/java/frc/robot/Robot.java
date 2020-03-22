@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.TestingVisionSubsys;
 import frc.robot.subsystems.GetJevoisDataSubsys;
 import frc.robot.subsystems.VisionHighgoalSubsys;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -33,6 +35,7 @@ public class Robot extends TimedRobot {
   
   public static GetJevoisDataSubsys getJevoisDataSubsys = new GetJevoisDataSubsys();
   public static VisionHighgoalSubsys visionHighgoalSubsys = new VisionHighgoalSubsys();
+  public static TestingVisionSubsys testingVisionSubsys = new TestingVisionSubsys();
   //#endregion  =======================END OF ROBOT SUBSYSTEMS======================
   
   //#region ==================BEGINNING OF VISION ROBOT VARIABLES======================

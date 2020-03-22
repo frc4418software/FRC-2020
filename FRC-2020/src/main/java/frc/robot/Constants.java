@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.SerialPort;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  //#region ======================BEGINNING OF VISION CONSTANTS==========================
+  //#region ======================BEGINNING OF VISION CONSTANTS==================================
   //#region -----------BEGINNING OF *JEVOIS RECEIVE* CONSTANTS----------
   public static final SerialPort jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
   public static final String 
@@ -41,7 +41,8 @@ public final class Constants {
 
   public static final int
           leftMotorDirFlip = 1,                   // TODO CONFIG whether 1 or -1 makes the left motor turn forward
-          rightMotorDirFlip = -1;                 // TODO CONFIG whether 1 or -1 makes the right motor turn forward
+          rightMotorDirFlip = -1,                 // TODO CONFIG whether 1 or -1 makes the right motor turn forward
+          JEVOIS_PITCH_SERVO_PWM_PIN = 8;
   //#endregion  -----------END OF MULTI-COMPONENT CONSTANTS------------
 
   //#region -----------BEGINNING OF SWEEP CONSTANTS----------
@@ -137,7 +138,7 @@ public final class Constants {
   /*X3D_BUTTON_12 = 12*/;
   //#endregion  ======================END OF CONTROLLER ABSTRACTIONS===========================
 
-  //#region ======================BEGINNING OF CONTROLLER IDS=========================
+  //#region ======================BEGINNING OF CONTROLLER IDS====================================
   // Controller IDs
 public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
   X3D_RIGHT_JOYSTICK_ID = 1,
@@ -159,7 +160,7 @@ public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
   CLIMB_AXIS_ID = GAMEPAD_AXIS_LEFT_Y;
   //#endregion =============================END OF CONTROLLER IDS=========================
 
-  //#region ======================BEGINNING OF DRIVE SUBSYSTEM IDS=========================
+  //#region ======================BEGINNING OF DRIVE SUBSYSTEM IDS===============================
   // Drive Subsystem IDs
 public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10, 
   DRIVE_LEFT_B_TALON_SRX_ID = 11,
@@ -177,7 +178,7 @@ public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10,
 public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI) / 256; // diameter * pi = circumference. circumference / 256 = distance per pulse
   //#endregion  =============================END OF DRIVE SUBSYSTEM IDS=========================
 
-  //#region ======================BEGINNING OF MANIPULATOR SUBSYSTEM CONSTANTS=========================
+  //#region ======================BEGINNING OF MANIPULATOR SUBSYSTEM CONSTANTS===================
   // Manipulator Subsystem IDs
   public static final int MAN_FIRE_BOTTOM_TALON_SRX_ID = 30,
     MAN_FIRE_TOP_TALON_SRX_ID = 31,
@@ -186,7 +187,7 @@ public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI)
   public static final double teleopLoadMotorPercent = 0.5;
   //#endregion  =============================END OF MANIPULATOR SUBSYSTEM IDS=========================
 
-  //#region ======================BEGINNING OF CLIMB SUBSYSTEM IDS=========================
+  //#region ======================BEGINNING OF CLIMB SUBSYSTEM IDS===============================
   // Climb Subsystem IDs
 public static final int CLIMBER_ENCODER_CHANNELA_ID = 2, 
   CLIMBER_FRONT_ENCODER_CHANNELB_ID = 3, 
@@ -194,7 +195,7 @@ public static final int CLIMBER_ENCODER_CHANNELA_ID = 2,
 //public static final double CLIMBER_ENCODER_DISTANCE_PER_PULSE = ;          tbd
   //#endregion  =============================END OF CLIMB SUBSYSTEM IDS=========================
 
-  //#region ======================BEGINNING OF RIO POST INFO=========================
+  //#region ======================BEGINNING OF RIO POST INFO=====================================
 // RIO Post Info
 public static int[] expectedTalonIDs = {DRIVE_LEFT_A_TALON_SRX_ID, DRIVE_LEFT_B_TALON_SRX_ID, DRIVE_RIGHT_A_TALON_SRX_ID, 
                 DRIVE_RIGHT_B_TALON_SRX_ID};

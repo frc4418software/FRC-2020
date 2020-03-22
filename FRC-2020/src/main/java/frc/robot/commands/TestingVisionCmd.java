@@ -14,26 +14,31 @@ import frc.robot.Robot;
 public class TestingVisionCmd extends CommandBase {
   public TestingVisionCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Robot.getJevoisDataSubsys, 
+                    Robot.visionHighgoalSubsys,
+                    Robot.testingVisionSubsys);
   }
 
   @Override
   public void initialize() {
-    SmartDashboard.putString("TESTING CODE", "RUNNING");
-    Robot.getJevoisDataSubsys.InitJevois();
+    SmartDashboard.putString("TESTING VISION", "STARTED");
+    //Robot.getJevoisDataSubsys.InitJevois();
+    Robot.testingVisionSubsys.setPitchAngle(70.0);
   }
 
   @Override
   public void execute() {
-    Robot.getJevoisDataSubsys.ReadAndParseXYSize();
-  }
-
-  @Override
-  public void end(boolean interrupted) {
-
+    //Robot.getJevoisDataSubsys.ReadAndParseXYSize();
+    
   }
 
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    SmartDashboard.putString("TESTING CODE", "FINISHED");
   }
 }

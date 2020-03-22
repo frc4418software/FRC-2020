@@ -7,16 +7,28 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class TestingVisionSubsys extends SubsystemBase {
 
+  private Servo jevoisPitchServo;
+
+  //#region Constructor
   public TestingVisionSubsys() {
+    jevoisPitchServo = new Servo(Constants.JEVOIS_PITCH_SERVO_PWM_PIN);
 
   }
+  //#endregion End of Constructor
 
-  @Override
-  public void periodic() {
-    
+  //#region Set and Read Servo Angle
+  public void setPitchAngle(double degrees) {
+    jevoisPitchServo.setAngle(degrees);
   }
+  //=========================================================
+  public double getPitchAngle() {
+    return jevoisPitchServo.getAngle();
+  }
+  //#endregion
 }
