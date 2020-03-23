@@ -18,7 +18,7 @@ public class TestingVisionSubsys extends SubsystemBase {
   //#region Constructor
   public TestingVisionSubsys() {
     jevoisPitchServo = new Servo(Constants.JEVOIS_PITCH_SERVO_PWM_PIN);
-
+    jevoisPitchServo.setBounds(1950, 1504, 1500, 1496, 1050);
   }
   //#endregion End of Constructor
 
