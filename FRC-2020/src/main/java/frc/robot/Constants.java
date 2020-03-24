@@ -34,7 +34,7 @@ public final class Constants {
   
   //#region -----------BEGINNING OF MULTI-COMPONENT CONSTANTS-----------
   public static final boolean 
-          isUsingBackupCoordsAsDefault = false;   // TODO CONFIG if using backup coords to drive towards highgoal
+          usingBackupCoordsAsDefault = false;   // TODO CONFIG if using backup coords to drive towards highgoal
 
   public static final double
           maxBothMotorOutputPercent = 0.75;       // TODO CONFIG safe overall max speed percentage for the drive motors during vision
@@ -46,23 +46,24 @@ public final class Constants {
   //#endregion  -----------END OF MULTI-COMPONENT CONSTANTS------------
 
   //#region -----------BEGINNING OF SWEEP CONSTANTS----------
-  public static final int 
-          msTimeForFullSideRotation = 1000,           // TODO CONFIG WITH MATH time for robot to do full-side turn when on leftmost/rightmost pos
-          msTimeForCenterSideRotation = 417;          // TODO CONFIG WITH MATH to find time for robot to do partial turn when in centermost
+  public static final double 
+          secTimeFullSideRotation = 1.0,           // TODO CONFIG WITH MATH time for robot to do full-side turn when on leftmost/rightmost pos
+          secTimeCenterSideRotation = 0.42;          // TODO CONFIG WITH MATH to find time for robot to do partial turn when in centermost
   //#endregion  -----------END OF SWEEP CONSTANTS------------
 
   //#region -----------BEGINNING OF CONFIRM CONSTANTS----------
-  public static final long
-          consistentHighgoalConfirmMsTime = 1300,     // TODO CONFIG good time for a consistent receival of highgoal XY coords
-          confirmStopwatchMsTimeout = 2500;           // TODO CONFIG good max time to look for a consistent stream of highgoal XY coords
+  public static final double
+          secTimeConfirmHighgoal = 1.3,     // TODO CONFIG good time for a consistent receival of highgoal XY coords
+          secTimeConfirmTimeout = 2.5;           // TODO CONFIG good max time to look for a consistent stream of highgoal XY coords
   //#endregion  -----------END OF CONFIRM CONSTANTS------------
 
   //#region -----------BEGINNING OF FACE CONSTANTS----------
   public static final int 
           faceXCoordThreshold = 12;                   // TODO CONFIG a good x threshold for facing the center of the highgoal
     
-  public static final long 
-          faceMsTimeThreshold = 700;                  // TODO CONFIG ms time threshold for how long to confirm it's facing a consistent highgoal
+  public static final double 
+          secTimeFaceThreshold = 0.7,                  // TODO CONFIG seconds to confirm facing consistent highgoal
+          secTimeFaceTimeout = 1.25;                  // TODO CONFIG seconds until stop trying to face highgoal
   //#endregion  -----------END OF FACE CONSTANTS------------
 
   //#region -----------BEGINNING OF DRIVE CONSTANTS----------
@@ -75,14 +76,14 @@ public final class Constants {
   public static final int 
           jevoisServoAdjustPos = 30;              // TODO CONFIG correct pos for jevois servo to point up at highgoal for adjust-confirm
   
-  public static final long 
-          adjustHighgoalConfirmMsTime = 900,          // TODO CONFIG time for confirming a highgoal for the adjust stage
-          adjustConfirmStopwatchMsTimeout = 1200;     // TODO CONFIG max time for adjust stage to try re-confirming a highgoal in order to re-face
+  public static final double 
+          secTimeAdjustConfirmThreshold = 0.9,          // TODO CONFIG time for confirming a highgoal for the adjust stage
+          secTimeAdjustConfirmTimeout = 1.2;     // TODO CONFIG max time for adjust stage to try re-confirming a highgoal in order to re-face
   //#endregion  -   -   -   -   END OF ADJUST-CONFIRM CONSTANTS   -   -   -
   //#region -   -   -   -   BEGINNING OF ADJUST-FACE CONSTANTS   -   -   -
-  public static final long
-        adjustFaceMsTimeThreshold = 500,      // TODO CONFIG time needed to know that re-face is within the x threshold
-        adjustFaceHighgoalTimeMax = 800;      // TODO CONFIG maximum time allowed to re-face highgoal
+  public static final double
+        secTimeAdjustFaceThreshold = 0.5,      // TODO CONFIG time needed to know that re-face is within the x threshold
+        secTimeAdjustFaceTimeout = 0.8;      // TODO CONFIG maximum time allowed to re-face highgoal
       
   public static final int
         adjustFaceXCoordThreshold = 8;        // TODO CONFIG x threshold for re-facing the highgoal

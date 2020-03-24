@@ -27,25 +27,13 @@ public class TestingVisionCmd extends CommandBase {
   @Override
   public void execute() {
     // Robot.getJevoisDataSubsys.ReadAndParseXYSize();
-    if (Robot.testingVisionSubsys.getPitchAngle() != 180.0) {
-      Robot.testingVisionSubsys.setPitchAngle(180.0);
-    }
+    Robot.testingVisionSubsys.setPitchAngle(180.0);
+    SmartDashboard.putNumber("Servo angle", Robot.testingVisionSubsys.getPitchAngle());
+    Robot.testingVisionSubsys.timerDelay(2.0);
 
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-    if (Robot.testingVisionSubsys.getPitchAngle() != 0.0) {
-      Robot.testingVisionSubsys.setPitchAngle(0.0);
-    }
-
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    Robot.testingVisionSubsys.setPitchAngle(0.0);
+    SmartDashboard.putNumber("Servo angle", Robot.testingVisionSubsys.getPitchAngle());
+    Robot.testingVisionSubsys.timerDelay(2.0);
   }
 
   @Override
@@ -55,6 +43,10 @@ public class TestingVisionCmd extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putString("TESTING CODE", "FINISHED");
+    if (interrupted) {
+      SmartDashboard.putString("TESTING VISION", "INTERRUPTED");
+    } else {
+      SmartDashboard.putString("TESTING VISION", "FINISHED");
+    }
   }
 }

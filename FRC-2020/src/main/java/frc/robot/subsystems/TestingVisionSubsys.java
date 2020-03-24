@@ -8,17 +8,20 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class TestingVisionSubsys extends SubsystemBase {
 
   private Servo jevoisPitchServo;
+  private Timer servoTimer;
 
   //#region Constructor
   public TestingVisionSubsys() {
     jevoisPitchServo = new Servo(Constants.JEVOIS_PITCH_SERVO_PWM_PIN);
-    jevoisPitchServo.setBounds(1950, 1504, 1500, 1496, 1050);
+    //jevoisPitchServo.setBounds(1950, 1504, 1500, 1496, 1050);
+    jevoisPitchServo.setBounds(2.4, 0., 0., 0., 0.9);
   }
   //#endregion End of Constructor
 
@@ -29,6 +32,30 @@ public class TestingVisionSubsys extends SubsystemBase {
   //=========================================================
   public double getPitchAngle() {
     return jevoisPitchServo.getAngle();
+  }
+  //#endregion
+
+
+
+  //#region Use the servo timer
+  public void timerDelay(double seconds) {
+    Timer.delay(seconds);
+  }
+  //=========================================================
+  public void servoTimerStart() {
+    servoTimer.start();
+  }
+  //=========================================================
+  public void servoTimerStop() {
+    servoTimer.stop();
+  }
+  //=========================================================
+  public void servoTimerReset() {
+    servoTimer.reset();
+  }
+  //=========================================================
+  public double servoTimerGet() {
+    return servoTimer.get();
   }
   //#endregion
 }
