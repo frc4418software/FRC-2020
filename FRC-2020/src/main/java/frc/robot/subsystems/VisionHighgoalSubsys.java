@@ -7,12 +7,34 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
 
 public class VisionHighgoalSubsys extends SubsystemBase {
+    //#region   ====================BEGINNING OF MULTI-COMPONENT TIMER SETUP======================================
+    private Timer visionTimer;
+
+    public double getVisTimer() {
+        return visionTimer.get();
+    }
+    public void startVisTimer() {
+        visionTimer.start();
+    }
+    public void resetVisTimer() {
+        visionTimer.reset();
+    }
+    public void stopVisTimer() {
+        visionTimer.stop();
+    }
+    //#endregion
+
+
+
+
+
     //#region   ====================BEGINNING OF SWEEP VARIABLES SECTION=======================================
     private boolean startSweepTimer = false;
     public boolean isStartSweepTimer() {
@@ -205,8 +227,8 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //======================================================================================================
     // Sub-function
     public void StopResetVisionTimer() {
-        Robot.visionTimer.stop();
-        Robot.visionTimer.reset();
+        stopVisTimer();
+        resetVisTimer();
     }
     //#endregion    ||||||||||||||||||||||END OF MULTI-COMPONENT FUNCTIONS||||||||||||||||||||||||||||||
 
@@ -215,7 +237,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     public void StopwatchTurnAndStop(double secDelayTime, boolean turningLeft) {
         // If sweep stopwatch is not started
         if (isStartSweepTimer() == false) {
-            Robot.visionTimer.start();
+            startVisTimer();
             setStartSweepTimer(true);
         // If sweep stopwatch is started
         }
@@ -233,7 +255,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         }
 
         // If sweep duration is fulfilled
-        if (Robot.visionTimer.get() >= secDelayTime) {
+        if (getVisTimer() >= secDelayTime) {
             Robot.driveSubsystem.stopDrive();
 
             // Reset the sweep stopwatch
@@ -267,7 +289,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     // Sub-function
     public void StopConfirmIfFound() {
         // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
-        if (Robot.visionTimer.get() >= Constants.secTimeConfirmHighgoal) {
+        if (getVisTimer() >= Constants.secTimeConfirmHighgoal) {
             // Read the latest XY and parse it into usable integer coordinates
             Robot.getJevoisDataSubsys.ReadAndParseXYSize();
 
@@ -287,16 +309,16 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //======================================================================================================
     public void ConfirmHighgoalXYWithTimeout() {
         if (isStartConfirmTimer() == false) {
-            Robot.visionTimer.start();
+            startVisTimer();
             setStartConfirmTimer(true);
         }
 
         if (isStartConfirmTimer() == true) {
             // If the robot has NOT been trying to confirm a consistent highgoal for the max time allowed
-            if (Robot.visionTimer.get() < Constants.secTimeConfirmTimeout) {
+            if (getVisTimer() < Constants.secTimeConfirmTimeout) {
                 // Reset the confirm timer to zero if the string is invalid
                 if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData()) {
-                    Robot.visionTimer.reset();
+                    resetVisTimer();
                 }
 
                 // Stop trying to confirm highgoal IF a constant stream of XY highgoal coords was found
@@ -396,14 +418,14 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     //======================================================================================================
     public void FaceHighgoalTimedThreshold() {
         if (isStartFaceTimer() == false) {
-            Robot.visionTimer.start();
+            startVisTimer();
             setStartFaceTimer(true);
         }
 
         if (isStartFaceTimer() == true) {
             // If we have NOT timed out for trying to face highgoal
-            if (Robot.visionTimer.get() < Constants.secTimeFaceTimeout) {
-                if (Robot.visionTimer.get() >= Constants.secTimeFaceThreshold) {
+            if (getVisTimer() < Constants.secTimeFaceTimeout) {
+                if (getVisTimer() >= Constants.secTimeFaceThreshold) {
                     setFacingHighgoal(true);
                     FaceCompleteStopAndReset();
                 } else {
@@ -411,7 +433,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     
                     if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData() ||
                     (! IsHighgoalXCoordWithinFaceThreshold())  ) {
-                        Robot.visionTimer.reset();
+                        resetVisTimer();
                     }
                 }
             // If we have timed out for trying to face highgoal
@@ -483,7 +505,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     // Sub-function
     public void StopAdjustConfirmIfHighgoalFound() {
         // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
-        if (Robot.visionTimer.get() >= Constants.secTimeAdjustConfirmThreshold) {
+        if (getVisTimer() >= Constants.secTimeAdjustConfirmThreshold) {
             // Read the latest XY and parse it into usable integer coordinates
             Robot.getJevoisDataSubsys.ReadAndParseXYSize();
 
@@ -497,16 +519,16 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     // Sub-function
     public void TryToConfirmHighgoalForAdjusting() {
         if (isStartAdjustConfirmTimer() == false) {
-            Robot.visionTimer.start();
+            startVisTimer();
             setStartAdjustConfirmTimer(true);
         }
 
         if (isStartAdjustConfirmTimer() == true) {
             // If the robot has NOT been trying to confirm a consistent highgoal for the max time allowed
-            if (Robot.visionTimer.get() < Constants.secTimeAdjustConfirmTimeout) {
+            if (getVisTimer() < Constants.secTimeAdjustConfirmTimeout) {
                 // Reset the adjust-confirm timer if the string is invalid
                 if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData()) {
-                    Robot.visionTimer.reset();
+                    resetVisTimer();
                 }
 
                 // Stop the robot from trying to confirm a highgoal if a constant stream of XY highgoal coords was found
@@ -549,22 +571,22 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     // Sub-function
     public void AdjustFaceHighgoalTimedThreshold() {
         if (isStartAdjustFaceTimer() == false) {
-            Robot.visionTimer.start();
+            startVisTimer();
             setStartAdjustFaceTimer(true);
         }
 
         if (isStartAdjustFaceTimer() == true) {
             // If we DID reach the threshold for adjust-facing
-            if (Robot.visionTimer.get() >= Constants.secTimeAdjustFaceThreshold) {
+            if (getVisTimer() >= Constants.secTimeAdjustFaceThreshold) {
                 StopResetCompleteAdjustFacing(true);
                 
             } else {
                 // If adjust stage has NOT timed out for trying to re-face
-                if (Robot.visionTimer.get() < Constants.secTimeAdjustFaceTimeout) {
+                if (getVisTimer() < Constants.secTimeAdjustFaceTimeout) {
                     DriveTurnToFaceHighgoal();
                     if (! Robot.getJevoisDataSubsys.IsReceivedStringValidData() ||
                     (! IsHighgoalXCoordWithinAdjustFaceThreshold())  ) {
-                        Robot.visionTimer.reset();
+                        resetVisTimer();
                     }
                 // If adjust stage has timed out for trying to re-face
                 } else {

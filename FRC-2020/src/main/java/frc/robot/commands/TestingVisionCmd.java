@@ -21,19 +21,17 @@ public class TestingVisionCmd extends CommandBase {
   public void initialize() {
     SmartDashboard.putString("TESTING VISION", "STARTED");
     // Robot.getJevoisDataSubsys.InitJevois();
-    Robot.testingVisionSubsys.setPitchAngle(70.0);
+    try { 
+      Robot.visionHighgoalSubsys.startVisTimer();
+    } catch (NullPointerException npe) {
+      npe.printStackTrace();
+    }
   }
 
   @Override
   public void execute() {
     // Robot.getJevoisDataSubsys.ReadAndParseXYSize();
-    Robot.testingVisionSubsys.setPitchAngle(180.0);
-    SmartDashboard.putNumber("Servo angle", Robot.testingVisionSubsys.getPitchAngle());
-    Robot.testingVisionSubsys.timerDelay(2.0);
-
-    Robot.testingVisionSubsys.setPitchAngle(0.0);
-    SmartDashboard.putNumber("Servo angle", Robot.testingVisionSubsys.getPitchAngle());
-    Robot.testingVisionSubsys.timerDelay(2.0);
+    SmartDashboard.putNumber("Vision Timer", Robot.visionHighgoalSubsys.getVisTimer());
   }
 
   @Override
