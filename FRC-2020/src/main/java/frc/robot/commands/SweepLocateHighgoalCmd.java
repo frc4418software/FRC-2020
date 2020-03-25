@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class SweepLocateHighgoalCmd extends CommandBase {
@@ -25,7 +26,7 @@ public class SweepLocateHighgoalCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init", "SweepLocateHighgoalCmd");
+    SmartDashboard.putString(Constants.visDeployCodeStatus, "INITIALIZING SweepLocateHighgoalCmd");
 
     //Robot.getJevoisDataSubsys.InitSerialPort();
   }
@@ -35,12 +36,17 @@ public class SweepLocateHighgoalCmd extends CommandBase {
   public void execute() {
     // TODO WRITE code to make surveyMode chosen by joystick, instead of 1 as default for robot at leftmost position
     Robot.visionHighgoalSubsys.SurveyTurnForHighgoal(1);
+    SmartDashboard.putString(Constants.visDeployCodeStatus, "EXECUTING SweepLocateHighgoalCmd");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putString("CMD Done", "SweepLocateHighgoalCmd");
+    if (interrupted) {
+      SmartDashboard.putString(Constants.visDeployCodeStatus, "INTERRUPTED SweepLocateHighgoalCmd");
+    } else {
+      SmartDashboard.putString(Constants.visDeployCodeStatus, "FINISHED SweepLocateHighgoalCmd");
+    }
   }
 
   // Returns true when the command should end.

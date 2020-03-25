@@ -26,6 +26,7 @@ import frc.robot.subsystems.VisionHighgoalSubsys;
  * project.
  */
 public class Robot extends TimedRobot {
+  private Command m_teleoperatedCommand;
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
   
@@ -117,6 +118,14 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+
+    m_teleoperatedCommand = m_robotContainer.getTeleopCommand();
+
+    // schedule the autonomous command (example)
+    if (m_teleoperatedCommand != null) {
+      m_teleoperatedCommand.schedule();
+    }
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

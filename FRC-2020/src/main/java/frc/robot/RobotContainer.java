@@ -31,9 +31,11 @@ import frc.robot.commands.ToggleArcadeDriveCommand;
 public class RobotContainer {
   //#region Create joysticks
   // Create joysticks
-  private static final Joystick X3D_LEFT = new Joystick(Constants.X3D_LEFT_JOYSTICK_ID),
-                                X3D_RIGHT = new Joystick(Constants.X3D_RIGHT_JOYSTICK_ID) ,
-                                GAMEPAD = new Joystick(Constants.GAMEPAD_JOYSTICK_ID);
+  private static final Joystick 
+      X3D_LEFT = new Joystick(Constants.X3D_LEFT_JOYSTICK_ID),
+      X3D_RIGHT = new Joystick(Constants.X3D_RIGHT_JOYSTICK_ID) ,
+      GAMEPAD = new Joystick(Constants.GAMEPAD_JOYSTICK_ID),
+      XBOX_ONE = new Joystick(Constants.XBOX_ONE_JOYSTICK_ID);              // FOR VISION TESTING AND FUN LOL
   //#endregion
                                 
   //#region Get axis for specific functions
@@ -53,6 +55,30 @@ public class RobotContainer {
   }
   public static double getClimberAxis() {
     return GAMEPAD.getRawAxis(Constants.CLIMB_AXIS_ID);
+  }
+
+  // Get Xbox one left joystick axes
+  public static double getXboxOneLeftJoyXAxis() {
+    return XBOX_ONE.getRawAxis(Constants.XBOX_ONE_LEFT_JOY_X_AXIS_ID);
+  }
+  public static double getXboxOneLeftJoyYAxis() {
+    return XBOX_ONE.getRawAxis(Constants.XBOX_ONE_LEFT_JOY_Y_AXIS_ID);
+  }
+  
+  // Get Xbox one left and right trigger axes
+  public static double getXboxOneLeftTrigAxis() {
+    return XBOX_ONE.getRawAxis(Constants.XBOX_ONE_LEFT_TRIGGER_AXIS_ID);
+  }
+  public static double getXboxOneRightTrigAxis() {
+    return XBOX_ONE.getRawAxis(Constants.XBOX_ONE_RIGHT_TRIGGER_AXIS_ID);
+  }
+
+  // Get Xbox one right joystick axes
+  public static double getXboxOneRightJoyXAxis() {
+    return XBOX_ONE.getRawAxis(Constants.XBOX_ONE_RIGHT_JOY_X_AXIS_ID);
+  }
+  public static double getXboxOneRightJoyYAxis() {
+    return XBOX_ONE.getRawAxis(Constants.XBOX_ONE_RIGHT_JOY_Y_AXIS_ID);
   }
   //#endregion
 
@@ -110,6 +136,13 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     SequentialCommandGroup m_autoCommand = new HighgoalVisionCmdGroup();
     return m_autoCommand;
+  }
+  //#endregion
+
+  //#region Pass Teleop Command to Main
+  public Command getTeleopCommand() {
+    SequentialCommandGroup m_teleopCommand = new HighgoalVisionCmdGroup();
+    return m_teleopCommand;
   }
   //#endregion
 }

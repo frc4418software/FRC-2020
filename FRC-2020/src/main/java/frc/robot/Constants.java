@@ -21,6 +21,12 @@ import edu.wpi.first.wpilibj.SerialPort;
  */
 public final class Constants {
   //#region ======================BEGINNING OF VISION CONSTANTS==================================
+  //#region -----------BEGINNING OF VISION DEBUGGING CONSTANTS-----------
+  public static final String 
+        visDeployCodeStatus = "VIS_CODE",
+        visTestCodeStatus = "VIS_TEST";
+  //#endregion
+  
   //#region -----------BEGINNING OF *JEVOIS RECEIVE* CONSTANTS----------
   public static final SerialPort jevois = new SerialPort(115200, SerialPort.Port.kUSB1);
   public static final String 
@@ -145,18 +151,41 @@ public final class Constants {
 
   //#region ======================BEGINNING OF CONTROLLER IDS====================================
   // Controller IDs
-public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
+public static final int         
+  // Joysticks IDs
+  X3D_LEFT_JOYSTICK_ID = 0,
   X3D_RIGHT_JOYSTICK_ID = 1,
   GAMEPAD_JOYSTICK_ID = 2,
-  LEFT_TANK_DRIVE_AXIS_ID = X3D_AXIS_PITCH, // Tank drive axis
+  XBOX_ONE_JOYSTICK_ID = 3,             // Xbox one controller for testing vision
+
+  // Vision axis IDs
+        // Left joystick axes
+  XBOX_ONE_LEFT_JOY_X_AXIS_ID = 0,
+  XBOX_ONE_LEFT_JOY_Y_AXIS_ID = 1,
+
+        // Left and right trigger axes
+  XBOX_ONE_LEFT_TRIGGER_AXIS_ID = 2,
+  XBOX_ONE_RIGHT_TRIGGER_AXIS_ID = 3,
+
+        // Right joystick axes
+  XBOX_ONE_RIGHT_JOY_X_AXIS_ID = 4,
+  XBOX_ONE_RIGHT_JOY_Y_AXIS_ID = 5,
+        
+  
+  // Tank drive axis
+  LEFT_TANK_DRIVE_AXIS_ID = X3D_AXIS_PITCH,
   RIGHT_TANK_DRIVE_AXIS_ID = X3D_AXIS_PITCH,
-  FORWARD_ARCADE_DRIVE_AXIS_ID = X3D_AXIS_PITCH, // Arcade drive axis
+
+  // Arcade drive axis
+  FORWARD_ARCADE_DRIVE_AXIS_ID = X3D_AXIS_PITCH,
   ANGLE_ARCADE_DRIVE_AXIS_ID = X3D_AXIS_ROLL,
   TOGGLE_ARCADE_DRIVE_BUTOON_ID = X3D_BUTTON_5,
   DRIVE_STRAIGHT_BUTTON_ID = X3D_BUTTON_GRIP,
   TRACK_BALL_VISION_BUTTON_ID = GAMEPAD_BUTTON_B,
   TRACK_HIGHGOAL_VISION_BUTTON_ID = GAMEPAD_BUTTON_X,
-  LAUNCH_BUTTON_ID = X3D_BUTTON_TRIGGER, //Manipulator buttons
+
+  //Manipulator buttons
+  LAUNCH_BUTTON_ID = X3D_BUTTON_TRIGGER,
   INTAKE_BUTTON_ID = X3D_BUTTON_3,
   CLEAR_BUTTON_ID = X3D_BUTTON_4,
   SELECT_BUTTON_1_ID = X3D_BUTTON_7,

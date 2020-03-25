@@ -9,7 +9,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 public class TestingVisionCmd extends CommandBase {
   public TestingVisionCmd() {
@@ -19,16 +21,20 @@ public class TestingVisionCmd extends CommandBase {
 
   @Override
   public void initialize() {
-    SmartDashboard.putString("TESTING VISION", "STARTED");
-    // Robot.getJevoisDataSubsys.InitJevois();
+    SmartDashboard.putString(Constants.visTestCodeStatus, "INITIALIZED TestingVisionCmd");
     
-    System.out.println("\nHello there\n");
+    // Robot.getJevoisDataSubsys.InitJevois();
   }
 
   @Override
   public void execute() {
     // Robot.getJevoisDataSubsys.ReadAndParseXYSize();
-    SmartDashboard.putNumber("Vision Timer", Robot.visionTimer.get());
+
+    Robot.visionHighgoalSubsys.setPitchAngle(
+        -RobotContainer.getXboxOneLeftJoyYAxis() * 180.0
+        );
+    
+    SmartDashboard.putString(Constants.visTestCodeStatus, "EXECUTING TestingVisionCmd");
   }
 
   @Override
@@ -39,9 +45,9 @@ public class TestingVisionCmd extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (interrupted) {
-      SmartDashboard.putString("TESTING VISION", "INTERRUPTED");
+      SmartDashboard.putString(Constants.visTestCodeStatus, "INTERRUPTED TestingVisionCmd");
     } else {
-      SmartDashboard.putString("TESTING VISION", "FINISHED");
+      SmartDashboard.putString(Constants.visTestCodeStatus, "FINISHED TestingVisionCmd");
     }
   }
 }

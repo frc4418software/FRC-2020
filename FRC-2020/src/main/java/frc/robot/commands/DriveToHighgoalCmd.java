@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class DriveToHighgoalCmd extends CommandBase {
@@ -25,13 +26,14 @@ public class DriveToHighgoalCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init", "DriveToHighgoalCmd");
+    SmartDashboard.putString(Constants.visDeployCodeStatus, "INITIALIZED DriveToHighgoalCmd");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     Robot.visionHighgoalSubsys.DriveUntilCloseToHighgoal();
+    SmartDashboard.putString(Constants.visDeployCodeStatus, "EXECUTING DriveToHighgoalCmd");
   }
 
   // Called once the command ends or is interrupted.
@@ -39,8 +41,11 @@ public class DriveToHighgoalCmd extends CommandBase {
   public void end(boolean interrupted) {
     // Reset drive detection to get close enough to highgoal using dist thresh AND/OR highgoal rect size
     Robot.visionHighgoalSubsys.setHasReachedHighgoal(false);
-
-    SmartDashboard.putString("CMD Done", "DriveToHighgoalCmd");
+    if (interrupted) {
+      SmartDashboard.putString(Constants.visDeployCodeStatus, "INTERRUPTED DriveToHighgoalCmd");
+    } else {
+      SmartDashboard.putString(Constants.visDeployCodeStatus, "FINISHED DriveToHighgoalCmd");
+    }
   }
 
   // Returns true when the command should end.
