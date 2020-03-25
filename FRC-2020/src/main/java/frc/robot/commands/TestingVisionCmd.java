@@ -30,9 +30,10 @@ public class TestingVisionCmd extends CommandBase {
   public void execute() {
     // Robot.getJevoisDataSubsys.ReadAndParseXYSize();
 
-    Robot.visionHighgoalSubsys.setPitchAngle(
-        -RobotContainer.getXboxOneLeftJoyYAxis() * 180.0
-        );
+    double leftJoyXAxis = (((RobotContainer.getXboxOneLeftJoyYAxis() + 1.0) / (1.0 + 1.0))
+                          * 1.0);
+
+    Robot.visionHighgoalSubsys.setPitchAngle(leftJoyXAxis * 180.0);
     
     SmartDashboard.putString(Constants.visTestCodeStatus, "EXECUTING TestingVisionCmd");
   }
