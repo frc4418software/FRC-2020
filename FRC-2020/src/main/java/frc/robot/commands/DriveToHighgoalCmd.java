@@ -25,7 +25,7 @@ public class DriveToHighgoalCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init-ed", "DriveToHighgoalCmd");
+    SmartDashboard.putString("CMD Init", "DriveToHighgoalCmd");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

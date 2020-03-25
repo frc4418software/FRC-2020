@@ -25,7 +25,7 @@ public class FaceHighgoalCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init-ed", "FaceHighgoalCmd");
+    SmartDashboard.putString("CMD Init", "FaceHighgoalCmd");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -37,7 +37,7 @@ public class GetJevoisDataSubsys extends SubsystemBase {
         }
     }
     //================================================================
-    // Sub-function
+    
     public boolean IsReceivedStringValidData() {
         if (    (! Robot.jevoisString.contains(Constants.nopeString)) && (! Robot.jevoisString.isBlank())   ) {
             return true;

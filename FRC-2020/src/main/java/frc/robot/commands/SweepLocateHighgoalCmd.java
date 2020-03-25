@@ -25,7 +25,7 @@ public class SweepLocateHighgoalCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init-ed", "SweepLocateHighgoalCmd");
+    SmartDashboard.putString("CMD Init", "SweepLocateHighgoalCmd");
 
     //Robot.getJevoisDataSubsys.InitSerialPort();
   }

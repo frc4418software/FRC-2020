@@ -31,7 +31,7 @@ public class ShootIntoHighgoalCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CMD Init-ed", "ShootIntoHighgoalCmd");
+    SmartDashboard.putString("CMD Init", "ShootIntoHighgoalCmd");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,7 +45,8 @@ public class ShootIntoHighgoalCmd extends CommandBase {
   public void end(boolean interrupted) {
     // Stop manipulator motors and reset timers
     Robot.manipulatorsubsystem.StopAndResetManipulator();
-
+    // Reset the JeVois servo pitch angle
+    Robot.visionHighgoalSubsys.ResetJevoisServo();
     // Print to smartdash that the "shoot" stage of highgoal-vision is done
     SmartDashboard.putString("CMD Done", "ShootIntoHighgoalCmd");
   }

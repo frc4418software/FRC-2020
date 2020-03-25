@@ -21,17 +21,14 @@ public class TestingVisionCmd extends CommandBase {
   public void initialize() {
     SmartDashboard.putString("TESTING VISION", "STARTED");
     // Robot.getJevoisDataSubsys.InitJevois();
-    try { 
-      Robot.visionHighgoalSubsys.startVisTimer();
-    } catch (NullPointerException npe) {
-      npe.printStackTrace();
-    }
+    
+    System.out.println("\nHello there\n");
   }
 
   @Override
   public void execute() {
     // Robot.getJevoisDataSubsys.ReadAndParseXYSize();
-    SmartDashboard.putNumber("Vision Timer", Robot.visionHighgoalSubsys.getVisTimer());
+    SmartDashboard.putNumber("Vision Timer", Robot.visionTimer.get());
   }
 
   @Override

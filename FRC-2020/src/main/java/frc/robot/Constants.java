@@ -73,10 +73,14 @@ public final class Constants {
 
   //#region -----------BEGINNING OF ADJUST CONSTANTS----------
   //#region -   -   -   -   BEGINNING OF ADJUST-CONFIRM CONSTANTS   -   -   -
-  public static final int 
-          jevoisServoAdjustPos = 30;              // TODO CONFIG correct pos for jevois servo to point up at highgoal for adjust-confirm
+  public static final double 
+          jevoisServoAdjustPos = 30.0,              // TODO CONFIG correct pos for jevois servo to point up at highgoal for adjust-confirm
+          jevoisServoResetPos = 0.0,                // TODO CONFIG default reset pos for jevois servo (ideally parallel with ground)
+          jevoisServoMaxPos = 175.0,                // TODO CONFIG max jevois pitch servo pos to be safe on gearbox
+          jevoisServoMinPos = 5.0;                  // TODO CONFIG min jevois pitch servo pos to be safe on gearbox
   
   public static final double 
+          secTimeAdjustServoDelay = 0.65,         // TODO CONFIG delay time after moving servo to allow JeVois to re-focus
           secTimeAdjustConfirmThreshold = 0.9,          // TODO CONFIG time for confirming a highgoal for the adjust stage
           secTimeAdjustConfirmTimeout = 1.2;     // TODO CONFIG max time for adjust stage to try re-confirming a highgoal in order to re-face
   //#endregion  -   -   -   -   END OF ADJUST-CONFIRM CONSTANTS   -   -   -
