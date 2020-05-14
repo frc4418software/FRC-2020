@@ -24,7 +24,7 @@ public final class Constants {
     // Controller abstractions
   private static final int //GAMEPAD_AXIS_LEFT_X = 0, // Gamepad axis
   GAMEPAD_AXIS_LEFT_Y = 1,
-  /*GAMEPAD_AXIS_RIGHT_X = 4,
+  GAMEPAD_AXIS_RIGHT_X = 4,/*
   GAMEPAD_AXIS_RIGHT_Y = 5,
   GAMEPAD_AXIS_LEFT_TRIGGER = 2,
   GAMEPAD_AXIS_RIGHT_TRIGGER = 3,
@@ -66,7 +66,8 @@ public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs
   ANGLE_ARCADE_DRIVE_AXIS_ID = X3D_AXIS_ROLL,
   TOGGLE_ARCADE_DRIVE_BUTOON_ID = X3D_BUTTON_5,
   DRIVE_STRAIGHT_BUTTON_ID = X3D_BUTTON_GRIP,
-  CLIMB_AXIS_ID = GAMEPAD_AXIS_LEFT_Y;
+  FRONT_CLIMB_AXIS_ID = GAMEPAD_AXIS_LEFT_Y,
+  BACK_CLIMB_AXIS_ID = GAMEPAD_AXIS_RIGHT_X;
 
 // Drive Subsystem IDs
 public static final int DRIVE_LEFT_A_TALON_SRX_ID = 10, 

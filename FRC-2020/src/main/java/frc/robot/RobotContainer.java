@@ -59,9 +59,7 @@ public class RobotContainer {
     return X3D_RIGHT.getRawAxis(Constants.ANGLE_ARCADE_DRIVE_AXIS_ID);
   }
 
-  public static double getClimberAxis() {
-    return GAMEPAD.getRawAxis(Constants.CLIMB_AXIS_ID);
-  }
+  
 
   // Create and assign default buttons
   public static JoystickButton toggleArcadeDriveButton = new JoystickButton(X3D_RIGHT,
