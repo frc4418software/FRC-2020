@@ -106,7 +106,7 @@ public static final int CONTROL_PANEL_MANIPULATOR_TALON_SRX_ID = 18,
   public static I2C.Port i2cPort = I2C.Port.kOnboard; 
 
 // Climb Subsystem IDs
-public static final int CLIMBER_TALON_SRX_ID = 30;
+
 
 // RIO Post Info
 public static int[] expectedTalonIDs = {DRIVE_LEFT_A_TALON_SRX_ID, DRIVE_LEFT_B_TALON_SRX_ID, DRIVE_RIGHT_A_TALON_SRX_ID, 
