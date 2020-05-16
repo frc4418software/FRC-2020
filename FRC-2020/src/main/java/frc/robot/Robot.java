@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.OutputAllDataCommand;
 import frc.robot.subsystems.DriveSubsystem;
-
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.ControlPanelManipulatorSubsystem;
 /**
@@ -33,6 +33,7 @@ public class Robot extends TimedRobot  {
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static ColorSensorSubsystem colorSensorSubsystem = new ColorSensorSubsystem();
   public static ControlPanelManipulatorSubsystem controlPanelManipulatorSubsystem = new ControlPanelManipulatorSubsystem();
+  public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
 
   public static SenseColorCommand colorSense = new SenseColorCommand();
 

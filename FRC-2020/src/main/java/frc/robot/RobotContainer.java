@@ -59,6 +59,13 @@ public class RobotContainer {
     return X3D_RIGHT.getRawAxis(Constants.ANGLE_ARCADE_DRIVE_AXIS_ID);
   }
 
+  public static double getFrontClimberAxis() {
+    return GAMEPAD.getRawAxis(Constants.FRONT_CLIMB_AXIS_ID);
+  }
+  public static double getBackClimberAxis() {
+    return GAMEPAD.getRawAxis(Constants.BACK_CLIMB_AXIS_ID);
+  }
+
   
 
   // Create and assign default buttons
