@@ -296,23 +296,28 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 
     //#region   ====================BEGINNING OF CONFIRM FUNCTIONS SECTION=======================================
     
-    public void StopConfirmIfFound() {
+    public void StopConfirmIfFound(boolean isConfirmStage, double timeoutThreshold) {
         // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
-        if (Robot.visionTimer.get() >= Constants.secTimeConfirmHighgoal) {
+        if (Robot.visionTimer.get() >= timeoutThreshold) {
             // Read the latest XY and parse it into usable integer coordinates
             Robot.getJevoisDataSubsys.ReadAndParseXYSize();
 
             // Store the confirmed highgoal's XY coords and rect size in the backup* vars
             SaveBackupHighgoalXYRectSize();
 
-            // Reset the confirm timer
-            StopResetVisionTimer();
-            setStartConfirmTimer(false);
+            if (isConfirmStage) {
+                // Reset the confirm timer
+                StopResetVisionTimer();
+                setStartConfirmTimer(false);
 
-            // Save that we have found a highgoal to follow
-            Robot.consistentHighgoalFound = true;
-            // Stop the robot from trying to confirm a consistently-time highgoal
-            setStopConfirmCmd(true);
+                // Save that we have found a highgoal to follow
+                Robot.consistentHighgoalFound = true;
+                // Stop the robot from trying to confirm a consistently-time highgoal
+                setStopConfirmCmd(true);    
+            } else {
+                AdjustConfirmCompleteStopReset(true);
+            }
+            
         }
     }
     //======================================================================================================
@@ -320,9 +325,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         if (isStartConfirmTimer() == false) {
             Robot.visionTimer.start();
             setStartConfirmTimer(true);
-        }
-
-        if (isStartConfirmTimer() == true) {
+        } else {
             // If the robot has NOT been trying to confirm a consistent highgoal for the max time allowed
             if (Robot.visionTimer.get() < Constants.secTimeConfirmTimeout) {
                 // Reset the confirm timer to zero if the string is invalid
@@ -331,7 +334,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
                 }
 
                 // Stop trying to confirm highgoal IF a constant stream of XY highgoal coords was found
-                StopConfirmIfFound();
+                StopConfirmIfFound(true, Constants.secTimeConfirmHighgoal);
 
             // If the robot has been trying to confirm a consistent highgoal for the max time allowed
             } else {
@@ -507,19 +510,6 @@ public class VisionHighgoalSubsys extends SubsystemBase {
         Robot.stopAdjustConfirmComponent = true;
     }
     //======================================================================================================
-    public void StopAdjustConfirmIfHighgoalFound() {
-        // If there is a constant receiving of highgoal XY coords greater than the CONFIG confirm time
-        if (Robot.visionTimer.get() >= Constants.secTimeAdjustConfirmThreshold) {
-            // Read the latest XY and parse it into usable integer coordinates
-            Robot.getJevoisDataSubsys.ReadAndParseXYSize();
-
-            // Store the re-confirmed highgoal's XY coords and rect size in the backup* vars
-            SaveBackupHighgoalXYRectSize();
-
-            AdjustConfirmCompleteStopReset(true);
-        }
-    }
-    //======================================================================================================
     public void TryToConfirmHighgoalForAdjusting() {
         // Start the adjust-confirm timer for timing out and tracking confirm threshold
         if (isStartAdjustConfirmTimer() == false) {
@@ -537,7 +527,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
                 }
 
                 // Stop the robot from trying to confirm a highgoal if a constant stream of XY highgoal coords was found
-                StopAdjustConfirmIfHighgoalFound();
+                StopConfirmIfFound(false, Constants.secTimeAdjustConfirmTimeout);
 
             // If the robot has been trying to confirm a consistent highgoal for the max time allowed
             } else {
