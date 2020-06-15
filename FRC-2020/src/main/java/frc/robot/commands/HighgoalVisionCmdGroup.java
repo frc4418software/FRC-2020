@@ -15,7 +15,7 @@ public class HighgoalVisionCmdGroup extends SequentialCommandGroup {
    */
   public HighgoalVisionCmdGroup() {
     addCommands(
-      new SweepLocateHighgoalCmd(), 
+      new SweepLocateHighgoalCmd(),
       new ConfirmHighgoalCmd(),
       new FaceHighgoalCmd(),
       new DriveToHighgoalCmd(),

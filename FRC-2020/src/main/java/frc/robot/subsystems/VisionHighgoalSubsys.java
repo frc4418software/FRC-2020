@@ -195,7 +195,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
 
 
 
-    //#region   ||||||||||||||||||||||BEGINNING OF MULTI-COMPONENT FUNCTIONS||||||||||||||||||||||||||||||
+    //#region   ||||||||||||||||||||||BEGINNING OF MULTI-COMPONENT FUNC=TIONS||||||||||||||||||||||||||||||
     public void setPitchAngle(double degrees) {
         if (degrees > Constants.jevoisServoMaxPos) {
             jevoisPitchServo.setAngle(Constants.jevoisServoMaxPos);
@@ -488,7 +488,7 @@ public class VisionHighgoalSubsys extends SubsystemBase {
     }
     //#endregion    ====================END OF DRIVE FUNCTIONS SECTION=======================================
 
-    //#region   ====================BEGINNING OF ADJUST FUNCTIONS SECTION=======================================
+    //#region   ====================BEGINNING OF ADJUST FUNCTIONS SECTION======================================
     //#region   --------------BEGINNING OF ADJUST-CONFIRM-FUNCTIONS------------------------------------
     public void AdjustAimJevoisServo() {
         setPitchAngle(Constants.jevoisServoAdjustPos);
