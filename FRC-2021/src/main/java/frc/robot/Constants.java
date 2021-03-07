@@ -7,7 +7,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -97,12 +100,6 @@ public static final double kRamseteB = 2, kRamseteZeta = 0.7;
 
 public static final double DRIVE_ENCODER_DISTANCE_PER_PULSE  = (15.24 * Math.PI) / 256; // diameter * pi = circumference. circumference / 256 = distance per pulse
 
-
-// Climb Subsystem IDs
-public static final int CLIMBER_ENCODER_CHANNELA_ID = 2, 
-  CLIMBER_FRONT_ENCODER_CHANNELB_ID = 3, 
-  CLIMBER_TALON_SRX_ID = 30;
-public static final double CLIMBER_ENCODER_DISTANCE_PER_PULSE = (15.24 * Math.PI) / 256; //diameter tbd          
 
 // RIO Post Info
 public static int[] expectedTalonIDs = {DRIVE_LEFT_A_TALON_SRX_ID, DRIVE_LEFT_B_TALON_SRX_ID, DRIVE_RIGHT_A_TALON_SRX_ID, 

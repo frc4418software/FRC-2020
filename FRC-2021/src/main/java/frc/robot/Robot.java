@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.OutputAllDataCommand;
-import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
 /**
@@ -28,7 +27,6 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public static ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   public static OutputAllDataCommand dataComm = new OutputAllDataCommand();
   public static int robotPosition; 
   public static double distance;
@@ -91,9 +89,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    distance = driveSubsystem.getBackDriveDistance();
     AutoRoutineChooser.setDriveTrajectory();
-    robotPosition = DriverStation.getInstance().getLocation();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
