@@ -9,7 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 
 /**
@@ -24,7 +26,17 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
  */
 public final class Constants {
   // Path Trajectories
-  Trajectory BarrelRacingPathTrajectory = new 
+  public static Trajectory 
+    BarrelRacingPathTrajectory = new TrajectoryGenerator.generateTrajectory(
+      // TODO: Make this spline path
+    ),
+    SlalomPathTrajectory = new TrajectoryGenerator.generateTrajectory(
+      // TODO: Make this spline path
+    ),
+    BouncePathTrajectory = new TrajectoryGenerator.generateTrajectory(
+      // TODO: Make this spline path
+    );
+  
 
     // Controller abstractions
   private static final int //GAMEPAD_AXIS_LEFT_X = 0, // Gamepad axis
