@@ -23,6 +23,9 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  // Path Trajectories
+  Trajectory BarrelRacingPathTrajectory = new 
+
     // Controller abstractions
   private static final int //GAMEPAD_AXIS_LEFT_X = 0, // Gamepad axis
   GAMEPAD_AXIS_LEFT_Y = 1,
@@ -57,7 +60,6 @@ public final class Constants {
   X3D_BUTTON_10 = 10,
   X3D_BUTTON_11 = 11,
   X3D_BUTTON_12 = 12*/;
-
 
 // Controller IDs
 public static final int X3D_LEFT_JOYSTICK_ID = 0, // Joysticks IDs

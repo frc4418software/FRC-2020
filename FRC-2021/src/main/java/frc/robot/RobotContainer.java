@@ -90,11 +90,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // AutoRoutineChooser.driveTrajectoryStart();
-
     //This command will follow the driveTajectory when established
     RamseteCommand ramseteDriveCommand = new RamseteCommand(
-      AutoRoutineChooser.driveTrajectory, 
+      AutoRoutineChooser.getDriveTrajectory(), 
       drive::getPose, 
       new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta), 
       new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter, Constants.kaVoltSecondsSquaredPerMeter), 

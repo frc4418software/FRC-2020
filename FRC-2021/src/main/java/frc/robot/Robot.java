@@ -31,8 +31,7 @@ public class Robot extends TimedRobot {
   public static int robotPosition; 
   public static double distance;
 
-  public static SendableChooser<Integer> robotPositionChooser;
-  public static SendableChooser<Integer> autoRoutineChooser;
+  public static SendableChooser<Integer> trajectoryChooser = new SendableChooser<Integer>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,17 +43,10 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    robotPositionChooser = new SendableChooser<Integer>();
-    robotPositionChooser.setDefaultOption("FMS", 0);
-    robotPositionChooser.addOption("Left", 1);
-    robotPositionChooser.addOption("Center", 2);
-    robotPositionChooser.addOption("Right", 3);
-    SmartDashboard.putData(robotPositionChooser);
-
-    autoRoutineChooser = new SendableChooser<Integer>();
-    autoRoutineChooser.setDefaultOption("Low Goal", 0);
-    autoRoutineChooser.addOption("High Goal", 1);
-    SmartDashboard.putData(autoRoutineChooser);
+    trajectoryChooser.setDefaultOption("Barrel Racing Path", 0);
+    trajectoryChooser.addOption("Slalom Path", 1);
+    trajectoryChooser.addOption("Bounce Path", 2);
+    SmartDashboard.putData(trajectoryChooser);
   }
 
   /**
@@ -89,9 +81,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    AutoRoutineChooser.setDriveTrajectory();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

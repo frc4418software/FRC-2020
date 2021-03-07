@@ -49,7 +49,7 @@ public class AutoRoutineChooser {
           .addConstraint(autoVoltageConstraint);
     }
 
-    public static void getDriveTrajectory() {
+    public static Trajectory getDriveTrajectory() {
       return driveTrajectory;
     }
     
@@ -58,7 +58,18 @@ public class AutoRoutineChooser {
     - Low goal shooting: left station, right station, center station
     - High goal shooting: left station, right station, center station (tbd whether or not this will be functional)
     */
-    public static void startDriveTrajectory () {
-        int autoRoutine = Robot.autoRoutineChooser.getSelected();
+    public static void selectDriveTrajectory () {
+        int trajectoryNum = Robot.trajectoryChooser.getSelected();
+        switch (trajectoryNum) {
+          case 0: // Barrel Racing Path
+            driveTrajectory = Constants.BarrelRacingPathTrajectory;
+            break;
+          case 1:
+            driveTrajectory = Constants.SlalomPathTrajectory;
+            break;
+          case 2:
+            driveTrajectory = Constants.BouncePathTrajectory;
+            break;
+        }
     }
 }
