@@ -13,6 +13,16 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+
+
+import java.util.Arrays;
+import java.util.ArrayList;
+
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -25,16 +35,50 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  // Trajectory configs
+  public static DifferentialDriveVoltageConstraint 
+    autoVoltageConstraint =
+      new DifferentialDriveVoltageConstraint(
+          new SimpleMotorFeedforward(Constants.ksVolts,
+                                    Constants.kvVoltSecondsPerMeter,
+                                    Constants.kaVoltSecondsSquaredPerMeter),
+          Constants.kDriveKinematics,
+          10);
+
   // Path Trajectories
   public static Trajectory 
-    BarrelRacingPathTrajectory = new TrajectoryGenerator.generateTrajectory(
-      // TODO: Make this spline path
+    BarrelRacingPathTrajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(Units.feetToMeters(1.54), Units.feetToMeters(23.23), Rotation2d.fromDegrees(-180)),
+      new ArrayList<Translation2d>(Arrays.asList(
+        new Translation2d(Units.feetToMeters(14.54), Units.feetToMeters(23.23)),
+        new Translation2d(Units.feetToMeters(21.04), Units.feetToMeters(18.23))
+      )),
+      new Pose2d(Units.feetToMeters(23.7), Units.feetToMeters(6.8), Rotation2d.fromDegrees(-160)),
+      // new TrajectoryConfig(Units.feetToMeters(12), Units.feetToMeters(12))
+      new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond, 
+                            Constants.kMaxAccelerationMetersPerSecondSquared)
+                            .setKinematics(Constants.kDriveKinematics)
+                            .addConstraint(Constants.autoVoltageConstraint)
     ),
-    SlalomPathTrajectory = new TrajectoryGenerator.generateTrajectory(
-      // TODO: Make this spline path
+
+    SlalomPathTrajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(Units.feetToMeters(1.54), Units.feetToMeters(23.23), Rotation2d.fromDegrees(-180)),
+      new ArrayList<Translation2d>(Arrays.asList(
+        new Translation2d(Units.feetToMeters(14.54), Units.feetToMeters(23.23)),
+        new Translation2d(Units.feetToMeters(21.04), Units.feetToMeters(18.23))
+      )),
+      new Pose2d(Units.feetToMeters(23.7), Units.feetToMeters(6.8), Rotation2d.fromDegrees(-160)),
+      new TrajectoryConfig(Units.feetToMeters(12), Units.feetToMeters(12))
     ),
-    BouncePathTrajectory = new TrajectoryGenerator.generateTrajectory(
-      // TODO: Make this spline path
+    
+    BouncePathTrajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(Units.feetToMeters(1.54), Units.feetToMeters(23.23), Rotation2d.fromDegrees(-180)),
+      new ArrayList<Translation2d>(Arrays.asList(
+        new Translation2d(Units.feetToMeters(14.54), Units.feetToMeters(23.23)),
+        new Translation2d(Units.feetToMeters(21.04), Units.feetToMeters(18.23))
+      )),
+      new Pose2d(Units.feetToMeters(23.7), Units.feetToMeters(6.8), Rotation2d.fromDegrees(-160)),
+      new TrajectoryConfig(Units.feetToMeters(12), Units.feetToMeters(12))
     );
   
 

@@ -90,6 +90,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    // Figure out which trajectory we're using
+    
+    
     //This command will follow the driveTajectory when established
     RamseteCommand ramseteDriveCommand = new RamseteCommand(
       AutoRoutineChooser.getDriveTrajectory(), 
