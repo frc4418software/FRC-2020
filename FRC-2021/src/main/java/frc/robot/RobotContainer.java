@@ -90,9 +90,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Figure out which trajectory we're using
-    
-    
     //This command will follow the driveTajectory when established
     RamseteCommand ramseteDriveCommand = new RamseteCommand(
       AutoRoutineChooser.getDriveTrajectory(), 
@@ -105,7 +102,6 @@ public class RobotContainer {
       new PIDController(Constants.kPDriveVel, 0, 0),
       drive::driveVolts, 
       Robot.driveSubsystem);
-    
 
     // Run path following command, then stop at the end.
     return (ramseteDriveCommand.andThen(() -> Robot.driveSubsystem.driveVolts(0, 0)));
